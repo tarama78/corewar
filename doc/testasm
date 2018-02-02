@@ -1,0 +1,41 @@
+debut du programme:
+	nom du programme .name "nom"
+	description du programme .comment "descrition"
+
+intstruction:
+[label:] opcode <arg1>, <arg2>, ...
+
+arg:
+registres: r0, r1, ..., r15
+direct: %<valeur ou :lablel>
+	%12
+	%0x54
+	%:label
+indirect: <valeur ou :label>
+	:label
+	-450
+	+56
+
+le label peut n'avoir aucune instruction
+l'instruction peut etre sur la ligne en dessous du label
+
+!!!les adressages sont relatifs au PC et a IDX_MOD sauf lld et lldi
+
+pour chaque processus:
+	16 registres de 4 octets chacun (int) (r0, r1, ..., r15)
+	1 PC (contient l'adresse memoire de la prochaine instruction)
+	flag carry (il vaut 1 si la derniere operation a reussi)
+
+depart:
+	premier_process->r1 = numero du joueur
+	premier_process->rx = 0
+
+	la VM cree un espace memoire pour les champions, les charges, charge leurs process et les executes jusqu'a la fin
+
+	tout les 1536 cyclesla machine regarde si chaque process a execute au moins 1 live (si pas fait le process est mis a mort)
+	si il y as au moins 21 execution de live depuis la derniere verif on decremente les cycles de mort (1536) de 50
+
+	quand il y as plus de process: fin de partie
+	gagnant: dernier joueur raporte comme en vie
+
+	la memoire fait 4096 octets et est circulaire
