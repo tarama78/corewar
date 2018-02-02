@@ -39,3 +39,35 @@ depart:
 	gagnant: dernier joueur raporte comme en vie
 
 	la memoire fait 4096 octets et est circulaire
+
+binaire
+<instruction>,<type-arg>,<arg1>,<arg2>,...
+type-arg:
+	registre: 01
+	direct:   10
+	indirect: 11
+
+arg:
+	registre: 1 octet
+	direct:   2 octets
+	indirect: 2 octets
+
+instruction:
+<index> adresse memoire     #label, valeur normal, registre ???
+lfork <index>
+sti <reg> <index> <index>
+fork <index>
+lld <arg> <reg>
+ld <arg> <reg>
+add <reg1> <reg2> <reg3>
+	reg1 + reg2 > reg3
+zjmp <index>
+	jump if carry == 1
+sub <reg1> <reg2> <reg3>
+	reg1 - reg2 > reg3
+ldi <index1> <index2> <reg1>
+	index1 + index2 > lit la val a l'adresse et la met dans reg1
+or <arg1> <arg2> <reg1>
+	arg1 | arg2 > reg1 modifie le carry
+and <arg1> <arg2> <reg1>
+	arg1 & arg2 > reg1 modifie le carry
