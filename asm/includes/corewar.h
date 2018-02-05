@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/05 17:07:29 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/05 19:35:09 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct		s_label
 
 typedef struct		s_a
 {
-	char			name[PROG_NAME_LENGTH];
+	char			*name;
 	char			comment[COMMENT_LENGTH];
 	t_line			*line;
 	int				nb_label;
