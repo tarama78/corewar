@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get2arg.c                                       :+:      :+:    :+:   */
+/*   ft_lst_add_end.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/19 16:32:32 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/05 17:19:13 by tnicolas         ###   ########.fr       */
+/*   Created: 2018/02/05 17:58:42 by tnicolas          #+#    #+#             */
+/*   Updated: 2018/02/05 18:04:19 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
-**   | ft_get2arg.c                                             |
-**   |     ft_get2arg(6 lines)                                  |
+**   | ft_lst_add_end.c                                         |
+**   |     ft_lst_add_end(15 lines)                             |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -23,12 +23,23 @@
 **     |||   |||
 */
 
-int			ft_get2arg(long long arg, int n)
-{
-	int		bit;
+#include <corewar.h>
 
-	bit = sizeof(long long) * 4;
-	if (n == 0)
-		return ((int)((arg << bit) >> bit));
-	return ((int)(arg >> bit));
+void		ft_lst_add_end(t_lst **begin, t_lst *new)
+{
+	t_lst	*lst;
+
+	if (begin == NULL)
+		return ;
+	if (*begin == NULL)
+	{
+		*begin = new;
+		new->next = NULL;
+		return ;
+	}
+	lst = *begin;
+	while (lst->next)
+		lst = lst->next;
+	lst->next = new;
+	new->next = NULL;
 }
