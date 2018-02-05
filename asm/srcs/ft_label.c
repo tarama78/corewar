@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:21:37 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/05 17:59:28 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/05 18:34:00 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	new_label(t_label *label, int len_name, int addr, t_line *line)
 {
 	if (!(label->name = ft_strndup(line->line, len_name)))
 	{
-		write(2, "ERROR\n", 6);
+		write(2, "ERROR\n", 6); // FREE ALL
 		exit(0);
 	}
 	label->addr = addr;
@@ -46,6 +46,11 @@ void		ft_label(t_a data)
 	int		addr;
 	int		i;
 
+	if (!(data->label = (t_label *)malloc(sizeof(t_label) * data->nb_label)))
+	{
+		write(2, "ERROR\n", 6); // FREE ALL
+		exit(0);
+	}
 	addr = 0;
 	i = -1;
 	current = data->line;
