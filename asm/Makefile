@@ -12,7 +12,7 @@
 
 ASM = asm
 
-CFLAGS = -Wall -Wextra -Werror -Weverything -g
+CFLAGS = -Wall -Wextra
 
 SRC = main.c
 
