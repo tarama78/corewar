@@ -55,3 +55,5 @@ dkms.conf
 *.vim
 .DS_Store
 *.cor
+a.out
+asm/asm

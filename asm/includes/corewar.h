@@ -6,35 +6,42 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 18:17:47 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/06 17:42:22 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COREWAR_H
 # define COREWAR_H
 
-# include "op.h"
+# include <op.h>
+# include <libft.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 #include <stdlib.h>
 
+# define SUCCESS 0
+# define ERROR -1
+
 typedef struct		s_op
 {
 	char			*name;
 	int				nb_arg;
-	int				type_arg[3];
+	int				type_arg[MAX_ARGS_NUMBER];
 	int				opcode;
 	int				nb_cycle;
 	char			*descrition;
-	int				ok_codage;
-	int				jesaispas2;
+	int				octet_type_arg;
+	int				carry;
 }					t_op;
+
+extern t_op			op_tab[17];
 
 typedef struct		s_line
 {
 	struct s_line	*next;
 	char			*line;
+	int				num_line;
 	int				size;
 }					t_line;
 
@@ -49,11 +56,21 @@ typedef struct		s_a
 	char			*file_name;
 	char			name[PROG_NAME_LENGTH];
 	char			comment[COMMENT_LENGTH];
-	t_line			*tab_line;
+	t_line			*line;
+	t_label			*label;
+	char			*file_name;
 	int				nb_label;
-	t_label			*tab_label;
 }					t_a;
 
-void		ft_handle_line(t_a *a, char *ln, int num_ln);
+typedef struct		s_lst
+{
+	struct s_lst	*next;
+}					t_lst;
+
+void		ft_lst_add_end(t_lst **begin, t_lst *new);
+int			ft_handle_line(t_a *a, char *ln, int num_ln);
+void		ft_label(t_a *data);
+int			free_content(t_a *data, char *error);
+int			ft_parse_file(t_a *a, int fd);
 
 #endif
