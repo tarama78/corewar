@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 13:28:19 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 17:09:07 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/06 17:14:15 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	int		i;
 	t_line	*new_ln;
 
-	ft_printf("{yellow}%s: %s({bold}\"%s\"{eoc}{yellow}){eoc}\n", __FILE__, __func__, ln);
+//	ft_printf("{yellow}%s: %s({bold}\"%s\"{eoc}{yellow}){eoc}\n", __FILE__, __func__, ln);
 
 	name = NULL;
 	if (!(new_ln = malloc(sizeof(t_line))))
