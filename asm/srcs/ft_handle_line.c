@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 13:28:19 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 14:48:38 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 15:10:55 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,6 @@ int			main(int ac, char **av)
 	{
 		ft_printf("%d %s\n", a.label[i].addr, a.label[i].name);
 	}
-
+	free_content(&a, 0);
 	return (0);
 }

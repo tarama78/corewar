@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:21:37 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/06 14:42:16 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 15:11:42 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		ft_label(t_a *data)
 		exit(0);
 	}
 
-	addr = 0;0
+	addr = 0;
 	i = -1;
 	current = data->line;
 	while(current)

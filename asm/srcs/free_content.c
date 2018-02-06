@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 10:18:21 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/06 11:52:59 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 15:21:09 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,23 @@
 
 void	free_content(t_a *data, int mod)
 {
-	ft_fruit(2, data->line, data->label);
+	t_line	*tmp;
+	int		i;
+
+	tmp = data->line;
+	while (tmp)
+	{
+		data->line = data->line->next;
+		free(tmp->line);
+		free(tmp);
+		tmp = data->line;
+	}
+	i = -1;
+	while (++i < data->nb_label)
+	{
+		free(data->label[i].name);
+	}
+	free(data->label);
 	if (mod == ERROR)
 		exit(0);
 }
