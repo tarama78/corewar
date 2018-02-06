@@ -56,3 +56,4 @@ dkms.conf
 .DS_Store
 *.cor
 a.out
+asm/asm
