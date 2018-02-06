@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 13:28:19 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 17:14:15 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/06 17:26:41 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 
 static int	ft_err_msg(t_a *a, t_line *new_ln, char *txt)
 {
+	(void)a;
 	ft_errprintf("{red}ERROR:{eoc} {yellow}%s.s\n{eoc}"
 			"\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
 			"\t%s\n", "A->NOMDUFICHIER", new_ln->num_line, txt, new_ln->line);
@@ -131,7 +132,7 @@ static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
 	return (ft_err_msg(a, new_ln, "syntax error"));
 }
 
-static int	ft_get_size_op(t_a *a, char *ln, t_op *op, char **arg, t_line *new_ln)
+static int	ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
 {
 	int		sz;
 	int		i;
@@ -167,7 +168,7 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	while (ft_strcmp(op_tab[++i].name, name) != 0)
 		;
 	op = op_tab[i];
-	if ((i = ft_get_size_op(a, ln, &op, arg, new_ln)) == ERROR)
+	if ((i = ft_get_size_op(a, &op, arg, new_ln)) == ERROR)
 		return (ERROR);
 	new_ln->size = 1 + op.octet_type_arg + i;
 	i = -1;
@@ -207,27 +208,27 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 }
 
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <unistd.h>
-//#include <limits.h>
-//#include <string.h>
-//#include <ctype.h>
-//
-//int			main(int ac, char **av)
-//{
-//	int		i;
-//	t_a		a;
-//
-//	(void)ac;
-//	(void)av;
-//	(void)i;
-//	a.line = NULL;
-//	a.nb_label = 0;
-//	ft_printf("retour %d\n", ft_handle_line(&a, "add r1,   r12 ,  r15", 1));
-//	ft_printf("retour %d\n", ft_handle_line(&a, "label: zjmp  %12", 2));
-//	ft_printf("retour %d\n", ft_handle_line(&a, "ldi :seksek, %-15648, r7", 3));
-//	ft_printf("retour %d\n", ft_handle_line(&a, "autre_label:", 4));
-//	ft_printf("retour %d\n", ft_handle_line(&a, "label3:label5: label120: aff r16", 5));
-//	return (0);
-//}
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
+#include <string.h>
+#include <ctype.h>
+
+int			main(int ac, char **av)
+{
+	int		i;
+	t_a		a;
+
+	(void)ac;
+	(void)av;
+	(void)i;
+	a.line = NULL;
+	a.nb_label = 0;
+	ft_printf("retour %d\n", ft_handle_line(&a, "add r1,   r12 ,  r15", 1));
+	ft_printf("retour %d\n", ft_handle_line(&a, "label: zjmp  %12", 2));
+	ft_printf("retour %d\n", ft_handle_line(&a, "ldi :seksek, %-15648, r7", 3));
+	ft_printf("retour %d\n", ft_handle_line(&a, "autre_label:", 4));
+	ft_printf("retour %d\n", ft_handle_line(&a, "label3:label5: label120: aff r16", 5));
+	return (0);
+}
