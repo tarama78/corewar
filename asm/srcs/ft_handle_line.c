@@ -15,12 +15,11 @@
 **   |     ft_err_msg(4 lines)                                  |
 **   |     ft_start_i(13 lines)                                 |
 **   |     ft_get_name(12 lines)                                |
-**   |     ft_get_type(41 lines)                                |
+**   |     ft_get_type(40 lines)                                |
 **   |         MEUUUU too many lines                            |
-**   |     ft_get_size_op(16 lines)                             |
-**   |     ft_check_arg(19 lines)                               |
-**   |     ft_handle_line(24 lines)                             |
-**   |     main(14 lines)                                       |
+**   |     ft_get_size_op(17 lines)                             |
+**   |     ft_check_arg(21 lines)                               |
+**   |     ft_handle_line(23 lines)                             |
 **   | MEUUUU too many functions                                |
 **   ------------------------------------------------------------
 **           __n__n__  /
@@ -35,10 +34,9 @@
 
 static int	ft_err_msg(t_a *a, t_line *new_ln, char *txt)
 {
-	(void)a;
 	ft_errprintf("{red}ERROR:{eoc} {yellow}%s.s\n{eoc}"
 			"\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
-			"\t%s\n", "A->NOMDUFICHIER", new_ln->num_line, txt, new_ln->line);
+			"\t%s\n", a->file_name, new_ln->num_line, txt, new_ln->line);
 	return (ERROR);
 }
 
@@ -65,7 +63,7 @@ static char	*ft_get_name(char *ln)
 	char	*ret;
 
 	i = -1;
-	while (ft_isalpha(ln[++i]))
+	while (ft_strchr(LABEL_CHARS, ln[++i]))
 		;
 	if (!(ret = malloc(sizeof(char) * (i + 1))))
 		exit(EXIT_FAILURE);
@@ -129,7 +127,7 @@ static int	ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
 	i = -1;
 	while (++i < op->nb_arg)
 	{
-//		ft_printf("\t%d -> %s (%d)\n", op->type_arg[i], arg[i], ft_get_type(a, arg[i], num_ln));
+//		ft_printf("\t%d -> %s (%d)\n", op->type_arg[i], arg[i], ft_get_type(a, arg[i], num_ln));//dd
 		if ((type = ft_get_type(a, arg[i], new_ln)) == ERROR)
 			return (ERROR);
 		if (!(op->type_arg[i] & type))
@@ -165,18 +163,41 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	return (SUCCESS);
 }
 
+static char	*ft_get_clean_ln(t_a *a, char *ln)
+{
+	int		i;
+	char	*ret;
+	char	*tmp;
+
+	if (!(ret = ft_strnew(sizeof(char) * ft_strlen(ln))))
+		exit(EXIT_FAILURE);
+	i = ft_start_i(a, ln);
+	if (ln[i] != '\0')
+	{
+		while (ft_strchr(LABEL_CHARS, ln[++i]))
+			;
+		i++;
+		if (!(tmp = ft_clean_char(ln + i, ' ')))
+			exit(EXIT_FAILURE);
+		ft_memcpy(ret + i, tmp, ft_strlen(tmp));
+		ft_fruit(1, tmp);
+	}
+	ft_memcpy(ret, ln, i);
+	return (ret);
+}
+
 int			ft_handle_line(t_a *a, char *ln, int num_ln)
 {
 	char	*name;
 	int		i;
 	t_line	*new_ln;
 
-//	ft_printf("{yellow}%s: %s({bold}\"%s\"{eoc}{yellow}){eoc}\n", __FILE__, __func__, ln);
-
+//	ft_printf("{yellow}%s: %s({bold}\"%s\"{eoc}{yellow}){eoc}\n", __FILE__, __func__, ln);//dd
 	name = NULL;
 	if (!(new_ln = malloc(sizeof(t_line))))
 		exit(EXIT_FAILURE);
-	new_ln->line = ft_strdup(ln);
+	if (!(new_ln->line = ft_get_clean_ln(a, ln)))
+		exit(EXIT_FAILURE);
 	new_ln->size = 0;
 	new_ln->num_line = num_ln;
 	i = ft_start_i(a, ln);
@@ -187,37 +208,9 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 		if (ft_check_arg(a, name, new_ln, ln + i) == ERROR)
 			return (ERROR);
 	}
+//	ft_printf("%s\n", new_ln->line);
 	ft_lst_add_end((t_lst**)&a->line, (t_lst*)new_ln);
 	ft_fruit(1, name);
 	ft_label(a);
-
-
-//	ft_printf("\tsize: %d\n", new_ln->size);
 	return (SUCCESS);
 }
-
-
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <unistd.h>
-//#include <limits.h>
-//#include <string.h>
-//#include <ctype.h>
-//
-//int			main(int ac, char **av)
-//{
-//	int		i;
-//	t_a		a;
-//
-//	(void)ac;
-//	(void)av;
-//	(void)i;
-//	a.line = NULL;
-//	a.nb_label = 0;
-//	ft_printf("retour %d\n", ft_handle_line(&a, "add r1,   r12 ,  r15", 1));
-//	ft_printf("retour %d\n", ft_handle_line(&a, "label: zjmp  %12", 2));
-//	ft_printf("retour %d\n", ft_handle_line(&a, "ldi :seksek, %-15648, r7", 3));
-//	ft_printf("retour %d\n", ft_handle_line(&a, "autre_label:", 4));
-//	ft_printf("retour %d\n", ft_handle_line(&a, "label3:label5: label120: aff r16", 5));
-//	return (0);
-//}

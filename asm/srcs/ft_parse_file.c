@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/06 16:51:38 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 17:55:21 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*ft_strjoin_ln(char *s1, char *s2)
 static int		ft_count_char(char *str, char c)
 {
 	int count;
-	int i;	
+	int i;
 
 	i = 0;
 	count = 0;
@@ -159,7 +159,7 @@ static void	ft_parse_cmd(int fd, t_a *a, int *num_ln)
 
 int		ft_parse_file(t_a *a, int fd)
 {
-	int		num_ln; 
+	int		num_ln;
 
 	num_ln = 0;
 //	ft_memset(a, 0, sizeof(t_a));

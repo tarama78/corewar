@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 14:00:11 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/06 17:42:22 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@
 typedef struct		s_op
 {
 	char			*name;
-	int				type_arg[MAX_ARGS_NUMBER];
-	char			*descrition;
 	int				nb_arg;
+	int				type_arg[MAX_ARGS_NUMBER];
 	int				opcode;
 	int				nb_cycle;
+	char			*descrition;
 	int				octet_type_arg;
-	int				jesaispas2;//carry ???
-	int		padding;
+	int				carry;
 }					t_op;
 
 extern t_op			op_tab[17];
@@ -46,7 +45,6 @@ typedef struct		s_label
 {
 	char			*name;
 	int				addr;
-	int		padding;
 }					t_label;
 
 typedef struct		s_a
@@ -57,7 +55,6 @@ typedef struct		s_a
 	t_label			*label;
 	char			*file_name;
 	int				nb_label;
-	int		padding;
 }					t_a;
 
 typedef struct		s_lst
