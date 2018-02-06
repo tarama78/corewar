@@ -51,7 +51,8 @@ void		ft_label(t_a *data)
 		write(2, "ERROR\n", 6); // FREE ALL
 		exit(0);
 	}
-	addr = 0;
+
+	addr = 0;0
 	i = -1;
 	current = data->line;
 	while(current)
