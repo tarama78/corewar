@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:40:53 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/06 18:47:24 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/06 18:50:59 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_encoding(int file, int nb_arg, char **words)
 	}
 }
 
-int		ft_binaire(int file, t_a data)
+int		ft_binaire(int file, t_a *data, t_line *tab_line)
 {
 	t_line *tmp;
 	char **words;
@@ -87,21 +87,6 @@ int		ft_binaire(int file, t_a data)
 	int i;
 	int j;
 	int k;
-
-	t_line *tab_line;
-	t_label *tab_label;
-
-	tab_line = malloc(sizeof(t_line));
-	tab_line->line = "live %:code";
-	tab_line->size = 15;
-	tab_line->next = malloc(sizeof(t_line));
-	tab_line->next->line = ft_strdup("sti r1,%0,r2");
-	tab_line->next->size = 13;
-	tab_line->next->next = NULL;
-
-	tab_label = malloc(sizeof(t_label) * 2);
-	tab_label->name = "code";
-	tab_label = malloc(sizeof(t_label));
 
 	tmp = tab_line;
 	i = -1;
@@ -124,34 +109,4 @@ int		ft_binaire(int file, t_a data)
 		tmp = tmp->next;
 	}
 	return (1);
-}
-
-int			main(int argc, char **argv)
-{
-	t_a	data;
-	int	fd;
-	int	fd_2;
-
-	if (argc == 1)
-	{
-		ft_printf("usage: ./asm file.s\n");
-		return (0);
-	}
-	fd_2 = open("txt.cor", O_CREAT | O_RDWR);
-	while (--argc > 0)
-	{
-		if ((fd = open(argv[argc], O_RDONLY)) == -1)
-			ft_printf("Can't read source file %s\n", argv[argc]);
-		else
-		{
-//			file_name(argv[argc]);
-//			init_struct(&data);
-//			data.name = argv[argc];
-			//APPEL FONCTION
-			ft_binaire(fd_2, data);
-			close(fd);
-		}
-	}
-	close(fd_2);
-	return (0);
 }
