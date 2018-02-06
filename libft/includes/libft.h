@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/30 14:55:43 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/05 17:47:48 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ double		ft_power(double nb, int power);
 long long	ft_2arg(int arg1, int arg2);
 int			ft_get2arg(long long arg, int n);
 void		ft_swap_int(int *a, int *b);
+char		*ft_clean_char(char *s, char c);
 int			get_next_line(const int fd, char **line);
 
 int			ft_printf(const char *format, ...);
