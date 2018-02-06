@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/05 19:35:09 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 10:40:28 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ typedef struct		s_line
 	struct s_line	*next;
 	char			*line;
 	int				size;
+	int		padding;
 }					t_line;
 
 typedef struct		s_label
 {
 	char			*name;
 	int				addr;
+	int		padding;
 }					t_label;
 
 typedef struct		s_a
@@ -45,8 +47,9 @@ typedef struct		s_a
 	char			*name;
 	char			comment[COMMENT_LENGTH];
 	t_line			*line;
-	int				nb_label;
 	t_label			*label;
+	int				nb_label;
+	int		padding;
 }					t_a;
 
 void		ft_handle_line(t_a *a, char *ln, int num_ln);
