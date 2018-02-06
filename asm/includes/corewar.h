@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/05 18:54:19 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/06 18:17:47 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct		s_op
 	int				opcode;
 	int				nb_cycle;
 	char			*descrition;
-	int				jesaispas1;
+	int				ok_codage;
 	int				jesaispas2;
 }					t_op;
 
