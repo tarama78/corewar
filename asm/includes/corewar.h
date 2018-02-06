@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 13:47:41 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/06 14:00:11 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <libft.h>
 
 # define SUCCESS 0
-# define ERROR 1
+# define ERROR -1
 
 typedef struct		s_op
 {
