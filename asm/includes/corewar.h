@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 15:21:42 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 15:31:25 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ typedef struct		s_lst
 void		ft_lst_add_end(t_lst **begin, t_lst *new);
 int			ft_handle_line(t_a *a, char *ln, int num_ln);
 void		ft_label(t_a *data);
-void		free_content(t_a *data, int mod);
+int			free_content(t_a *data, char *error);
 
 #endif
