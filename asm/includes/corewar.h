@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 13:47:41 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/06 15:02:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <libft.h>
 
 # define SUCCESS 0
-# define ERROR 1
+//# define ERROR 1
 
 typedef struct		s_op
 {
@@ -63,5 +63,6 @@ typedef struct		s_lst
 
 void		ft_lst_add_end(t_lst **begin, t_lst *new);
 int			ft_handle_line(t_a *a, char *ln, int num_ln);
+void		ft_label(t_a *data);
 
 #endif
