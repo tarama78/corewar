@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 15:31:25 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 16:35:28 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@
 typedef struct		s_op
 {
 	char			*name;
-	int				nb_arg;
 	int				type_arg[MAX_ARGS_NUMBER];
+	char			*descrition;
+	int				nb_arg;
 	int				opcode;
 	int				nb_cycle;
-	char			*descrition;
 	int				octet_type_arg;
 	int				jesaispas2;//carry ???
+	int		padding;
 }					t_op;
 
 extern t_op			op_tab[17];
@@ -39,7 +40,6 @@ typedef struct		s_line
 	char			*line;
 	int				num_line;
 	int				size;
-	int		padding;
 }					t_line;
 
 typedef struct		s_label
@@ -51,10 +51,11 @@ typedef struct		s_label
 
 typedef struct		s_a
 {
-	char			*name;
+	char			name[PROG_NAME_LENGTH];
 	char			comment[COMMENT_LENGTH];
 	t_line			*line;
 	t_label			*label;
+	char			*file_name;
 	int				nb_label;
 	int		padding;
 }					t_a;
@@ -68,5 +69,6 @@ void		ft_lst_add_end(t_lst **begin, t_lst *new);
 int			ft_handle_line(t_a *a, char *ln, int num_ln);
 void		ft_label(t_a *data);
 int			free_content(t_a *data, char *error);
+int			ft_parse_file(t_a *a, int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 13:28:19 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 15:10:55 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 17:01:28 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,13 +186,15 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	}
 	ft_lst_add_end((t_lst**)&a->line, (t_lst*)new_ln);
 	ft_fruit(1, name);
+	ft_label(a);
+
 
 //	ft_printf("\tsize: %d\n", new_ln->size);
 	return (SUCCESS);
 }
 
 
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>
@@ -221,4 +223,4 @@ int			main(int ac, char **av)
 	}
 	free_content(&a, 0);
 	return (0);
-}
+}*/

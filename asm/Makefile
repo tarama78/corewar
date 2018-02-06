@@ -6,15 +6,21 @@
 #    By: bcozic <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/10 12:19:55 by bcozic            #+#    #+#              #
-#    Updated: 2018/02/06 10:37:21 by bcozic           ###   ########.fr        #
+#    Updated: 2018/02/06 16:38:12 by bcozic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ASM = asm
 
-CFLAGS = -Wall -Wextra -Werror -Weverything -g
+CFLAGS =
 
-SRC = main.c
+SRC = main.c\
+	  ft_parse_file.c\
+	  ft_handle_line.c\
+	  ft_label.c\
+	  ft_lst_add_end.c\
+	  free_content.c\
+	  op.c
 
 OBJ = $(SRC:.c=.o)
 
