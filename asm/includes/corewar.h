@@ -15,6 +15,10 @@
 
 # include <op.h>
 # include <libft.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+#include <stdlib.h>
 
 # define SUCCESS 0
 # define ERROR -1
@@ -49,6 +53,7 @@ typedef struct		s_label
 
 typedef struct		s_a
 {
+	char			*file_name;
 	char			name[PROG_NAME_LENGTH];
 	char			comment[COMMENT_LENGTH];
 	t_line			*line;
