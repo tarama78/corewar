@@ -1,4 +1,4 @@
-script: make -j3 CFLAGS='-Wall -Wextra -Werror'
+script: make exec
 language: c
 os: osx
 compiler: clang gcc

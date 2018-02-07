@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/07 14:05:16 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/07 15:54:15 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ int			main(int argc, char **argv)
 	t_a	data;
 	int	fd;
 	int	ret_parse;
+	int	ret;
 
+	ret = EXIT_SUCCESS;
 	if (argc == 1)
 	{
 		ft_printf("usage: ./asm file.s\n");
@@ -57,10 +59,17 @@ int			main(int argc, char **argv)
 			file_name(argv[argc]);
 			data.file_name = argv[argc];
 			if ((ret_parse = ft_parse_file(&data, fd)) == 0 || ret_parse == ERROR)
-				ft_printf("failed\n");
+			{
+				ft_printf("{red}compilation failed {yellow}%s.s{eoc}\n",
+						data.file_name);
+				ret = EXIT_FAILURE;
+			}
+			else
+				ft_printf("{green}compilation success: {yellow}%s.cor{eoc}\n",
+						data.file_name);
 			free_content(&data, 0);
 			close(fd);
 		}
 	}
-	return (0);
+	return (ret);
 }
