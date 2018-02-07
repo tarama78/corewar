@@ -58,7 +58,6 @@ typedef struct		s_a
 	char			comment[COMMENT_LENGTH];
 	t_line			*line;
 	t_label			*label;
-	char			*file_name;
 	int				nb_label;
 }					t_a;
 
