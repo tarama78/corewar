@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:21:37 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/06 15:11:42 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 20:51:40 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ void		ft_label(t_a *data)
 		write(2, "ERROR\n", 6); // FREE ALL
 		exit(0);
 	}
-
+	i = -1;
+	while (++i < data->nb_label)
+		ft_bzero(&data->label[i], sizeof(t_label));
 	addr = 0;
 	i = -1;
 	current = data->line;
-	while(current)
+	while (current)
 	{
 		len_name = 0;
 		len_name = check_line(current);
