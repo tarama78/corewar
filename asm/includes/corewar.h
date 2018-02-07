@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/07 15:52:11 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/07 18:52:22 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct		s_a
 	t_line			*line;
 	t_label			*label;
 	int				nb_label;
+	int				cmpt;
 }					t_a;
 
 typedef struct		s_lst
