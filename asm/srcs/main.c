@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/07 18:51:40 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/07 19:05:33 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	file_name(char *name)
 		}
 }
 
-static int	ft_open_files(char *filename, int *fd1, int *fd2)
+static int	ft_open_files(char *filename, int *fd1, int *fd2, int *ret)
 {
 	char	*name2;
 
@@ -46,7 +46,11 @@ static int	ft_open_files(char *filename, int *fd1, int *fd2)
 	file_name(name2);
 	ft_strcat(name2, ".cor");
 	if ((*fd1 = open(filename, O_RDONLY)) == -1)
+	{
+		*ret = EXIT_FAILURE;
 		ft_printf("{red}Can't read source file{yellow} %s{eoc}\n", filename);
+		return (ERROR);
+	}
 	if ((*fd2 = open(name2, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU)) == -1)
 		exit(EXIT_FAILURE);
 	free(name2);
@@ -66,12 +70,12 @@ int			main(int argc, char **argv)
 	if (argc == 1)
 	{
 		ft_printf("usage: ./asm file.s\n");
-		return (0);
+		return (ret);
 	}
 	i = 0;
 	while (++i < argc)
 	{
-		if (ft_open_files(argv[i], &fd, &fd_2) == SUCCESS)
+		if (ft_open_files(argv[i], &fd, &fd_2, &ret) == SUCCESS)
 		{
 			init_struct(&data);
 			file_name(argv[i]);
