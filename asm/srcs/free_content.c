@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 10:18:21 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/06 15:31:07 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/06 20:47:17 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ int		free_content(t_a *data, char *error)
 	{
 		i = -1;
 		while (++i < data->nb_label)
-		{
-			free(data->label[i].name);
-		}
+			if (data->label[i].name)
+				free(data->label[i].name);
 		free(data->label);
 	}
 	if (error)
