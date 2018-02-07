@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/06 18:00:29 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/07 12:20:05 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@ int			main(int argc, char **argv)
 {
 	t_a	data;
 	int	fd;
+	int fd_2;
 
 	if (argc == 1)
 	{
 		ft_printf("usage: ./asm file.s\n");
 		return (0);
 	}
+	fd_2 = open("txt.cor", O_CREAT);
 	while (--argc > 0)
 	{
 		if ((fd = open(argv[argc], O_RDONLY)) == -1)
@@ -58,7 +60,8 @@ int			main(int argc, char **argv)
 			data.file_name = argv[argc];
 			if (!ft_parse_file(&data, fd))
 				ft_printf("failed\n");
-			free_content(&data, 0);
+			ft_binary(fd_2, &data);
+//			free_content(&data, 0);
 			close(fd);
 		}
 	}

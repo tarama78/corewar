@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 17:42:22 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/06 19:02:15 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct		s_a
 	char			comment[COMMENT_LENGTH];
 	t_line			*line;
 	t_label			*label;
-	char			*file_name;
 	int				nb_label;
 }					t_a;
 
@@ -72,5 +71,5 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln);
 void		ft_label(t_a *data);
 int			free_content(t_a *data, char *error);
 int			ft_parse_file(t_a *a, int fd);
-
+int			ft_binary(int file, t_a *data);
 #endif
