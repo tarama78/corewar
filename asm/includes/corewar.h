@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 19:02:15 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/07 15:52:11 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct		s_op
 	char			*descrition;
 	int				octet_type_arg;
 	int				carry;
+	int				diroct;
 }					t_op;
 
 extern t_op			op_tab[17];

@@ -6,46 +6,70 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:40:53 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/07 15:40:57 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:44:44 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <corewar.h>
 #include <stdio.h>
 
-static void		ft_handle_args(int file, char *arg, t_label *label, int *cmpt)
+static void		ft_handle_args(int file, char *arg, t_label *label, int *cmpt, int index_name)
 {
+	char *octet;
 	int i;
+	int value;
 
-	i = 0;
-	if (arg[0] == DIRECT_CHAR && arg[1] == LABEL_CHAR)
+	if (arg[0] == 'r')
 	{
-		printf("adress --> %d\n", label->addr);
-		printf("arg in handle arg --> %s", arg + 2);
-//		ft_dprintf(file, "%s", arg + 2);
-		ft_putchar_fd((char)(label->addr >> 8), file);
-		ft_putchar_fd((char)(label->addr << 8), file);
+		cmpt += 1;
+		ft_putchar_fd((char)ft_atoi(arg + 1) >> 8, file);
 	}
 	else
 	{
-		printf("arg in handle arg --> %s et aoit -->%d\n", arg, ft_atoi(arg + 1));
-//		ft_dprintf(file, "%hhd", ft_atoi(arg + 1));
-//		if (arg[0] == '%')
-//		{
-//			ft_putchar_fd((char)ft_atoi(arg + 1) >> 24, file);
-//			ft_putchar_fd((char)ft_atoi(arg + 1) >> 16, file);
-//		}
-		if (arg[0] != 'r')
-			ft_putchar_fd((char)ft_atoi(arg + 1) >> 8, file);
-		ft_putchar_fd((char)ft_atoi(arg + 1), file);
-		cmpt += 2;
+		i = op_tab[index_name].diroct;
+		if (arg[0] == '%' && arg[1] == ':')
+			value = label->addr - *cmpt;
+		else if (arg[0] == '%')
+			value = ft_atoi(arg + 1);
+		else
+			value = ft_atoi(arg);
+		cmpt += i;
+		octet = (char*)&value;
+		printf("i  %d\n", i);
+		while (--i >= 0)
+		{
+			printf("octect %d", octet[i]);
+			ft_putchar_fd(octet[i], file);
+		}
 	}
+
+//
+//	i = 0;
+//	if (arg[0] == DIRECT_CHAR && arg[1] == LABEL_CHAR)
+//	{
+//		printf("adress --> %d\n", label->addr);
+//		printf("arg in handle arg --> %s", arg + 2);
+//		ft_putchar_fd((char)(label->addr >> 8), file);
+//		ft_putchar_fd((char)(label->addr << 8), file);
+//	}
+//	else
+//	{
+//
+//		printf("arg in handle arg --> %s et aoit -->%d\n", arg, ft_atoi(arg + 1));
+//		if (arg[0] != 'r')
+//			ft_putchar_fd((char)ft_atoi(arg + 1) >> 8, file);
+//		ft_putchar_fd((char)ft_atoi(arg + 1), file);
+//		cmpt += 2;
+//	}
 }
 
 static int		ft_typepara(char *arg)
 {
 	if (arg[0] == 'r')
+	{
+		printf("reg code %d\n", REG_CODE);
 		return (REG_CODE);
+	}
 	else if (arg[0] == DIRECT_CHAR)
 		return (DIR_CODE);
 	else
@@ -119,9 +143,9 @@ int				ft_binary(int file, t_a *data)
 		while (args[++k])
 		{
 			printf("arg --> %s\n", args[k]);
-			ft_handle_args(file, args[k], data->label, &cmpt);
+			ft_handle_args(file, args[k], data->label, &cmpt, i);
 		}
 		tmp = tmp->next;
 	}
-	return (1);
+	return (SUCCESS);
 }
