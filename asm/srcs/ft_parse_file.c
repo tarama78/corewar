@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/06 17:55:21 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/07 14:52:42 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ static void	ft_clear_line(char *str)
 	{
 		if (str[i] == '\t')
 			str[i] = ' ';
-		else if (str[i] == '#')
-			str[i] = '\0';
+		else if (str[i] == COMMENT_CHAR)
+			str[i--] = '\0';
 		++i;
 	}
 }
@@ -126,7 +126,11 @@ static int		ft_parse_line(int fd, t_a *a, int *num_ln)
 			return (0);
 		}
 		if (trim[0])
-			ft_handle_line(a, trim, *num_ln);
+			if (ft_handle_line(a, trim, *num_ln) == ERROR)
+			{
+				ft_fruit(2, trim, line);
+				return (ERROR);
+			}
 		free(trim);
 		free(line);
 	}
@@ -162,10 +166,10 @@ int		ft_parse_file(t_a *a, int fd)
 	int		num_ln;
 
 	num_ln = 0;
-//	ft_memset(a, 0, sizeof(t_a));
 	ft_parse_cmd(fd, a, &num_ln);
 	if (!a->name[0])
 		return (0);
-	ft_parse_line(fd, a, &num_ln);
+	if (ft_parse_line(fd, a, &num_ln) == ERROR)
+		return (ERROR);
 	return (1);
 }
