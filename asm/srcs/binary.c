@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:40:53 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/07 16:44:44 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:50:20 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void		ft_handle_args(int file, char *arg, t_label *label, int *cmpt, int 
 	if (arg[0] == 'r')
 	{
 		cmpt += 1;
-		ft_putchar_fd((char)ft_atoi(arg + 1) >> 8, file);
+		ft_putchar_fd((char)ft_atoi(arg + 1), file);
 	}
 	else
 	{
