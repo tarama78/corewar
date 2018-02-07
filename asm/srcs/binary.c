@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:40:53 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/07 14:37:21 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/07 15:29:59 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,16 @@ static void		ft_encoding(int file, char **words, int *cmpt)
 
 void			ft_putname_magic(int file, t_a *data)
 {
-	ft_putstr_fd
+	int magic = COREWAR_EXEC_MAGIC;
+	char *ptr = (char*)&magic;
+	int i;
+
+	i = 4;
+
+	while (--i >= 0)
+		ft_putchar_fd(ptr[i], file);
+	write(file, data->name, 128);
+	write(file, data->comment, 2048);
 }
 
 int				ft_binary(int file, t_a *data)
