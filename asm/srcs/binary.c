@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:40:53 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/07 12:18:42 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/07 14:37:21 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ static void		ft_handle_args(int file, char *arg, t_label *label, int *cmpt)
 	i = 0;
 	if (arg[0] == '%' && arg[1] == ':')
 	{
+		printf("adress --> %d\n", label->addr);
 		printf("arg in handle arg --> %s", arg + 2);
 //		ft_dprintf(file, "%s", arg + 2);
-		ft_putchar_fd((char)arg[2], file);
+		ft_putchar_fd((char)(label->addr >> 8), file);
+		ft_putchar_fd((char)(label->addr << 8), file);
 	}
 	else
 	{
@@ -36,6 +38,7 @@ static void		ft_handle_args(int file, char *arg, t_label *label, int *cmpt)
 		if (arg[0] != 'r')
 			ft_putchar_fd((char)ft_atoi(arg + 1) >> 8, file);
 		ft_putchar_fd((char)ft_atoi(arg + 1), file);
+		cmpt += 2;
 	}
 }
 
@@ -67,6 +70,11 @@ static void		ft_encoding(int file, char **words, int *cmpt)
 	*cmpt += 1;
 }
 
+void			ft_putname_magic(int file, t_a *data)
+{
+	ft_putstr_fd
+}
+
 int				ft_binary(int file, t_a *data)
 {
 	t_line *tmp;
@@ -80,6 +88,7 @@ int				ft_binary(int file, t_a *data)
 
 	tmp = data->line;
 	cmpt = 0;
+	ft_putname_magic(file, data);
 	while (tmp != NULL)
 	{
 		j = 1;
