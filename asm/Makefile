@@ -19,6 +19,7 @@ FILES = main.c\
 		ft_lst_add_end.c\
 		free_content.c\
 		binary.c\
+		ft_error.c\
 		op.c
 
 HFILES = includes/corewar.h \

@@ -67,6 +67,8 @@ typedef struct		s_lst
 	struct s_lst	*next;
 }					t_lst;
 
+int			ft_err_msg(t_a *a, t_line *new_ln, char *txt);
+int			ft_warning_msg(t_a *a, t_line *new_ln, char *txt);
 void		ft_lst_add_end(t_lst **begin, t_lst *new);
 int			ft_handle_line(t_a *a, char *ln, int num_ln);
 void		ft_label(t_a *data);
