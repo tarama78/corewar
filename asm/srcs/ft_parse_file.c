@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/07 11:37:25 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/07 14:26:22 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,6 @@ int		ft_parse_file(t_a *a, int fd)
 	int		num_ln;
 
 	num_ln = 0;
-//	ft_memset(a, 0, sizeof(t_a));
 	ft_parse_cmd(fd, a, &num_ln);
 	if (!a->name[0])
 		return (0);
