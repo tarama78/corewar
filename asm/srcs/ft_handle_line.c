@@ -196,6 +196,12 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	name = NULL;
 	if (!(new_ln = malloc(sizeof(t_line))))
 		exit(EXIT_FAILURE);
+	if (ln[0] == '.')
+	{
+		new_ln->num_line = num_ln;
+		new_ln->line = ft_strdup(ln);
+		return (ft_err_msg(a, new_ln, "invalid line"));
+	}
 	if (!(new_ln->line = ft_get_clean_ln(a, ln)))
 		exit(EXIT_FAILURE);
 	new_ln->size = 0;
@@ -208,7 +214,6 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 		if (ft_check_arg(a, name, new_ln, ln + i) == ERROR)
 			return (ERROR);
 	}
-//	ft_printf("%s\n", new_ln->line);
 	ft_lst_add_end((t_lst**)&a->line, (t_lst*)new_ln);
 	ft_fruit(1, name);
 	ft_label(a);

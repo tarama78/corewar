@@ -6,12 +6,11 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/06 18:00:29 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/07 14:05:16 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include "ft_printf.h"
 #include "corewar.h"
 
 static void	init_struct(t_a *data)
@@ -41,6 +40,7 @@ int			main(int argc, char **argv)
 {
 	t_a	data;
 	int	fd;
+	int	ret_parse;
 
 	if (argc == 1)
 	{
@@ -56,7 +56,7 @@ int			main(int argc, char **argv)
 			init_struct(&data);
 			file_name(argv[argc]);
 			data.file_name = argv[argc];
-			if (!ft_parse_file(&data, fd))
+			if ((ret_parse = ft_parse_file(&data, fd)) == 0 || ret_parse == ERROR)
 				ft_printf("failed\n");
 			free_content(&data, 0);
 			close(fd);
