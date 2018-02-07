@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:40:53 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/07 16:54:04 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/07 18:59:51 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int				ft_binary(int file, t_a *data)
 
 	tmp = data->line;
 	cmpt = 0;
-		puts("yo1");
 	ft_putname_magic(file, data);
 	while (tmp != NULL)
 	{
@@ -114,11 +113,9 @@ int				ft_binary(int file, t_a *data)
 		cmpt += 1;
 		if (op_tab[i].octet_type_arg == 1)
 			ft_encoding(file, args, &cmpt);
-		puts("yo2");
 		while (args[++k])
 			ft_handle_args(file, args[k], data->label, &cmpt, i);
 		tmp = tmp->next;
-		puts("yo3");
 	}
 	return (SUCCESS);
 }
