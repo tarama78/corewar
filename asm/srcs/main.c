@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/07 18:48:38 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/07 18:51:40 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_open_files(char *filename, int *fd1, int *fd2)
 	ft_strcat(name2, ".cor");
 	if ((*fd1 = open(filename, O_RDONLY)) == -1)
 		ft_printf("{red}Can't read source file{yellow} %s{eoc}\n", filename);
-	if ((*fd2 = open(name2, O_CREAT | O_RDWR, S_IRWXU)) == -1)
+	if ((*fd2 = open(name2, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU)) == -1)
 		exit(EXIT_FAILURE);
 	free(name2);
 	return (SUCCESS);
