@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:40:53 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/07 15:29:59 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/07 15:40:57 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		ft_handle_args(int file, char *arg, t_label *label, int *cmpt)
 	int i;
 
 	i = 0;
-	if (arg[0] == '%' && arg[1] == ':')
+	if (arg[0] == DIRECT_CHAR && arg[1] == LABEL_CHAR)
 	{
 		printf("adress --> %d\n", label->addr);
 		printf("arg in handle arg --> %s", arg + 2);
@@ -45,11 +45,11 @@ static void		ft_handle_args(int file, char *arg, t_label *label, int *cmpt)
 static int		ft_typepara(char *arg)
 {
 	if (arg[0] == 'r')
-		return (1);
-	else if (arg[0] == '%')
-		return (2);
+		return (REG_CODE);
+	else if (arg[0] == DIRECT_CHAR)
+		return (DIR_CODE);
 	else
-		return (3);
+		return (IND_CODE);
 }
 
 static void		ft_encoding(int file, char **words, int *cmpt)
@@ -72,16 +72,17 @@ static void		ft_encoding(int file, char **words, int *cmpt)
 
 void			ft_putname_magic(int file, t_a *data)
 {
-	int magic = COREWAR_EXEC_MAGIC;
-	char *ptr = (char*)&magic;
+	int magic;
+	char *octet;
 	int i;
 
 	i = 4;
-
+	magic = COREWAR_EXEC_MAGIC;
+	octet = (char*)&magic;
 	while (--i >= 0)
-		ft_putchar_fd(ptr[i], file);
-	write(file, data->name, 128);
-	write(file, data->comment, 2048);
+		ft_putchar_fd(octet[i], file);
+	write(file, data->name, PROG_NAME_LENGTH);
+	write(file, data->comment, COMMENT_LENGTH);
 }
 
 int				ft_binary(int file, t_a *data)
@@ -104,9 +105,9 @@ int				ft_binary(int file, t_a *data)
 		k = -1;
 		i = -1;
 		words = ft_strsplit(tmp->line, ' ');
-		if (ft_strchr(words[0], ':') != NULL)
+		if (ft_strchr(words[0], LABEL_CHAR) != NULL)
 				++j;
-		args = ft_strsplit(words[j], ',');
+		args = ft_strsplit(words[j], SEPARATOR_CHAR);
 		while (++i < 17 && op_tab[i].name != 0
 				&& ft_strcmp(words[j - 1], op_tab[i].name) != 0)
 			;
