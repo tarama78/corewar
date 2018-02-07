@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/06 17:56:55 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/07 14:54:00 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ FILES = main.c\
 		ft_label.c\
 		ft_lst_add_end.c\
 		free_content.c\
+		ft_error.c\
 		op.c
 
 HFILES = includes/corewar.h \

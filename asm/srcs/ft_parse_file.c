@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/07 14:26:22 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/07 14:52:42 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static void	ft_clear_line(char *str)
 		if (str[i] == '\t')
 			str[i] = ' ';
 		else if (str[i] == COMMENT_CHAR)
-			str[i] = '\0';
+			str[i--] = '\0';
 		++i;
 	}
 }

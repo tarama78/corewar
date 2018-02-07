@@ -12,14 +12,14 @@
 /*
 **   ____________________________________________________________
 **   | ft_handle_line.c                                         |
-**   |     ft_err_msg(4 lines)                                  |
 **   |     ft_start_i(13 lines)                                 |
 **   |     ft_get_name(12 lines)                                |
 **   |     ft_get_type(40 lines)                                |
 **   |         MEUUUU too many lines                            |
 **   |     ft_get_size_op(17 lines)                             |
-**   |     ft_check_arg(21 lines)                               |
-**   |     ft_handle_line(23 lines)                             |
+**   |     ft_check_arg(23 lines)                               |
+**   |     ft_get_clean_ln(19 lines)                            |
+**   |     ft_handle_line(24 lines)                             |
 **   | MEUUUU too many functions                                |
 **   ------------------------------------------------------------
 **           __n__n__  /
@@ -31,14 +31,6 @@
 */
 
 #include <corewar.h>
-
-static int	ft_err_msg(t_a *a, t_line *new_ln, char *txt)
-{
-	ft_errprintf("{red}ERROR:{eoc} {yellow}%s.s\n{eoc}"
-			"\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
-			"\t%s\n", a->file_name, new_ln->num_line, txt, new_ln->line);
-	return (ERROR);
-}
 
 static int	ft_start_i(t_a *a, char *ln)
 {
@@ -147,6 +139,8 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 
 	if (!(tmp = ft_clean_char(ln, ' ')))
 		exit(EXIT_FAILURE);
+	if (tmp[0] == '\0' && ft_fruit(1, tmp))
+		return (ft_err_msg(a, new_ln, "invalid line"));
 	if (!(arg = ft_strsplit(tmp, SEPARATOR_CHAR)))
 		exit(EXIT_FAILURE);
 	i = -1;
@@ -196,12 +190,6 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	name = NULL;
 	if (!(new_ln = malloc(sizeof(t_line))))
 		exit(EXIT_FAILURE);
-	if (ln[0] == '.')
-	{
-		new_ln->num_line = num_ln;
-		new_ln->line = ft_strdup(ln);
-		return (ft_err_msg(a, new_ln, "invalid line"));
-	}
 	if (!(new_ln->line = ft_get_clean_ln(a, ln)))
 		exit(EXIT_FAILURE);
 	new_ln->size = 0;
