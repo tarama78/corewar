@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get2arg.c                                       :+:      :+:    :+:   */
+/*   ft_clean_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/19 16:32:32 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/05 17:19:13 by tnicolas         ###   ########.fr       */
+/*   Created: 2018/02/05 17:46:50 by tnicolas          #+#    #+#             */
+/*   Updated: 2018/02/05 17:53:04 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
-**   | ft_get2arg.c                                             |
-**   |     ft_get2arg(6 lines)                                  |
+**   | ft_clean_char.c                                          |
+**   |     ft_clean_char(19 lines)                              |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -23,12 +23,27 @@
 **     |||   |||
 */
 
-int			ft_get2arg(long long arg, int n)
-{
-	int		bit;
+#include <libft.h>
 
-	bit = sizeof(long long) * 4;
-	if (n == 0)
-		return ((int)((arg << bit) >> bit));
-	return ((int)(arg >> bit));
+char		*ft_clean_char(char *s, char c)
+{
+	int		i;
+	int		j;
+	char	*ret;
+
+	i = -1;
+	j = 0;
+	while (s[++i])
+		if (s[i] == c)
+			j++;
+	j = i - j;
+	if (!(ret = malloc(sizeof(char) * (j + 1))))
+		return (NULL);
+	ret[j] = '\0';
+	i = -1;
+	j = -1;
+	while (s[++i])
+		if (s[i] != c)
+			ret[++j] = s[i];
+	return (ret);
 }

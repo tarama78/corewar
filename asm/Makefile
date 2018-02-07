@@ -3,55 +3,108 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bcozic <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/12/10 12:19:55 by bcozic            #+#    #+#              #
-#    Updated: 2018/02/06 10:37:21 by bcozic           ###   ########.fr        #
+#    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
+#    Updated: 2018/02/07 15:31:30 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-ASM = asm
+NAME = asm
 
-CFLAGS = -Wall -Wextra
+FILES = main.c\
+		ft_parse_file.c\
+		ft_handle_line.c\
+		ft_label.c\
+		ft_lst_add_end.c\
+		free_content.c\
+		ft_error.c\
+		op.c
 
-SRC = main.c
+HFILES = includes/corewar.h \
+		 includes/op.h \
+		 $(LIBFT_DIR)includes/libft.h \
 
-OBJ = $(SRC:.c=.o)
+LIBFT_DIR = ../libft/
+LIBFT = $(LIBFT_DIR)libft.a
+LIBFT_LIB = -L $(LIBFT_DIR) -lft
 
-SOBJ = $(addprefix obj/, $(OBJ))
+CC = gcc
+CFLAGS = -Wall -Wextra -g#########Werror
 
-LIBFT = ../libft/libft.a
+OBJS_DIR = objs/
+SRCS_DIR = srcs/
 
-all : obj $(LIBFT) $(ASM)
+INC_DIR =	includes/ \
+			$(LIBFT_DIR)includes/ \
 
-obj :
-	@mkdir obj
+INC := $(addprefix -I , $(INC_DIR))
+SRCS := $(addprefix $(SRCS_DIR), $(FILES))
+OBJS := $(addprefix $(OBJS_DIR), $(FILES:.c=.o))
 
-$(LIBFT) :
-	@make -C ../libft
+NORMAL = "\x1B[0m"
+RED = "\x1B[31m"
+GREEN = "\x1B[32m"
+YELLOW = "\x1B[33m"
+BLUE = "\x1B[34m"
+MAGENTA = "\x1B[35m"
+CYAN = "\x1B[36m"
+WHITE = "\x1B[37m"
+BOLD = "\e[1m"
+LIGHT = "\e[2m"
+ITALIC = "\e[3m"
+ULINE = "\e[4m"
 
-obj/%.o: srcs/%.c
-	@gcc $(CFLAGS) -c $< -o $@ -I ../libft/includes -I includes
+ARG = "ex.s"
 
-$(ASM) : $(SOBJ)
-	@gcc -o $(ASM) $(SOBJ) $(LIBFT)
-	@echo "ASM OK"
+START = @printf $(GREEN)$(BOLD)"ASM\n--------------------\n"$(NORMAL)
+END = @printf $(GREEN)$(BOLD)"--------------------\n"$(NORMAL)
 
-clean : clean_libft
-	@rm -f $(SOBJ)
-	@echo "Obj deleted"
+all:
+	@make -C $(LIBFT_DIR)
+	$(START)
+	@make $(NAME)
+	$(END)
 
-clean_libft :
-	@make -C ../libft clean
+$(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT)
+	@printf $(CYAN)"-> create program : $(NAME)\n"$(NORMAL)
+	@$(CC) -o $(NAME) $(OBJS) $(INC) $(CFLAGS) $(LIBFT_LIB)
 
-fclean_libft : clean_libft
-	@rm -f $(LIBFT)
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(HFILES)
+	@printf $(YELLOW)"-> $<\n"$(NORMAL)
+	@$(CC) -c $(INC) $< -o $@ $(CFLAGS)
 
-fclean : clean
-	@rm -f $(LIBFT)
-	@rm -f $(ASM)
-	@echo "exe deleted"
+$(OBJS_DIR):
+	@mkdir -p $(dir $(OBJS))
 
-re : fclean all
-	
-.PHONY : all clean clean_libft fclean_libft fclean re
+clean:
+	@make -C $(LIBFT_DIR) clean
+	$(START)
+	@printf $(RED)"-x remove .o files\n"$(NORMAL)
+	@rm -rf $(OBJS_DIR)
+	$(END)
+
+fclean: clean
+	@make -C $(LIBFT_DIR) cleanlib
+	$(START)
+	@printf $(RED)"-x remove $(NAME)\n"$(NORMAL)
+	@rm -f $(NAME)
+	$(END)
+
+re: fclean
+	@make
+
+exec:
+	@clear
+	@make
+	@printf $(MAGENTA)$(BOLD)"EXEC ASM\n--------------------\n"$(NORMAL)
+	@printf $(ARG)":\n"$(BLUE)$(BOLD)
+	@cat $(ARG)
+	@printf $(NORMAL)"\nresult:\n"
+	@./$(NAME) $(ARG)
+	@printf $(MAGENTA)$(BOLD)"--------------------\n"$(NORMAL)
+
+open:
+	@vim +Line $(SRCS) $(HFILES) Makefile
+
+.PHONY: all clean fclean re exec open
