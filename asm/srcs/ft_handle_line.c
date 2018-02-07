@@ -139,7 +139,7 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 
 	if (!(tmp = ft_clean_char(ln, ' ')))
 		exit(EXIT_FAILURE);
-	if (tmp[0] == '\0' && ft_fruit(1, tmp))
+	if ((tmp[0] == '\0' || name[0] == '\0') && ft_fruit(1, tmp))
 		return (ft_err_msg(a, new_ln, "invalid line"));
 	if (!(arg = ft_strsplit(tmp, SEPARATOR_CHAR)))
 		exit(EXIT_FAILURE);
@@ -157,7 +157,7 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	return (SUCCESS);
 }
 
-static char	*ft_get_clean_ln(t_a *a, char *ln)
+static char	*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln)
 {
 	int		i;
 	char	*ret;
@@ -168,9 +168,15 @@ static char	*ft_get_clean_ln(t_a *a, char *ln)
 	i = ft_start_i(a, ln);
 	if (ln[i] != '\0')
 	{
-		while (ft_strchr(LABEL_CHARS, ln[++i]))
+		while (ft_strchr(LABEL_CHARS, ln[++i]) && ln[i])
 			;
 		i++;
+		if (ln[i - 1] == '\0')
+		{
+			new_ln->line = ln;
+			ft_err_msg(a, new_ln, "invalid line");
+			return (NULL);
+		}
 		if (!(tmp = ft_clean_char(ln + i, ' ')))
 			exit(EXIT_FAILURE);
 		ft_memcpy(ret + i, tmp, ft_strlen(tmp));
@@ -190,10 +196,10 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	name = NULL;
 	if (!(new_ln = malloc(sizeof(t_line))))
 		exit(EXIT_FAILURE);
-	if (!(new_ln->line = ft_get_clean_ln(a, ln)))
-		exit(EXIT_FAILURE);
 	new_ln->size = 0;
 	new_ln->num_line = num_ln;
+	if (!(new_ln->line = ft_get_clean_ln(a, ln, new_ln)))
+		return (ERROR);
 	i = ft_start_i(a, ln);
 	if (i == 0 || ln[i] != '\0')
 	{

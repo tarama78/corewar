@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 14:35:14 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/07 14:37:34 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:25:30 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@
 
 int			ft_err_msg(t_a *a, t_line *new_ln, char *txt)
 {
-	ft_errprintf("{red}ERROR:{eoc} {yellow}%s.s\n{eoc}"
-			"\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
-			"\t%s\n", a->file_name, new_ln->num_line, txt, new_ln->line);
+	ft_errprintf("\t{red}{bold}ERROR:{eoc} {yellow}%s.s\n{eoc}"
+			"\t\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
+			"\t\t%s\n", a->file_name, new_ln->num_line, txt, new_ln->line);
 	return (ERROR);
 }
 
 int			ft_warning_msg(t_a *a, t_line *new_ln, char *txt)
 {
-	ft_errprintf("{MAGENTA}WARNING:{eoc} {yellow}%s.s\n{eoc}"
-			"\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
-			"\t%s\n", a->file_name, new_ln->num_line, txt, new_ln->line);
+	ft_errprintf("\t{magenta}{bold}WARNING:{eoc} {yellow}%s.s\n{eoc}"
+			"\t\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
+			"\t\t%s\n", a->file_name, new_ln->num_line, txt, new_ln->line);
 	return (SUCCESS);
 }
