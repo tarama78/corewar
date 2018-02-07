@@ -61,6 +61,7 @@ typedef struct		s_a
 	t_label			*label;
 	int				nb_label;
 	int				cmpt;
+	int				size;
 }					t_a;
 
 typedef struct		s_lst
