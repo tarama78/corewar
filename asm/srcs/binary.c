@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/08 14:38:08 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/08 16:46:05 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		ft_handle_args(int file, char *arg, t_a *data, int index_name)
 	else
 	{
 		i = (arg[0] == '%' ? DIR_SIZE : IND_SIZE);
-		i = (op_tab[index_name].carry == 1 ? 2 : i);
+		i = (op_tab[index_name].size_change == 1 ? 2 : i);
 		if (arg[0] == '%' && arg[1] == ':')
 		{
 			value = ft_label_address(arg, data->label, 1) - data->cmpt;
