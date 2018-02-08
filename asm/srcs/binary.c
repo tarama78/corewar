@@ -6,13 +6,12 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/08 14:35:56 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/08 14:38:08 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <corewar.h>
 #include <stdio.h>
-
 
 static int		ft_label_address(char *label, t_label *tab_label, int dir)
 {
@@ -21,15 +20,14 @@ static int		ft_label_address(char *label, t_label *tab_label, int dir)
 	i = -1;
 	while (ft_strequ(label + ((dir == 1) ? 2 : 1), tab_label[++i].name) != 1)
 		;
-//	printf("label name : %s, adress renvoye --> %d\n",tab_label[i].name, tab_label[i].addr);
 	return (tab_label[i].addr);
 }
 
 static void		ft_handle_args(int file, char *arg, t_a *data, int index_name)
 {
-	char *octet;
-	int i;
-	int value;
+	char	*octet;
+	int		i;
+	int		value;
 
 	if (arg[0] == 'r')
 		ft_putchar_fd((char)ft_atoi(arg + 1), file);
@@ -40,7 +38,6 @@ static void		ft_handle_args(int file, char *arg, t_a *data, int index_name)
 		if (arg[0] == '%' && arg[1] == ':')
 		{
 			value = ft_label_address(arg, data->label, 1) - data->cmpt;
-//		printf("valeur %d, addresse %d , cpmt %d", value, data->label[i].addr, data->cmpt);
 		}
 		else if (arg[0] == ':')
 			value = ft_label_address(arg, data->label, 0) - data->cmpt;
@@ -83,9 +80,9 @@ static void		ft_encoding(int file, char **words)
 
 void			ft_putname_magic(int file, t_a *data)
 {
-	int magic;
-	char *octet;
-	int i;
+	int		magic;
+	char	*octet;
+	int		i;
 
 	i = 4;
 	magic = COREWAR_EXEC_MAGIC;
@@ -104,12 +101,12 @@ void			ft_putname_magic(int file, t_a *data)
 
 int				ft_binary(int file, t_a *data)
 {
-	t_line *tmp;
-	char **words;
-	char **args;
-	int i;
-	int j;
-	int k;
+	t_line	*tmp;
+	char	**words;
+	char	**args;
+	int		i;
+	int		j;
+	int		k;
 
 	tmp = data->line;
 	data->cmpt = 0;
@@ -121,7 +118,7 @@ int				ft_binary(int file, t_a *data)
 		i = -1;
 		words = ft_strsplit(tmp->line, ' ');
 		if (ft_strchr(words[0], LABEL_CHAR) != NULL)
-				++j;
+			++j;
 		if (words[1] == NULL)
 		{
 			tmp = tmp->next;
