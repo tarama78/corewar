@@ -44,6 +44,7 @@ static int	ft_start_i(t_a *a, char *ln)
 		while (ln[++i] == ' ' || ln[i] == '\t')
 			;
 		a->nb_label++;
+//		printf("nblabel %d line--> %s\n", a->nb_label, ln);
 		return (i + ft_start_i(a, ln + i));
 	}
 	return (0);
@@ -80,8 +81,12 @@ static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
 			if (i >= 1 && i <= REG_NUMBER)
 				return (T_REG);
 			else
+			{
+				a->nb_label -=1;
 				return (ft_err_msg(a, new_ln, "reg number does not exist"));
+			}
 		}
+		a->nb_label -=1;
 		return (ft_err_msg(a, new_ln, "syntax error in reg"));
 	}
 	else
@@ -93,6 +98,7 @@ static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
 				;
 			if (arg[i] == '\0')
 				return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
+			a->nb_label -=1;
 			return (ft_err_msg(a, new_ln, "syntax error in label"));
 		}
 		else if (ft_isdigit(arg[i]) || arg[i] == '-')
@@ -102,10 +108,13 @@ static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
 				;
 			if (arg[i] == '\0')
 				return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
+			a->nb_label -=1;
 			return (ft_err_msg(a, new_ln, "invalid parameter"));
 		}
+			a->nb_label -=1;
 		return (ft_err_msg(a, new_ln, "invalid parameter"));
 	}
+	a->nb_label -=1;
 	return (ft_err_msg(a, new_ln, "syntax error"));
 }
 
@@ -163,10 +172,13 @@ static char	*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln)
 	int		i;
 	char	*ret;
 	char	*tmp;
+	int		lb;
 
 	if (!(ret = ft_strnew(sizeof(char) * ft_strlen(ln))))
 		exit(EXIT_FAILURE);
+	lb = a->nb_label;
 	i = ft_start_i(a, ln);
+	a->nb_label = lb;
 	if (ln[i] != '\0')
 	{
 		while (ft_strchr(LABEL_CHARS, ln[++i]) && ln[i])
@@ -211,6 +223,7 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	}
 	ft_lst_add_end((t_lst**)&a->line, (t_lst*)new_ln);
 	ft_fruit(1, name);
+//	printf("nb_labeli %d\n", a->nb_label);
 	ft_label(a);
 	return (SUCCESS);
 }
