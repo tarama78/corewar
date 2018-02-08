@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:21:37 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/07 18:55:39 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/07 19:37:38 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ void		ft_label(t_a *data)
 		addr += current->size;
 		current = current->next;
 	}
-	data->size = addr;
+	data->prog_size = addr;
 }

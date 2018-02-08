@@ -1,69 +1,67 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   binary.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/05 17:40:53 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/06 18:50:59 by ynacache         ###   ########.fr       */
+/*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
+/*   Updated: 2018/02/08 16:46:05 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/corewar.h"
-#include "../libft/includes/ft_printf.h"
+#include <corewar.h>
 #include <stdio.h>
 
-t_op    op_tab[17] =
-{
-	{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
-	{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0},
-	{"st", 2, {T_REG, T_IND | T_REG}, 3, 5, "store", 1, 0},
-	{"add", 3, {T_REG, T_REG, T_REG}, 4, 10, "addition", 1, 0},
-	{"sub", 3, {T_REG, T_REG, T_REG}, 5, 10, "soustraction", 1, 0},
-	{"and", 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 6, 6,
-		"et (and  r1, r2, r3   r1&r2 -> r3", 1, 0},
-	{"or", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 7, 6,
-		"ou  (or   r1, r2, r3   r1 | r2 -> r3", 1, 0},
-	{"xor", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 8, 6,
-		"ou (xor  r1, r2, r3   r1^r2 -> r3", 1, 0},
-	{"zjmp", 1, {T_DIR}, 9, 20, "jump if zero", 0, 1},
-	{"ldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 10, 25,
-		"load index", 1, 1},
-	{"sti", 3, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, 11, 25,
-		"store index", 1, 1},
-	{"fork", 1, {T_DIR}, 12, 800, "fork", 0, 1},
-	{"lld", 2, {T_DIR | T_IND, T_REG}, 13, 10, "long load", 1, 0},
-	{"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 14, 50,
-		"long load index", 1, 1},
-	{"lfork", 1, {T_DIR}, 15, 1000, "long fork", 0, 1},
-	{"aff", 1, {T_REG}, 16, 2, "aff", 1, 0},
-	{0, 0, {0}, 0, 0, 0, 0, 0}
-};
-
-void	ft_handle_args(int file, char *arg)
+static int		ft_label_address(char *label, t_label *tab_label, int dir)
 {
 	int i;
 
-	i = 0;
-	if (arg[0] == '%' && arg[1] == ':')
-		ft_dprintf(file, "%s", arg + 2);
-	else
-		ft_dprintf(file, "%s", arg + 1);
-
+	i = -1;
+	while (ft_strequ(label + ((dir == 1) ? 2 : 1), tab_label[++i].name) != 1)
+		;
+	return (tab_label[i].addr);
 }
 
-int		ft_typepara(char *arg)
+static void		ft_handle_args(int file, char *arg, t_a *data, int index_name)
+{
+	char	*octet;
+	int		i;
+	int		value;
+
+	if (arg[0] == 'r')
+		ft_putchar_fd((char)ft_atoi(arg + 1), file);
+	else
+	{
+		i = (arg[0] == '%' ? DIR_SIZE : IND_SIZE);
+		i = (op_tab[index_name].size_change == 1 ? 2 : i);
+		if (arg[0] == '%' && arg[1] == ':')
+		{
+			value = ft_label_address(arg, data->label, 1) - data->cmpt;
+		}
+		else if (arg[0] == ':')
+			value = ft_label_address(arg, data->label, 0) - data->cmpt;
+		else if (arg[0] == '%')
+			value = ft_atoi(arg + 1);
+		else
+			value = ft_atoi(arg);
+		octet = (char*)&value;
+		while (--i >= 0)
+			ft_putchar_fd(octet[i], file);
+	}
+}
+
+static int		ft_typepara(char *arg)
 {
 	if (arg[0] == 'r')
-		return (1);
-	else if (arg[0] == '%')
-		return (2);
+		return (REG_CODE);
+	else if (arg[0] == DIRECT_CHAR)
+		return (DIR_CODE);
 	else
-		return (3);
+		return (IND_CODE);
 }
 
-void	ft_encoding(int file, int nb_arg, char **words)
+static void		ft_encoding(int file, char **words)
 {
 	int				i;
 	unsigned char	octet;
@@ -77,36 +75,66 @@ void	ft_encoding(int file, int nb_arg, char **words)
 		decal -= 2;
 		octet += ft_typepara(words[i]) << decal;
 	}
+	ft_dprintf(file, "%c", octet);
 }
 
-int		ft_binaire(int file, t_a *data, t_line *tab_line)
+void			ft_putname_magic(int file, t_a *data)
 {
-	t_line *tmp;
-	char **words;
-	char **args;
-	int i;
-	int j;
-	int k;
+	int		magic;
+	char	*octet;
+	int		i;
 
-	tmp = tab_line;
-	i = -1;
+	i = 4;
+	magic = COREWAR_EXEC_MAGIC;
+	octet = (char*)&magic;
+	while (--i >= 0)
+		ft_putchar_fd(octet[i], file);
+	write(file, data->name, PROG_NAME_LENGTH);
+	write(file, "\0\0\0\0", 4);
+	i = 4;
+	octet = (char*)&data->prog_size;
+	while (--i >= 0)
+		ft_putchar_fd(octet[i], file);
+	write(file, data->comment, COMMENT_LENGTH);
+	write(file, "\0\0\0\0", 4);
+}
+
+int				ft_binary(int file, t_a *data)
+{
+	t_line	*tmp;
+	char	**words;
+	char	**args;
+	int		i;
+	int		j;
+	int		k;
+
+	tmp = data->line;
+	data->cmpt = 0;
+	ft_putname_magic(file, data);
 	while (tmp != NULL)
 	{
 		j = 1;
 		k = -1;
+		i = -1;
 		words = ft_strsplit(tmp->line, ' ');
-		if (ft_strchr(words[0], ':') != NULL)
-				++j;
-		args = ft_strsplit(words[j], ',');
-		while (i < 17 && op_tab[++i].name != 0
+		if (ft_strchr(words[0], LABEL_CHAR) != NULL)
+			++j;
+		if (words[1] == NULL)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
+		args = ft_strsplit(words[j], SEPARATOR_CHAR);
+		while (++i < 17 && op_tab[i].name != 0
 				&& ft_strcmp(words[j - 1], op_tab[i].name) != 0)
 			;
-		ft_dprintf(file, "%s", ft_itoa(op_tab[i].opcode));
-		if (op_tab[i].ok_codage == 1)
-			ft_encoding(file, op_tab[i].nb_arg, args);
+		ft_dprintf(file, "%c", (char)op_tab[i].opcode);
+		if (op_tab[i].octet_type_arg == 1)
+			ft_encoding(file, args);
 		while (args[++k])
-			ft_handle_args(file, args[k]);
+			ft_handle_args(file, args[k], data, i);
+		data->cmpt += tmp->size;
 		tmp = tmp->next;
 	}
-	return (1);
+	return (SUCCESS);
 }

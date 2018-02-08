@@ -5,21 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/06 13:28:19 by tnicolas          #+#    #+#             */
+/*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
+/*   Updated: 2018/02/08 16:46:16 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
 **   | ft_handle_line.c                                         |
-**   |     ft_start_i(13 lines)                                 |
+**   |     ft_start_i(14 lines)                                 |
 **   |     ft_get_name(12 lines)                                |
-**   |     ft_get_type(40 lines)                                |
-**   |         MEUUUU too many lines                            |
+**   |     ft_get_type_dir_ind(24 lines)                        |
+**   |     ft_get_type(25 lines)                                |
 **   |     ft_get_size_op(17 lines)                             |
 **   |     ft_check_arg(23 lines)                               |
-**   |     ft_get_clean_ln(19 lines)                            |
-**   |     ft_handle_line(24 lines)                             |
+**   |     ft_get_clean_ln(25 lines)                            |
+**   |     ft_handle_line(23 lines)                             |
 **   | MEUUUU too many functions                                |
 **   ------------------------------------------------------------
 **           __n__n__  /
@@ -32,7 +33,7 @@
 
 #include <corewar.h>
 
-static int	ft_start_i(t_a *a, char *ln)
+static int	ft_start_i(t_a *a, char *ln, int label)
 {
 	int		i;
 
@@ -43,8 +44,9 @@ static int	ft_start_i(t_a *a, char *ln)
 	{
 		while (ln[++i] == ' ' || ln[i] == '\t')
 			;
-		a->nb_label++;
-		return (i + ft_start_i(a, ln + i));
+		if (label)
+			a->nb_label++;
+		return (i + ft_start_i(a, ln + i, label));
 	}
 	return (0);
 }
@@ -65,6 +67,34 @@ static char	*ft_get_name(char *ln)
 	return (ret);
 }
 
+static int	ft_get_type_dir_ind(t_a *a, char *arg, t_line *new_ln)
+{
+	int		i;
+
+	i = (arg[0] == DIRECT_CHAR) ? 1 : 0;
+	if (arg[i] == LABEL_CHAR)
+	{
+		while (ft_strchr(LABEL_CHARS, arg[++i]) && arg[i])
+			;
+		if (arg[i] == '\0')
+			return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
+		--a->nb_label;
+		return (ft_err_msg(a, new_ln, "syntax error in label"));
+	}
+	else if (ft_isdigit(arg[i]) || arg[i] == '-')
+	{
+		i = (arg[i] == '-') ? i : i - 1;
+		while (ft_isdigit(arg[++i]))
+			;
+		if (arg[i] == '\0')
+			return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
+		--a->nb_label;
+		return (ft_err_msg(a, new_ln, "invalid parameter"));
+	}
+	--a->nb_label;
+	return (ft_err_msg(a, new_ln, "invalid parameter"));
+}
+
 static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
 {
 	int		i;
@@ -80,32 +110,17 @@ static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
 			if (i >= 1 && i <= REG_NUMBER)
 				return (T_REG);
 			else
+			{
+				--a->nb_label;
 				return (ft_err_msg(a, new_ln, "reg number does not exist"));
+			}
 		}
+		--a->nb_label;
 		return (ft_err_msg(a, new_ln, "syntax error in reg"));
 	}
 	else
-	{
-		i = (arg[0] == DIRECT_CHAR) ? 1 : 0;
-		if (arg[i] == LABEL_CHAR)
-		{
-			while (ft_strchr(LABEL_CHARS, arg[++i]) && arg[i])
-				;
-			if (arg[i] == '\0')
-				return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
-			return (ft_err_msg(a, new_ln, "syntax error in label"));
-		}
-		else if (ft_isdigit(arg[i]) || arg[i] == '-')
-		{
-			i = (arg[i] == '-') ? i : i - 1;
-			while (ft_isdigit(arg[++i]))
-				;
-			if (arg[i] == '\0')
-				return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
-			return (ft_err_msg(a, new_ln, "invalid parameter"));
-		}
-		return (ft_err_msg(a, new_ln, "invalid parameter"));
-	}
+		return (ft_get_type_dir_ind(a, arg, new_ln));
+	--a->nb_label;
 	return (ft_err_msg(a, new_ln, "syntax error"));
 }
 
@@ -119,13 +134,13 @@ static int	ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
 	i = -1;
 	while (++i < op->nb_arg)
 	{
-//		ft_printf("\t%d -> %s (%d)\n", op->type_arg[i], arg[i], ft_get_type(a, arg[i], num_ln));//dd
 		if ((type = ft_get_type(a, arg[i], new_ln)) == ERROR)
 			return (ERROR);
 		if (!(op->type_arg[i] & type))
 			return (ft_err_msg(a, new_ln, "invalid parameter type"));
 		sz += ((type & T_REG) ? 1 : 0) + ((type & T_DIR) ? DIR_SIZE : 0)
-			+ (( type & IND_SIZE) ? 2 : 0);
+			+ ((type & T_IND) ? IND_SIZE : 0);
+		sz = (type & T_DIR && op->size_change == 1) ? sz - 2 : sz;
 	}
 	return (sz);
 }
@@ -165,7 +180,7 @@ static char	*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln)
 
 	if (!(ret = ft_strnew(sizeof(char) * ft_strlen(ln))))
 		exit(EXIT_FAILURE);
-	i = ft_start_i(a, ln);
+	i = ft_start_i(a, ln, 0);
 	if (ln[i] != '\0')
 	{
 		while (ft_strchr(LABEL_CHARS, ln[++i]) && ln[i])
@@ -192,7 +207,6 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	int		i;
 	t_line	*new_ln;
 
-//	ft_printf("{yellow}%s: %s({bold}\"%s\"{eoc}{yellow}){eoc}\n", __FILE__, __func__, ln);//dd
 	name = NULL;
 	if (!(new_ln = malloc(sizeof(t_line))))
 		exit(EXIT_FAILURE);
@@ -200,7 +214,7 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	new_ln->num_line = num_ln;
 	if (!(new_ln->line = ft_get_clean_ln(a, ln, new_ln)))
 		return (ERROR);
-	i = ft_start_i(a, ln);
+	i = ft_start_i(a, ln, 1);
 	if (i == 0 || ln[i] != '\0')
 	{
 		name = ft_get_name(ln + i);

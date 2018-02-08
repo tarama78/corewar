@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/07 18:55:53 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/08 16:45:13 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct		s_op
 	int				nb_cycle;
 	char			*descrition;
 	int				octet_type_arg;
-	int				carry;
+	int				size_change;
 }					t_op;
 
 extern t_op			op_tab[17];
@@ -59,7 +59,8 @@ typedef struct		s_a
 	t_line			*line;
 	t_label			*label;
 	int				nb_label;
-	int				size;
+	int				cmpt;
+	int				prog_size;
 }					t_a;
 
 typedef struct		s_lst
@@ -74,5 +75,5 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln);
 void		ft_label(t_a *data);
 int			free_content(t_a *data, char *error);
 int			ft_parse_file(t_a *a, int fd);
-
+int			ft_binary(int file, t_a *data);
 #endif
