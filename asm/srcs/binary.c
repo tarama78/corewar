@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/08 12:06:59 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 14:35:56 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int		ft_typepara(char *arg)
 		return (IND_CODE);
 }
 
-static void		ft_encoding(int file, char **words, t_a *data)
+static void		ft_encoding(int file, char **words)
 {
 	int				i;
 	unsigned char	octet;
@@ -133,7 +133,7 @@ int				ft_binary(int file, t_a *data)
 			;
 		ft_dprintf(file, "%c", (char)op_tab[i].opcode);
 		if (op_tab[i].octet_type_arg == 1)
-			ft_encoding(file, args, data);
+			ft_encoding(file, args);
 		while (args[++k])
 			ft_handle_args(file, args[k], data, i);
 		data->cmpt += tmp->size;
