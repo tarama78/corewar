@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 22:20:49 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/08 17:53:13 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 19:18:27 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **   |     ft_checkwidth2(18 lines)                             |
 **   |     ft_checkwidth(20 lines)                              |
 **   |     ft_checkprecision(19 lines)                          |
-**   |     ft_check(22 lines)                                   |
+**   |     ft_check(18 lines)                                   |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -127,18 +127,18 @@ int			ft_check(char **ret, char *str, va_list ap, t_arg *arg)
 	if (str != NULL)
 		free(arg->str);
 	arg->str = str;
-	if (ft_cleanstars(&str, ap) == ERROR && ft_fruit(1, &str))
+	if (ft_cleanstars(&str, ap) == ERROR && ft_free(1, str))
 		return (ERROR);
-	if (ft_checkflag(arg, str) == ERROR && ft_fruit(1, &str))
+	if (ft_checkflag(arg, str) == ERROR && ft_free(1, str))
 		return (ERROR);
-	if (ft_checkwidth(arg, str) == ERROR && ft_fruit(1, &str))
+	if (ft_checkwidth(arg, str) == ERROR && ft_free(1, str))
 		return (ERROR);
-	if (ft_checkprecision(arg, str) == ERROR && ft_fruit(1, &str))
+	if (ft_checkprecision(arg, str) == ERROR && ft_free(1, str))
 		return (ERROR);
-	if (!(arg->str = ft_strdup(str)) && ft_fruit(2, &str, &arg->str))
+	if (!(arg->str = ft_strdup(str)) && ft_free(2, str, arg->str))
 		return (ERROR);
-	if (ft_checkconv(ret, arg, ap) == ERROR && ft_fruit(2, &str, &arg->str))
+	if (ft_checkconv(ret, arg, ap) == ERROR && ft_free(2, str, arg->str))
 		return (ERROR);
-	ft_fruit(2, &arg->str, &str);
+	ft_free(2, arg->str, str);
 	return (SUCCESS);
 }

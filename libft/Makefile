@@ -6,7 +6,7 @@
 #    By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 09:45:36 by tnicolas          #+#    #+#              #
-#    Updated: 2018/02/08 17:43:15 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/08 19:15:50 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,6 +87,7 @@ FILES = ft_strlen.c \
 		bonus/ft_ltoa.c \
 		bonus/ft_lltoa.c \
 		bonus/ft_abs.c \
+		bonus/ft_free.c \
 		bonus/ft_fruit.c \
 		bonus/ft_strndup.c \
 		bonus/ft_power.c \

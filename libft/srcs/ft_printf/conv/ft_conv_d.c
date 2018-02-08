@@ -6,7 +6,7 @@
 /*   By: pmilan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 17:44:51 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/08 17:54:30 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 19:18:28 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	ft_width(char **new_ret, char **new_nb, t_arg *arg)
 				ft_strncpy((*new_ret) + sz - sz_total, *new_nb, sz_total);
 			else
 				ft_strncpy(*new_ret, *new_nb, sz_total);
-		else if (ft_fruit(1, new_ret) && !(*new_ret = ft_strdup(*new_nb)))
+		else if (ft_free(1, *new_ret) && !(*new_ret = ft_strdup(*new_nb)))
 			return (ERROR);
 	}
 	return (SUCCESS);
@@ -132,12 +132,12 @@ int			ft_conv_d(char **ret, t_arg *arg)
 			return (ERROR);
 	}
 	if (ft_width(&new_ret, &new_nb, arg) == ERROR &&
-			ft_fruit(2, &new_ret, &new_nb))
+			ft_free(2, new_ret, new_nb))
 		return (ERROR);
 	free(new_nb);
 	sz = ft_strlen(new_ret);
 	if (!(*ret = ft_strfreejoin(*ret, new_ret, sz, arg)) &&
-			ft_fruit(1, &new_ret))
+			ft_free(1, new_ret))
 		return (ERROR);
 	arg->cmpt += sz;
 	free(new_ret);

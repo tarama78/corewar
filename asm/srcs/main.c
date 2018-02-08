@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/08 18:01:32 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 19:06:52 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ static int	ft_compile_file(t_a *data, int fd, int fd_2, char *argvi)
 	if (ft_parse_file(data, fd) == ERROR)
 	{
 		ft_printf("{red}{bold}compilation failed: {eoc}"
-				"{yellow}%s.s{eoc}\n", data->file_name);
+				"{yellow}%s.s{eoc}\n", argvi);
 		ret = EXIT_FAILURE;
 	}
 	else
 	{
 		ft_binary(fd_2, data);
 		ft_printf("{green}{bold}compilation success: {eoc}{yellow}%s"
-				".cor{eoc}\n", data->file_name);
+				".cor{eoc}\n", argvi);
 	}
 	free_content(data, 0);
 	close(fd);
