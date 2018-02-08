@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/08 16:46:16 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 17:14:04 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	ft_get_type_dir_ind(t_a *a, char *arg, t_line *new_ln)
 		if (arg[i] == '\0')
 			return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
 		--a->nb_label;
-		return (ft_err_msg(a, new_ln, "syntax error in label"));
+		return (ft_err_msg(a, new_ln, "syntax error in label", 0));
 	}
 	else if (ft_isdigit(arg[i]) || arg[i] == '-')
 	{
@@ -89,10 +89,10 @@ static int	ft_get_type_dir_ind(t_a *a, char *arg, t_line *new_ln)
 		if (arg[i] == '\0')
 			return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
 		--a->nb_label;
-		return (ft_err_msg(a, new_ln, "invalid parameter"));
+		return (ft_err_msg(a, new_ln, "invalid parameter", 0));
 	}
 	--a->nb_label;
-	return (ft_err_msg(a, new_ln, "invalid parameter"));
+	return (ft_err_msg(a, new_ln, "invalid parameter", 0));
 }
 
 static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
@@ -112,16 +112,16 @@ static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
 			else
 			{
 				--a->nb_label;
-				return (ft_err_msg(a, new_ln, "reg number does not exist"));
+				return (ft_err_msg(a, new_ln, "reg number does not exist", 0));
 			}
 		}
 		--a->nb_label;
-		return (ft_err_msg(a, new_ln, "syntax error in reg"));
+		return (ft_err_msg(a, new_ln, "syntax error in reg", 0));
 	}
 	else
 		return (ft_get_type_dir_ind(a, arg, new_ln));
 	--a->nb_label;
-	return (ft_err_msg(a, new_ln, "syntax error"));
+	return (ft_err_msg(a, new_ln, "syntax error", 0));
 }
 
 static int	ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
@@ -137,7 +137,7 @@ static int	ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
 		if ((type = ft_get_type(a, arg[i], new_ln)) == ERROR)
 			return (ERROR);
 		if (!(op->type_arg[i] & type))
-			return (ft_err_msg(a, new_ln, "invalid parameter type"));
+			return (ft_err_msg(a, new_ln, "invalid parameter type", 0));
 		sz += ((type & T_REG) ? 1 : 0) + ((type & T_DIR) ? DIR_SIZE : 0)
 			+ ((type & T_IND) ? IND_SIZE : 0);
 		sz = (type & T_DIR && op->size_change == 1) ? sz - 2 : sz;
@@ -155,7 +155,7 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	if (!(tmp = ft_clean_char(ln, ' ')))
 		exit(EXIT_FAILURE);
 	if ((tmp[0] == '\0' || name[0] == '\0') && ft_fruit(1, tmp))
-		return (ft_err_msg(a, new_ln, "invalid line"));
+		return (ft_err_msg(a, new_ln, "invalid line", 0));
 	if (!(arg = ft_strsplit(tmp, SEPARATOR_CHAR)))
 		exit(EXIT_FAILURE);
 	i = -1;
@@ -189,7 +189,7 @@ static char	*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln)
 		if (ln[i - 1] == '\0')
 		{
 			new_ln->line = ln;
-			ft_err_msg(a, new_ln, "invalid line");
+			ft_err_msg(a, new_ln, "invalid line", 0);
 			return (NULL);
 		}
 		if (!(tmp = ft_clean_char(ln + i, ' ')))
