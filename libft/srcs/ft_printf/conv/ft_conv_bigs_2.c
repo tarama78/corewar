@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:11:43 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/14 13:19:06 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 17:54:05 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	ft_strcpy_custom_bigs(char **str, t_arg *arg, wchar_t *x,
 	{
 		arg->arg.c = *x;
 		if (arg->preci > 0 && arg->preci >= ft_strlenw_bigs(*x))
-			if (ft_add_conv_bigc(&tmp, arg) == ERROR && ft_fruit(1, tmp))
+			if (ft_add_conv_bigc(&tmp, arg) == ERROR && ft_fruit(1, &tmp))
 				return (ERROR);
 		arg->preci -= ft_strlenw_bigs(*x);
 		x++;

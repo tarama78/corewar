@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 18:20:12 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/14 13:19:07 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 17:55:43 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static char	*ft_decalage_exposant(char *s, int exposant, t_arg *arg)
 		return (NULL);
 	ft_precision_f(cpy, arg->preci);
 	cpy = ft_fill_rest_e(cpy, exposant, arg->preci, arg);
-	if (ft_fruit(1, s) && !(s = ft_strdup(cpy)))
+	if (ft_fruit(1, &s) && !(s = ft_strdup(cpy)))
 		return (NULL);
 	free(cpy);
 	return (s);

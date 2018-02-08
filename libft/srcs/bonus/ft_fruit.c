@@ -6,14 +6,14 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 11:45:25 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/29 12:38:52 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 17:51:50 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
 **   | ft_fruit.c                                               |
-**   |     ft_fruit(8 lines)                                    |
+**   |     ft_fruit(12 lines)                                   |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -28,14 +28,15 @@
 
 int		ft_fruit(size_t n, ...)
 {
-	void	*del;
+	void	**del;
 	va_list	ap;
 
 	va_start(ap, n);
 	while (n-- > 0)
 	{
-		free((del = va_arg(ap, void *)));
-		del = NULL;
+		del = va_arg(ap, void **);
+		free(*del);
+		*del = NULL;
 	}
 	va_end(ap);
 	return (1);

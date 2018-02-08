@@ -6,7 +6,7 @@
 /*   By: pmilan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:54:21 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/14 13:19:05 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 17:53:40 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static char	*ft_nettoyage(char *cpy, int i)
 		new_net[j] = cpy[i];
 		++j;
 	}
-	if (!(cpy = ft_strdup(new_net)) && ft_fruit(1, new_net))
+	if (!(cpy = ft_strdup(new_net)) && ft_fruit(1, &new_net))
 		return (NULL);
 	return (cpy);
 }
@@ -127,7 +127,7 @@ int			ft_cleanstars(char **str, va_list ap)
 				return (ERROR);
 		}
 	}
-	if (ft_fruit(1, *str) && !(*str = ft_strdup(cpy)))
+	if (ft_fruit(1, str) && !(*str = ft_strdup(cpy)))
 		return (ERROR);
 	free(cpy);
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:50:09 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/14 13:19:05 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 17:53:58 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	ft_sz_expr(const char *format, int i, char **expr)
 
 static int	ft_norminette(char **ret, t_arg *arg, int x)
 {
-	if (ft_strcmp(*ret, "") == 0 && ft_fruit(1, *ret))
+	if (ft_strcmp(*ret, "") == 0 && ft_fruit(1, ret))
 		return (ERROR);
 	if (arg->conv == 'C' || (arg->conv == 'c' && ft_length_cs(arg) == ERROR))
 		write(STDOUT_FILENO, *ret, arg->cmpt - x);

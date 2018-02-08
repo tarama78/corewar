@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 17:02:07 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/14 13:19:05 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 17:53:50 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char		*ft_replace_stars(char *cpy, long long nb_len, int total, int *i)
 	while (++j <= new_size)
 		new[j] = cpy[++(*i)];
 	free(cpy);
-	if (!(cpy = ft_strdup(new)) && ft_fruit(1, new))
+	if (!(cpy = ft_strdup(new)) && ft_fruit(1, &new))
 		return (NULL);
 	free(new);
 	*i = marqueur;

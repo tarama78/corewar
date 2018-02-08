@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 12:39:19 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/14 13:19:06 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 17:55:19 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static int	ft_improve_ge(char **new_r, int i, int len, t_arg *arg)
 	while (++j < len - count)
 		cpy[j] = (*new_r)[++i_back];
 	cpy[j] = '\0';
-	if (ft_fruit(1, *new_r) && !(*new_r = ft_strdup(cpy)) && ft_fruit(1, cpy))
+	if (ft_fruit(1, new_r) && !(*new_r = ft_strdup(cpy)) && ft_fruit(1, &cpy))
 		return (ERROR);
-	if (ft_fruit(1, cpy) && ft_flags_e(&cpy, *new_r, arg) == ERROR)
+	if (ft_fruit(1, &cpy) && ft_flags_e(&cpy, *new_r, arg) == ERROR)
 		return (ERROR);
-	if (ft_fruit(1, *new_r) && !(*new_r = ft_strdup(cpy)))
+	if (ft_fruit(1, &new_r) && !(*new_r = ft_strdup(cpy)))
 		return (ERROR);
 	free(cpy);
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/06 18:58:33 by ynacache         ###   ########.fr        #
+#    Updated: 2018/02/08 18:04:12 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,5 +107,10 @@ exec:
 
 open:
 	@vim +Line $(SRCS) $(HFILES) Makefile
+
+norm:
+	@printf $(BLUE)$(BOLD)"NORME ASM\n--------------------\n"$(NORMAL)
+	@norminette $(SRCS) $(HFILES)
+	@printf $(BLUE)$(BOLD)"--------------------\n"$(NORMAL)
 
 .PHONY: all clean fclean re exec open
