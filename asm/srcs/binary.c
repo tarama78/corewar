@@ -99,34 +99,35 @@ void			ft_putname_magic(int file, t_a *data)
 	write(file, "\0\0\0\0", 4);
 }
 
-int				ft_binary(int file, t_a *data)
+static int		ft_binary_2(int *j, int *i, char ***word, t_line *tmp)
 {
-	t_line	*tmp;
-	char	**words;
-	char	**args;
-	int		i;
+	*j = 1;
+	*i = -1;
+	if (!(*word = ft_strsplit(tmp->line, ' ')))
+		return (ERROR);
+	if (ft_strchr((*word)[0], LABEL_CHAR) != NULL)
+		++(*j);
+	return (SUCCESS);
+}
+
+static int		ft_binary_1(int file, t_a *data, t_line *tmp, int i)
+{
 	int		j;
 	int		k;
+	char	**word;
+	char	**args;
 
-	tmp = data->line;
-	data->cmpt = 0;
-	ft_putname_magic(file, data);
 	while (tmp != NULL)
 	{
-		j = 1;
 		k = -1;
-		i = -1;
-		words = ft_strsplit(tmp->line, ' ');
-		if (ft_strchr(words[0], LABEL_CHAR) != NULL)
-			++j;
-		if (words[1] == NULL)
-		{
-			tmp = tmp->next;
+		if (ft_binary_2(&j, &i, &word, tmp) == ERROR)
+			ft_err_msg(data, tmp, "malloc fail", 0);
+		if (word[1] == NULL && ((tmp = tmp->next) ? 1 : 1))
 			continue ;
-		}
-		args = ft_strsplit(words[j], SEPARATOR_CHAR);
+		if (!(args = ft_strsplit(word[j], SEPARATOR_CHAR)))
+			ft_err_msg(data, tmp, "malloc fail", 0);
 		while (++i < 17 && g_op_tab[i].name != 0
-				&& ft_strcmp(words[j - 1], g_op_tab[i].name) != 0)
+				&& ft_strcmp(word[j - 1], g_op_tab[i].name) != 0)
 			;
 		ft_dprintf(file, "%c", (char)g_op_tab[i].opcode);
 		if (g_op_tab[i].octet_type_arg == 1)
@@ -136,5 +137,19 @@ int				ft_binary(int file, t_a *data)
 		data->cmpt += tmp->size;
 		tmp = tmp->next;
 	}
+	// ft_free_binary avec adress args & word
+	return (SUCCESS);
+}
+
+int				ft_binary(int file, t_a *data)
+{
+	t_line	*tmp;
+	int		i;
+
+	tmp = data->line;
+	data->cmpt = 0;
+	i = -1;
+	ft_putname_magic(file, data);
+	ft_binary_1(file, data, tmp, i);
 	return (SUCCESS);
 }
