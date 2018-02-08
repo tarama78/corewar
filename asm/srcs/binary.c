@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   binary.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/05 17:40:53 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/07 19:29:35 by ynacache         ###   ########.fr       */
+/*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
+/*   Updated: 2018/02/07 19:57:22 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ void			ft_putname_magic(int file, t_a *data)
 		ft_putchar_fd(octet[i], file);
 	write(file, data->name, PROG_NAME_LENGTH);
 	write(file, "\0\0\0\0", 4);
-	write(file, "****", 4);
+	i = 4;
+	octet = (char*)&data->prog_size;
+	while (--i >= 0)
+		ft_putchar_fd(octet[i], file);
 	write(file, data->comment, COMMENT_LENGTH);
 	write(file, "\0\0\0\0", 4);
 }
