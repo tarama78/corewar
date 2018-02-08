@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/07 16:01:48 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 12:12:10 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ static void	ft_parse_cmd(int fd, t_a *a, int *num_ln)
 			ft_strncat(a->comment, comment, len);
 		free(comment);
 	}
+	else
+		ft_warning_msg(a, NULL, "no comment");
 }
 
 int		ft_parse_file(t_a *a, int fd)
@@ -168,8 +170,8 @@ int		ft_parse_file(t_a *a, int fd)
 	num_ln = 0;
 	ft_parse_cmd(fd, a, &num_ln);
 	if (!a->name[0])
-		return (0);
+		return (ERROR);
 	if (ft_parse_line(fd, a, &num_ln) == ERROR)
 		return (ERROR);
-	return (1);
+	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 14:35:14 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/07 16:25:30 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 12:10:09 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,12 @@ int			ft_err_msg(t_a *a, t_line *new_ln, char *txt)
 
 int			ft_warning_msg(t_a *a, t_line *new_ln, char *txt)
 {
-	ft_errprintf("\t{magenta}{bold}WARNING:{eoc} {yellow}%s.s\n{eoc}"
-			"\t\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
-			"\t\t%s\n", a->file_name, new_ln->num_line, txt, new_ln->line);
+	if (new_ln)
+		ft_errprintf("\t{magenta}{bold}WARNING:{eoc} {yellow}%s.s\n{eoc}"
+				"\t\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
+				"\t\t%s\n", a->file_name, new_ln->num_line, txt, new_ln->line);
+	else
+		ft_errprintf("\t{magenta}{bold}WARNING:{eoc} {yellow}%s.s\n{eoc}"
+				"\t\t%s\n", a->file_name, txt);
 	return (SUCCESS);
 }

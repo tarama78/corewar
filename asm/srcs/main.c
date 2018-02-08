@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/07 19:05:33 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 12:12:24 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			main(int argc, char **argv)
 			data.file_name = argv[i];
 			ft_printf("{bold}{yellow}compilation: {eoc}{yellow}%s.s{eoc}\n",
 					data.file_name);
-			if ((ret_parse = ft_parse_file(&data, fd)) == 0 || ret_parse == ERROR)
+			if ((ret_parse = ft_parse_file(&data, fd)) == ERROR)
 			{
 				ft_printf("{red}{bold}compilation failed: {eoc}{yellow}%s.s{eoc}"
 						"\n", data.file_name);
