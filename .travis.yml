@@ -2,3 +2,5 @@ script: make exec
 language: c
 os: osx
 compiler: clang gcc
+notifications:
+  email: false
