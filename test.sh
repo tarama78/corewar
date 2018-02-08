@@ -1,6 +1,10 @@
 make -C asm CFLAGS=-"Wall -Wextra -Werror" 
 echo "TEST ASM"
 ./asm/asm doc/vm_champs/champs/42.s
+mv doc/vm_champs/champs/42.cor doc/vm_champs/champs/42.cor2
+./doc/vm_champs/asm doc/vm_champs/champs/42.s
+diff doc/vm_champs/champs/42.cor doc/vm_champs/champs/42.cor2
+./asm/asm doc/vm_champs/champs/42.s
 echo
 ./asm/asm doc/vm_champs/champs/Gagnant.s
 echo

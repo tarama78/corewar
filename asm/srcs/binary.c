@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/07 19:57:22 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/08 12:06:59 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include <stdio.h>
 
 
-static int		ft_label_address(char *label, t_label *tab_label)
+static int		ft_label_address(char *label, t_label *tab_label, int dir)
 {
 	int i;
 
 	i = -1;
-	while (ft_strequ(label + 2, tab_label[++i].name) != 1)
+	while (ft_strequ(label + ((dir == 1) ? 2 : 1), tab_label[++i].name) != 1)
 		;
 //	printf("label name : %s, adress renvoye --> %d\n",tab_label[i].name, tab_label[i].addr);
 	return (tab_label[i].addr);
@@ -32,23 +32,22 @@ static void		ft_handle_args(int file, char *arg, t_a *data, int index_name)
 	int value;
 
 	if (arg[0] == 'r')
-	{
-		data->cmpt += 1;
 		ft_putchar_fd((char)ft_atoi(arg + 1), file);
-	}
 	else
 	{
-		i = op_tab[index_name].diroct;
+		i = (arg[0] == '%' ? DIR_SIZE : IND_SIZE);
+		i = (op_tab[index_name].carry == 1 ? 2 : i);
 		if (arg[0] == '%' && arg[1] == ':')
 		{
-			value = ft_label_address(arg, data->label) - data->cmpt;
+			value = ft_label_address(arg, data->label, 1) - data->cmpt;
 //		printf("valeur %d, addresse %d , cpmt %d", value, data->label[i].addr, data->cmpt);
 		}
+		else if (arg[0] == ':')
+			value = ft_label_address(arg, data->label, 0) - data->cmpt;
 		else if (arg[0] == '%')
 			value = ft_atoi(arg + 1);
 		else
 			value = ft_atoi(arg);
-		data->cmpt += i;
 		octet = (char*)&value;
 		while (--i >= 0)
 			ft_putchar_fd(octet[i], file);
@@ -80,7 +79,6 @@ static void		ft_encoding(int file, char **words, t_a *data)
 		octet += ft_typepara(words[i]) << decal;
 	}
 	ft_dprintf(file, "%c", octet);
-	data->cmpt += 1;
 }
 
 void			ft_putname_magic(int file, t_a *data)
@@ -134,11 +132,11 @@ int				ft_binary(int file, t_a *data)
 				&& ft_strcmp(words[j - 1], op_tab[i].name) != 0)
 			;
 		ft_dprintf(file, "%c", (char)op_tab[i].opcode);
-		data->cmpt += 1;
 		if (op_tab[i].octet_type_arg == 1)
 			ft_encoding(file, args, data);
 		while (args[++k])
 			ft_handle_args(file, args[k], data, i);
+		data->cmpt += tmp->size;
 		tmp = tmp->next;
 	}
 	return (SUCCESS);

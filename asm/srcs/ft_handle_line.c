@@ -124,8 +124,9 @@ static int	ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
 			return (ERROR);
 		if (!(op->type_arg[i] & type))
 			return (ft_err_msg(a, new_ln, "invalid parameter type"));
-		sz += ((type & T_REG) ? 1 : 0) + ((type & T_DIR) ? op->diroct : 0)
-			+ (( type & IND_SIZE) ? op->diroct : 0);
+		sz += ((type & T_REG) ? 1 : 0) + ((type & T_DIR) ? DIR_SIZE : 0)
+			+ (( type & T_IND) ? IND_SIZE : 0);
+		sz = (type & T_DIR && op->carry == 1) ? sz - 2 : sz;
 	}
 	return (sz);
 }
