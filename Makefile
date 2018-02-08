@@ -6,7 +6,7 @@
 #    By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/06 19:11:27 by tnicolas          #+#    #+#              #
-#    Updated: 2018/02/07 21:26:42 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/08 19:20:57 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,5 +22,9 @@ fclean:
 re:
 	@make -C asm re
 
-exec:
+exec: all
 	@./test.sh
+
+norm:
+	@make -C libft norm
+	@make -C asm norm

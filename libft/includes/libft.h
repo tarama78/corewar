@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/06 17:14:59 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 19:14:10 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ char		*ft_ftoa(double f, int sign);
 char		*ft_ltoa(long n);
 char		*ft_lltoa(long long n);
 unsigned	ft_abs(int nb);
+int			ft_free(size_t n, ...);
 int			ft_fruit(size_t n, ...);
 char		*ft_strndup(const char *s1, int n);
 double		ft_power(double nb, int power);
@@ -139,6 +140,7 @@ long long	ft_2arg(int arg1, int arg2);
 int			ft_get2arg(long long arg, int n);
 void		ft_swap_int(int *a, int *b);
 char		*ft_clean_char(char *s, char c);
+void		ft_test_malloc(size_t size);
 int			get_next_line(const int fd, char **line);
 
 int			ft_printf(const char *format, ...);

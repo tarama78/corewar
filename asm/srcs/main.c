@@ -6,12 +6,29 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/08 12:12:24 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 19:06:52 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+**   ____________________________________________________________
+**   | main.c                                                   |
+**   |     init_struct(6 lines)                                 |
+**   |     file_name(9 lines)                                   |
+**   |     ft_open_files(17 lines)                              |
+**   |     ft_compile_file(24 lines)                            |
+**   |     main(25 lines)                                       |
+**   ------------------------------------------------------------
+**           __n__n__  /
+**    .------`-\00/-'/
+**   /  ##  ## (oo)
+**  / \## __   ./
+**     |//YY \|/
+**     |||   |||
+*/
+
 #include <fcntl.h>
-#include "corewar.h"
+#include <corewar.h>
 
 static void	init_struct(t_a *data)
 {
@@ -41,7 +58,7 @@ static int	ft_open_files(char *filename, int *fd1, int *fd2, int *ret)
 	char	*name2;
 
 	if (!(name2 = malloc(sizeof(char) * (ft_strlen(filename) + 5))))
-		exit(EXIT_FAILURE);
+		ft_err_msg(NULL, NULL, "malloc fail", 1);
 	ft_strncpy(name2, filename, ft_strlen(filename) + 1);
 	file_name(name2);
 	ft_strcat(name2, ".cor");
@@ -57,19 +74,47 @@ static int	ft_open_files(char *filename, int *fd1, int *fd2, int *ret)
 	return (SUCCESS);
 }
 
+static int	ft_compile_file(t_a *data, int fd, int fd_2, char *argvi)
+{
+	int		ret;
+
+	ret = EXIT_SUCCESS;
+	init_struct(data);
+	file_name(argvi);
+	data->file_name = argvi;
+	ft_printf("{bold}{yellow}compilation: {eoc}{yellow}%s.s{eoc}\n",
+			data->file_name);
+	if (ft_parse_file(data, fd) == ERROR)
+	{
+		ft_printf("{red}{bold}compilation failed: {eoc}"
+				"{yellow}%s.s{eoc}\n", argvi);
+		ret = EXIT_FAILURE;
+	}
+	else
+	{
+		ft_binary(fd_2, data);
+		ft_printf("{green}{bold}compilation success: {eoc}{yellow}%s"
+				".cor{eoc}\n", argvi);
+	}
+	free_content(data, 0);
+	close(fd);
+	close(fd_2);
+	return (ret);
+}
+
 int			main(int argc, char **argv)
 {
 	t_a	data;
 	int	fd;
 	int fd_2;
-	int	ret_parse;
 	int	i;
 	int	ret;
 
+	ft_test_malloc(128);
 	ret = EXIT_SUCCESS;
 	if (argc == 1)
 	{
-		ft_printf("usage: ./asm file.s\n");
+		ft_printf("usage: ./asm <files.s>\n");
 		return (ret);
 	}
 	i = 0;
@@ -77,26 +122,8 @@ int			main(int argc, char **argv)
 	{
 		if (ft_open_files(argv[i], &fd, &fd_2, &ret) == SUCCESS)
 		{
-			init_struct(&data);
-			file_name(argv[i]);
-			data.file_name = argv[i];
-			ft_printf("{bold}{yellow}compilation: {eoc}{yellow}%s.s{eoc}\n",
-					data.file_name);
-			if ((ret_parse = ft_parse_file(&data, fd)) == ERROR)
-			{
-				ft_printf("{red}{bold}compilation failed: {eoc}{yellow}%s.s{eoc}"
-						"\n", data.file_name);
-				ret = EXIT_FAILURE;
-			}
-			else
-			{
-				ft_binary(fd_2, &data);
-				ft_printf("{green}{bold}compilation success: {eoc}{yellow}%s"
-						".cor{eoc}\n", data.file_name);
-			}
-			free_content(&data, 0);
-			close(fd);
-			close(fd_2);
+			ret = (ft_compile_file(&data, fd, fd_2, argv[i]) == EXIT_SUCCESS &&
+					ret == EXIT_SUCCESS) ? EXIT_SUCCESS : EXIT_FAILURE;
 			if (i + 1 < argc)
 				ft_printf("\n");
 		}

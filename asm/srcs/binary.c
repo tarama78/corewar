@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/08 19:42:08 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/08 18:11:45 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		ft_handle_args(int file, char *arg, t_a *data, int index_name)
 	else
 	{
 		i = (arg[0] == '%' ? DIR_SIZE : IND_SIZE);
-		i = (op_tab[index_name].size_change == 1 ? 2 : i);
+		i = (g_op_tab[index_name].size_change == 1 ? 2 : i);
 		if (arg[0] == '%' && arg[1] == ':')
 		{
 			value = ft_label_address(arg, data->label, 1) - data->cmpt;
@@ -126,11 +126,11 @@ static int		ft_binary_1(int file, t_a *data, t_line *tmp, int i)
 			continue ;
 		if (!(args = ft_strsplit(word[j], SEPARATOR_CHAR)))
 			ft_err_msg(data, tmp, "malloc fail", 0);
-		while (++i < 17 && op_tab[i].name != 0
-				&& ft_strcmp(word[j - 1], op_tab[i].name) != 0)
+		while (++i < 17 && g_op_tab[i].name != 0
+				&& ft_strcmp(word[j - 1], g_op_tab[i].name) != 0)
 			;
-		ft_dprintf(file, "%c", (char)op_tab[i].opcode);
-		if (op_tab[i].octet_type_arg == 1)
+		ft_dprintf(file, "%c", (char)g_op_tab[i].opcode);
+		if (g_op_tab[i].octet_type_arg == 1)
 			ft_encoding(file, args);
 		while (args[++k])
 			ft_handle_args(file, args[k], data, i);
