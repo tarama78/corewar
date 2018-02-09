@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:22:41 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 17:55:48 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/09 18:08:00 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,17 @@ void	sub(t_process *prc, t_a *a)
 	prc->carry = (prc->carry + 1) % 2;
 }
 
-void	or(t_process *prc, t_a *a)
+void	f_or(t_process *prc, t_a *a)
 {
 	int	v1;
 	int	v2;
 	int	curs;
 
 	curs = prc->pc + 2;
-	if (a->mem[prc->pc + 1] & 0x0F != 0x04)
+	v1 = (int)a->mem[prc->pc + 1]
+	if (v1 & 0x0F != 0x04 || v1 & 0xC0 == 0 || v1 & 0x30 == 0)
 	{
-		prc->pc += 5;
+		prc->pc++;
 		return ;
 	}
 	if (!check_cycle(6, prc))
@@ -61,16 +62,17 @@ void	or(t_process *prc, t_a *a)
 	prc->carry = (prc->carry + 1) % 2;
 }
 
-void	xor(t_process *prc, t_a *a)
+void	f_xor(t_process *prc, t_a *a)
 {
 	int	v1;
 	int	v2;
 	int	curs;
 
 	curs = prc->pc + 2;
-	if (a->mem[prc->pc + 1] & 0x0F != 0x04)
+	v1 = (int)a->mem[prc->pc + 1]
+	if (v1 & 0x0F != 0x04 || v1 & 0xC0 == 0 || v1 & 0x30 == 0)
 	{
-		prc->pc += 5;
+		prc->pc++;
 		return ;
 	}
 	if (!check_cycle(6, prc))
@@ -82,16 +84,17 @@ void	xor(t_process *prc, t_a *a)
 	prc->carry = (prc->carry + 1) % 2;
 }
 
-void	and(t_process *prc, t_a *a)
+void	f_and(t_process *prc, t_a *a)
 {
 	int	v1;
 	int	v2;
 	int	curs;
 
 	curs = prc->pc + 2;
-	if (a->mem[prc->pc + 1] & 0x0F != 0x04)
+	v1 = (int)a->mem[prc->pc + 1]
+	if (v1 & 0x0F != 0x04 || v1 & 0xC0 == 0 || v1 & 0x30 == 0)
 	{
-		prc->pc += 5;
+		prc->pc++;
 		return ;
 	}
 	if (!check_cycle(6, prc))

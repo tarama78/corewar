@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 16:16:55 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/09 18:02:01 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,14 @@ typedef struct			s_a
 	uint64_t			cycle;
 	uint8_t				mem[MEM_SIZE];
 }						t_a;
+
+int						check_cycle(int cycle t_process *prc);
+int						rec_memory(char type, int *curs, t_a *a, int addr);
+
+void					add(t_process *prc, t_a *);
+void					sub(t_process *prc, t_a *);
+void					f_or(t_process *prc, t_a *);
+void					f_xor(t_process *prc, t_a *);
+void					f_and(t_process *prc, t_a *);
 
 #endif
