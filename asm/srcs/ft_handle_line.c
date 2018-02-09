@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/08 18:11:45 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 12:04:26 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ static int	ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
 	i = -1;
 	while (++i < op->nb_arg)
 	{
+		if (arg[i] == NULL)
+			return (ft_err_msg(a, new_ln, "not enough arguments", 0));
 		if ((type = ft_get_type(a, arg[i], new_ln)) == ERROR)
 			return (ERROR);
 		if (!(op->type_arg[i] & type))
@@ -145,6 +147,36 @@ static int	ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
 	return (sz);
 }
 
+static char *ft_clean_char_custom(char *s)
+{
+	int		i;
+	int		j;
+	char	*ret;
+
+	if (!(ret = ft_strtrim(s)))
+		return (NULL);
+	i = -1;
+	while (ret[++i])
+	{
+		if (ret[i] == ',')
+		{
+			j = 0;
+			while (ret[i - j - 1] == ' ')
+				++j;
+			if (j > 0)
+				ft_memmove(ret + i - j, ret + i, ft_strlen(ret + i) + 1);
+			i -= j;
+			j = 0;
+			while (ret[i + j + 1] == ' ')
+				++j;
+			if (j > 0)
+				ft_memmove(ret + i + 1, ret + i + j + 1,
+						ft_strlen(ret + i + j + 1) + 1);
+		}
+	}
+	return (ret);
+}
+
 static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 {
 	char	*tmp;
@@ -152,7 +184,7 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	char	**arg;
 	t_op	op;
 
-	if (!(tmp = ft_clean_char(ln, ' ')))
+	if (!(tmp = ft_clean_char_custom(ln)))
 		exit(EXIT_FAILURE);
 	if ((tmp[0] == '\0' || name[0] == '\0') && ft_fruit(1, &tmp))
 		return (ft_err_msg(a, new_ln, "invalid line", 0));
@@ -162,8 +194,14 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	while (ft_strcmp(g_op_tab[++i].name, name) != 0)
 		;
 	op = g_op_tab[i];
-	if ((i = ft_get_size_op(a, &op, arg, new_ln)) == ERROR)
+	if ((i = ft_get_size_op(a, &op, arg, new_ln)) == ERROR && ft_fruit(1, &tmp))
+	{
+		i = -1;
+		while (arg[++i])
+			free(arg[i]);
+		ft_fruit(1, &arg);
 		return (ERROR);
+	}
 	new_ln->size = 1 + op.octet_type_arg + i;
 	i = -1;
 	while (arg[++i])
@@ -190,9 +228,10 @@ static char	*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln)
 		{
 			new_ln->line = ln;
 			ft_err_msg(a, new_ln, "invalid line", 0);
+			ft_fruit(1, &ret);
 			return (NULL);
 		}
-		if (!(tmp = ft_clean_char(ln + i, ' ')))
+		if (!(tmp = ft_clean_char_custom(ln + i)))
 			exit(EXIT_FAILURE);
 		ft_memcpy(ret + i, tmp, ft_strlen(tmp));
 		ft_fruit(1, &tmp);
@@ -212,18 +251,18 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 		exit(EXIT_FAILURE);
 	new_ln->size = 0;
 	new_ln->num_line = num_ln;
-	if (!(new_ln->line = ft_get_clean_ln(a, ln, new_ln)))
+	if (!(new_ln->line = ft_get_clean_ln(a, ln, new_ln)) && ft_free(1, new_ln))
 		return (ERROR);
 	i = ft_start_i(a, ln, 1);
 	if (i == 0 || ln[i] != '\0')
 	{
 		name = ft_get_name(ln + i);
 		i += ft_strlen(name);
-		if (ft_check_arg(a, name, new_ln, ln + i) == ERROR)
+		if (ft_check_arg(a, name, new_ln, ln + i) == ERROR &&
+				ft_fruit(3, &name, &new_ln->line, &new_ln))
 			return (ERROR);
 	}
 	ft_lst_add_end((t_lst**)&a->line, (t_lst*)new_ln);
 	ft_fruit(1, &name);
-	ft_label(a);
 	return (SUCCESS);
 }

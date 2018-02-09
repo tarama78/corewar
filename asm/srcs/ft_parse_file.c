@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/08 18:00:25 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 10:58:37 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,6 @@ int				ft_parse_file(t_a *a, int fd)
 		return (ERROR);
 	if (ft_parse_line(fd, a, &num_ln) == ERROR)
 		return (ERROR);
+	ft_label(a);
 	return (SUCCESS);
 }

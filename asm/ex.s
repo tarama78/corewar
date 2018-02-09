@@ -3,6 +3,9 @@
 
 l2:	sti	r1,%:live,%1
 	and        	r1     ,       %1   ,     r1
+	ld 1265 4756, r2
+
+#fdgfsgsf
 live:	
-live	%0
+live	%0#fdjsghkjs
 	zjmp	%:live
