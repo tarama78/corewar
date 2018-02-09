@@ -6,16 +6,20 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 21:04:44 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/09 22:04:26 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		check_cycle(int cycle, t_process *prc)
+int		check_cycle(t_process *prc, t_a *a)
 {
 	if (prc->cycle_wait == -1)
-		prc->cycle_wait = cycle;
+	{
+		while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
+			;
+		prc->cycle_wait = g_op_tab[i].nb_cycle;
+	}
 	else if (prc->cycle_wait >= 0)
 		prc->cycle_wait--;
 	if (prc->cycle_wait == -1)
@@ -25,22 +29,33 @@ int		check_cycle(int cycle, t_process *prc)
 
 int		rec_memory(char type, int *curs, t_a *a, int addr)
 {
+	int		val;
+
+	val = 0;
 	if (type & 0x03 == 0x03 && !addr)
 	{
-		*curs += 3;
-		return (*(int *)(a->mem + *curs - 3));
+		val = a->mem[*curs] << 6;
+		*curs = (*curs + 1) % MEM_SIZE;
+		val += a->mem[*curs] << 4;
+		*curs = (*curs + 1) % MEM_SIZE;
+		val += a->mem[*curs] << 2;
+		*curs = (*curs + 1) % MEM_SIZE;
+		val += a->mem[*curs];
+		*curs = (*curs + 1) % MEM_SIZE;
 	}
-	if (type & 0x02)
+	else if (type & 0x02)
 	{
-		*curs += 2;
-		return ((int)*(short *)(a->mem + *curs - 1));
+		val = a->mem[*curs] << 2;
+		*curs = (*curs + 1) % MEM_SIZE;
+		val += a->mem[*curs];
+		*curs = (*curs + 1) % MEM_SIZE;
 	}
-	if (type & 0x01)
+	else if (type & 0x01)
 	{
-		*curs += 1;
-		return ((int)*(char *)(a->mem + *curs - 1));
+		val = a->mem[*curs];
+		*curs = (*curs + 1) % MEM_SIZE;
 	}
-	return (0);
+	return (val);
 }
 
 //UTILISE AVANT LE TABLEAU DE POINTEUR SUR FONCTION,
