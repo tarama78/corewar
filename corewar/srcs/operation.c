@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:22:41 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 17:43:58 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/09 17:48:04 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	or(t_process *prc, t_a *a)
 	}
 	if (!check_cycle(6, prc))
 		return ;
-	v1 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a);
-	v2 = rec_memory(a->mem[prc->pc + 1] >> 6, &curs, a);
+	v1 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 0);
+	v2 = rec_memory(a->mem[prc->pc + 1] >> 6, &curs, a, 0);
 	prc->reg[a->mem[curs]] = v1 + v2;
 	prc->pc += 5;
 	prc->carry = (prc->carry + 1) % 2;
