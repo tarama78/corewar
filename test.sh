@@ -54,5 +54,3 @@ echo
 mv doc/vm_champs/champs/ex.cor diff.cor
 ./doc/vm_champs/asm doc/vm_champs/champs/ex.s
 diff diff.cor doc/vm_champs/champs/ex.cor
-echo "\nTEST WARNING"
-./asm/asm doc/vm_champs/champs/lde.s
