@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 12:37:34 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 16:05:28 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char		*ft_clean_char_custom(char *s)
 		return (NULL);
 	i = -1;
 	while (ret[++i])
-		if (ret[i] == ',')
+		if (ret[i] == SEPARATOR_CHAR)
 		{
 			j = 0;
 			while (ret[i - j - 1] == ' ')
