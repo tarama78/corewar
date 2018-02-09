@@ -37,6 +37,7 @@ typedef struct			s_op
 
 extern t_op				g_op_tab[17];
 
+/*
 typedef struct			s_process
 {
 	struct s_process	*next;
@@ -52,6 +53,8 @@ typedef struct			s_player
 {
 	char				name[NAME_SIZE + 1];
 	char				comment[COMMENT_SIZE + 1];
+	uint8_t				mem[CHAMP_MAX_SIZE];
+	int					mem_size;
 	int					player_number_print;
 	int					last_live_cycle;
 	int					nb_live_total;
@@ -59,13 +62,25 @@ typedef struct			s_player
 	size_t				nb_process;
 }						t_player;
 
+*/
+typedef struct			s_champ_file
+{
+	int					player_number_print;	
+	char				*filename;
+}						t_champ_file;
+
 typedef struct			s_a
 {
-	t_process			*process;
-	t_player			player[MAX_PLAYER];
+//	t_process			*process;
+//	t_player			player[MAX_PLAYER];
+	t_champ_file		file[MAX_PLAYERS];
+	int					num_of_player;
+	int					dump_cycle;
 	int					cycle_to_die;
 	uint64_t			cycle;
 	uint8_t				mem[MEM_SIZE];
 }						t_a;
+
+int	ft_is_uint(char *str, int *num);
 
 #endif

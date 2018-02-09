@@ -13,7 +13,8 @@
 NAME = corewar
 
 FILES = main.c\
-		../../commun/srcs/op.c
+		ft_is_int.c\
+		../../commun/srcs/op.c\
 
 HFILES = includes/corewar.h \
 		 ../commun/includes/op.h \
