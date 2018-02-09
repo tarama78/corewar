@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/08 18:04:12 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/09 12:15:51 by atripard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = asm
 
 FILES = main.c\
 		ft_parse_file.c\
+		ft_parse_cmd.c\
 		ft_handle_line.c\
 		ft_label.c\
 		ft_lst_add_end.c\

@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/08 18:11:54 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 12:16:29 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int					ft_handle_line(t_a *a, char *ln, int num_ln);
 void				ft_label(t_a *data);
 int					free_content(t_a *data, char *error);
 int					ft_parse_file(t_a *a, int fd);
+void				ft_parse_cmd(int fd, t_a *a, int *num_ln, int *cmd);
 int					ft_binary(int file, t_a *data);
 
 #endif
