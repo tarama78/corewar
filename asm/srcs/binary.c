@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/09 10:54:41 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 12:26:34 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ static int		ft_binary_2(int *j, int *i, char ***word, t_line *tmp)
 	return (SUCCESS);
 }
 
-static void	ft_free_binary(char ***word, char ***args)
+static void		ft_free_binary(char ***word, char ***args)
 {
 	int		i;
 

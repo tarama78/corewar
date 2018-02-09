@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:21:37 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 10:58:06 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 12:25:40 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ static int	check_line(t_line *line)
 static void	new_label(t_label *label, int len_name, int addr, t_line *line)
 {
 	if (!(label->name = ft_strndup(line->line, len_name)))
-	{
 		ft_err_msg(NULL, line, "malloc fail", 1);
-		//FREE ALL
-	}
 	label->addr = addr;
 }
 
@@ -47,10 +44,7 @@ void		ft_label(t_a *data)
 	int		i;
 
 	if (!(data->label = (t_label *)malloc(sizeof(t_label) * data->nb_label)))
-	{
 		ft_err_msg(data, NULL, "malloc fail", 1);
-		//FREE ALL
-	}
 	i = -1;
 	while (++i < data->nb_label)
 		ft_bzero(&data->label[i], sizeof(t_label));
