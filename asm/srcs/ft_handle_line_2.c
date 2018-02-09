@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 12:31:22 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 12:34:45 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 12:38:22 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
 	return (ft_err_msg(a, new_ln, "syntax error", 0));
 }
 
-int			ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
+int			ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_l)
 {
 	int		sz;
 	int		i;
@@ -112,11 +112,11 @@ int			ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
 	while (++i < op->nb_arg)
 	{
 		if (arg[i] == NULL)
-			return (ft_err_msg(a, new_ln, "not enough arguments", 0));
-		if ((type = ft_get_type(a, arg[i], new_ln)) == ERROR)
+			return (ft_err_msg(a, new_l, "not enough arguments", 0));
+		if ((type = ft_get_type(a, arg[i], new_l)) == ERROR)
 			return (ERROR);
 		if (!(op->type_arg[i] & type))
-			return (ft_err_msg(a, new_ln, "invalid parameter type", 0));
+			return (ft_err_msg(a, new_l, "invalid parameter type", 0));
 		sz += ((type & T_REG) ? 1 : 0) + ((type & T_DIR) ? DIR_SIZE : 0)
 			+ ((type & T_IND) ? IND_SIZE : 0);
 		sz = (type & T_DIR && op->size_change == 1) ? sz - 2 : sz;
