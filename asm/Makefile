@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/09 12:15:51 by atripard         ###   ########.fr        #
+#    Updated: 2018/02/09 12:46:23 by ynacache         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ FILES = main.c\
 		ft_lst_add_end.c\
 		free_content.c\
 		binary.c\
+		binary_2.c\
 		ft_error.c\
 		op.c
 
