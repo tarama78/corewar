@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:21:37 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 12:25:40 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 22:47:47 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,20 @@ static void	new_label(t_label *label, int len_name, int addr, t_line *line)
 	label->addr = addr;
 }
 
+static void	check_label_name(t_a *a, int id_label, t_line *line)
+{
+	int	i;
+
+	i = -1;
+	while (a->label[++i].name)
+		if (!ft_strcmp(a->label[i].name, a->label[id_label].name)
+				&& i != id_label)
+		{
+			ft_warning_msg(a, line, "duplicate name label");
+			return ;
+		}
+}
+
 void		ft_label(t_a *data)
 {
 	t_line	*current;
@@ -56,7 +70,10 @@ void		ft_label(t_a *data)
 		len_name = 0;
 		len_name = check_line(current);
 		if (len_name)
+		{
 			new_label(&data->label[++i], len_name, addr, current);
+			check_label_name(data, i, current);
+		}
 		addr += current->size;
 		current = current->next;
 	}
