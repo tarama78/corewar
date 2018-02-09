@@ -3,7 +3,7 @@
 
 l2:	sti	r1,%:live,%1
 	and        	r1     ,       %1   ,     r1
-	ld 1265 4756, r2
+	ld 12654756, r2
 
 #fdgfsgsf
 live:	

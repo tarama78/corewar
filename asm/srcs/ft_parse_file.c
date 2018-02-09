@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/09 12:17:25 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/09 12:23:01 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	ft_parse_line(int fd, t_a *a, int *num_ln)
 		if (trim[0])
 			if (ft_handle_line(a, trim, *num_ln) == ERROR)
 			{
-				ft_fruit(2, trim, line);
+				ft_fruit(2, &trim, &line);
 				return (ERROR);
 			}
 		ft_fruit(1, &trim);
