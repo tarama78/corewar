@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/22 15:06:56 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/14 13:19:07 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 19:18:28 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			ft_printf(const char *format, ...)
 	}
 	va_end(ap);
 	if (str != NULL)
-		if (write(STDOUT_FILENO, str, ret) == -1 && ft_fruit(1, str))
+		if (write(STDOUT_FILENO, str, ret) == -1 && ft_free(1, str))
 			return (ERROR);
 	free(str);
 	return (ret);

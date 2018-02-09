@@ -6,13 +6,13 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/08 12:12:10 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 10:58:37 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static char	*ft_strjoin_ln(char *s1, char *s2)
+static char		*ft_strjoin_ln(char *s1, char *s2)
 {
 	char	*str;
 
@@ -44,12 +44,12 @@ static int		ft_count_char(char *str, char c)
 	return (count);
 }
 
-static char	*ft_get_paragraph(int fd, int *num_ln, char *str)
+static char		*ft_get_paragraph(int fd, int *num_ln, char *str)
 {
-	char *line;
-	char *p;
-	int count;
-	int	i;
+	char	*line;
+	char	*p;
+	int		count;
+	int		i;
 
 	i = 0;
 	while (str[i] && str[i] != '\"')
@@ -89,14 +89,15 @@ static int		ft_get_cmd(int fd, int *num_ln, char **name, char **comment)
 		free(line);
 		if (ft_strnequ(trim, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)))
 			*name = ft_get_paragraph(fd, num_ln, trim);
-		else if (ft_strnequ(trim, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)))
+		else if (ft_strnequ(trim, COMMENT_CMD_STRING,
+					ft_strlen(COMMENT_CMD_STRING)))
 			*comment = ft_get_paragraph(fd, num_ln, trim);
 		free(trim);
 	}
 	return (1);
 }
 
-static void	ft_clear_line(char *str)
+static void		ft_clear_line(char *str)
 {
 	int i;
 
@@ -128,17 +129,16 @@ static int		ft_parse_line(int fd, t_a *a, int *num_ln)
 		if (trim[0])
 			if (ft_handle_line(a, trim, *num_ln) == ERROR)
 			{
-				ft_fruit(2, trim, line);
+				ft_fruit(2, &trim, &line);
 				return (ERROR);
 			}
-		free(trim);
-		free(line);
+		ft_fruit(1, &trim);
+		ft_fruit(1, &line);
 	}
 	return (1);
 }
 
-
-static void	ft_parse_cmd(int fd, t_a *a, int *num_ln)
+static void		ft_parse_cmd(int fd, t_a *a, int *num_ln)
 {
 	char	*name;
 	char	*comment;
@@ -163,7 +163,7 @@ static void	ft_parse_cmd(int fd, t_a *a, int *num_ln)
 		ft_warning_msg(a, NULL, "no comment");
 }
 
-int		ft_parse_file(t_a *a, int fd)
+int				ft_parse_file(t_a *a, int fd)
 {
 	int		num_ln;
 
@@ -173,5 +173,6 @@ int		ft_parse_file(t_a *a, int fd)
 		return (ERROR);
 	if (ft_parse_line(fd, a, &num_ln) == ERROR)
 		return (ERROR);
+	ft_label(a);
 	return (SUCCESS);
 }
