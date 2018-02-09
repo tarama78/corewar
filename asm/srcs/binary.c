@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/08 18:11:45 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 10:54:41 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,26 @@ static int		ft_binary_2(int *j, int *i, char ***word, t_line *tmp)
 	return (SUCCESS);
 }
 
+static void	ft_free_binary(char ***word, char ***args)
+{
+	int		i;
+
+	i = -1;
+	if (word != NULL)
+	{
+		while ((*word)[++i])
+			ft_fruit(1, &((*word)[i]));
+		ft_fruit(1, word);
+	}
+	i = -1;
+	if (args != NULL)
+	{
+		while ((*args)[++i])
+			ft_fruit(1, &((*args)[i]));
+		ft_fruit(1, args);
+	}
+}
+
 static int		ft_binary_1(int file, t_a *data, t_line *tmp, int i)
 {
 	int		j;
@@ -123,9 +143,15 @@ static int		ft_binary_1(int file, t_a *data, t_line *tmp, int i)
 		if (ft_binary_2(&j, &i, &word, tmp) == ERROR)
 			ft_err_msg(data, tmp, "malloc fail", 0);
 		if (word[1] == NULL && ((tmp = tmp->next) ? 1 : 1))
+		{
+			ft_free_binary(&word, NULL);
 			continue ;
+		}
 		if (!(args = ft_strsplit(word[j], SEPARATOR_CHAR)))
+		{
+			ft_free_binary(&word, NULL);
 			ft_err_msg(data, tmp, "malloc fail", 0);
+		}
 		while (++i < 17 && g_op_tab[i].name != 0
 				&& ft_strcmp(word[j - 1], g_op_tab[i].name) != 0)
 			;
@@ -136,8 +162,8 @@ static int		ft_binary_1(int file, t_a *data, t_line *tmp, int i)
 			ft_handle_args(file, args[k], data, i);
 		data->cmpt += tmp->size;
 		tmp = tmp->next;
+		ft_free_binary(&word, &args);
 	}
-	// ft_free_binary avec adress args & word
 	return (SUCCESS);
 }
 
