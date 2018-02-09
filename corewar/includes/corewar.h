@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 22:04:20 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/09 22:34:55 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,7 @@ void					ld(t_process *prc, t_a *a);
 void					lld(t_process *prc, t_a *a);
 void					ldi(t_process *prc, t_a *a);
 void					lldi(t_process *prc, t_a *a);
+void					st(t_process *prc, t_a *a);
+void					sti(t_process *prc, t_a *a);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:22:41 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 21:28:01 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/09 22:24:53 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	f_or(t_process *prc, t_a *a)
 	int	v2;
 	int	curs;
 
-	curs = prc->pc + 2;
+	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
 	v1 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 0);
@@ -62,7 +62,7 @@ void	f_xor(t_process *prc, t_a *a)
 	int	v2;
 	int	curs;
 
-	curs = prc->pc + 2;
+	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
 	v1 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 0);
@@ -78,7 +78,7 @@ void	f_and(t_process *prc, t_a *a)
 	int	v2;
 	int	curs;
 
-	curs = prc->pc + 2;
+	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
 	v1 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 0);
