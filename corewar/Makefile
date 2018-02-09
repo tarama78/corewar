@@ -6,23 +6,13 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/09 15:35:20 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/09 15:33:10 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = asm
+NAME = corewar
 
 FILES = main.c\
-		ft_parse_file.c\
-		ft_parse_cmd.c\
-		ft_handle_line.c\
-		ft_handle_line_2.c\
-		ft_label.c\
-		ft_lst_add_end.c\
-		free_content.c\
-		binary.c\
-		binary_2.c\
-		ft_error.c\
 		../../commun/srcs/op.c
 
 HFILES = includes/corewar.h \
@@ -34,7 +24,7 @@ LIBFT = $(LIBFT_DIR)libft.a
 LIBFT_LIB = -L $(LIBFT_DIR) -lft
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -g#########Werror
 
 OBJS_DIR = objs/
 SRCS_DIR = srcs/
@@ -60,9 +50,9 @@ LIGHT = "\e[2m"
 ITALIC = "\e[3m"
 ULINE = "\e[4m"
 
-ARG = "ex.s"
+ARG = "ex.s -n"
 
-START = @printf $(GREEN)$(BOLD)"ASM\n--------------------\n"$(NORMAL)
+START = @printf $(GREEN)$(BOLD)"COREWAR\n--------------------\n"$(NORMAL)
 END = @printf $(GREEN)$(BOLD)"--------------------\n"$(NORMAL)
 
 all:
@@ -103,10 +93,7 @@ re: fclean
 exec:
 	@clear
 	@make
-	@printf $(MAGENTA)$(BOLD)"EXEC ASM\n--------------------\n"$(NORMAL)
-	@printf $(ARG)":\n"$(BLUE)$(BOLD)
-	@cat $(ARG)
-	@printf $(NORMAL)"\nresult:\n"
+	@printf $(MAGENTA)$(BOLD)"EXEC COREWAR\n--------------------\n"$(NORMAL)
 	@./$(NAME) $(ARG)
 	@printf $(MAGENTA)$(BOLD)"--------------------\n"$(NORMAL)
 
@@ -114,7 +101,7 @@ open:
 	@vim +Line $(SRCS) $(HFILES) Makefile
 
 norm:
-	@printf $(BLUE)$(BOLD)"NORME ASM\n--------------------\n"$(NORMAL)
+	@printf $(BLUE)$(BOLD)"NORME COREWAR\n--------------------\n"$(NORMAL)
 	@norminette $(SRCS) $(HFILES)
 	@printf $(BLUE)$(BOLD)"--------------------\n"$(NORMAL)
 
