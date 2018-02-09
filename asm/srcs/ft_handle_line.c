@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 12:22:19 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/09 12:37:34 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 **   ____________________________________________________________
 **   | ft_handle_line.c                                         |
 **   |     ft_start_i(14 lines)                                 |
-**   |     ft_get_name(12 lines)                                |
-**   |     ft_get_type_dir_ind(24 lines)                        |
-**   |     ft_get_type(25 lines)                                |
-**   |     ft_get_size_op(17 lines)                             |
+**   |     ft_clean_char_custom(24 lines)                       |
+**   |     ft_free_arg(7 lines)                                 |
 **   |     ft_check_arg(23 lines)                               |
-**   |     ft_get_clean_ln(25 lines)                            |
 **   |     ft_handle_line(23 lines)                             |
-**   | MEUUUU too many functions                                |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -33,7 +29,7 @@
 
 #include <corewar.h>
 
-static int	ft_start_i(t_a *a, char *ln, int label)
+int			ft_start_i(t_a *a, char *ln, int label)
 {
 	int		i;
 
@@ -51,103 +47,7 @@ static int	ft_start_i(t_a *a, char *ln, int label)
 	return (0);
 }
 
-static char	*ft_get_name(char *ln)
-{
-	int		i;
-	char	*ret;
-
-	i = -1;
-	while (ft_strchr(LABEL_CHARS, ln[++i]))
-		;
-	if (!(ret = malloc(sizeof(char) * (i + 1))))
-		exit(EXIT_FAILURE);
-	ret[i] = '\0';
-	while (--i >= 0)
-		ret[i] = ln[i];
-	return (ret);
-}
-
-static int	ft_get_type_dir_ind(t_a *a, char *arg, t_line *new_ln)
-{
-	int		i;
-
-	i = (arg[0] == DIRECT_CHAR) ? 1 : 0;
-	if (arg[i] == LABEL_CHAR)
-	{
-		while (ft_strchr(LABEL_CHARS, arg[++i]) && arg[i])
-			;
-		if (arg[i] == '\0')
-			return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
-		--a->nb_label;
-		return (ft_err_msg(a, new_ln, "syntax error in label", 0));
-	}
-	else if (ft_isdigit(arg[i]) || arg[i] == '-')
-	{
-		i = (arg[i] == '-') ? i : i - 1;
-		while (ft_isdigit(arg[++i]))
-			;
-		if (arg[i] == '\0')
-			return ((arg[0] == DIRECT_CHAR) ? T_DIR : T_IND);
-		--a->nb_label;
-		return (ft_err_msg(a, new_ln, "invalid parameter", 0));
-	}
-	--a->nb_label;
-	return (ft_err_msg(a, new_ln, "invalid parameter", 0));
-}
-
-static int	ft_get_type(t_a *a, char *arg, t_line *new_ln)
-{
-	int		i;
-
-	if (arg[0] == 'r')
-	{
-		i = 0;
-		while (ft_isdigit(arg[++i]))
-			;
-		if (arg[i] == '\0')
-		{
-			i = ft_atoi(arg + 1);
-			if (i >= 1 && i <= REG_NUMBER)
-				return (T_REG);
-			else
-			{
-				--a->nb_label;
-				return (ft_err_msg(a, new_ln, "reg number does not exist", 0));
-			}
-		}
-		--a->nb_label;
-		return (ft_err_msg(a, new_ln, "syntax error in reg", 0));
-	}
-	else
-		return (ft_get_type_dir_ind(a, arg, new_ln));
-	--a->nb_label;
-	return (ft_err_msg(a, new_ln, "syntax error", 0));
-}
-
-static int	ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_ln)
-{
-	int		sz;
-	int		i;
-	int		type;
-
-	sz = 0;
-	i = -1;
-	while (++i < op->nb_arg)
-	{
-		if (arg[i] == NULL)
-			return (ft_err_msg(a, new_ln, "not enough arguments", 0));
-		if ((type = ft_get_type(a, arg[i], new_ln)) == ERROR)
-			return (ERROR);
-		if (!(op->type_arg[i] & type))
-			return (ft_err_msg(a, new_ln, "invalid parameter type", 0));
-		sz += ((type & T_REG) ? 1 : 0) + ((type & T_DIR) ? DIR_SIZE : 0)
-			+ ((type & T_IND) ? IND_SIZE : 0);
-		sz = (type & T_DIR && op->size_change == 1) ? sz - 2 : sz;
-	}
-	return (sz);
-}
-
-static char *ft_clean_char_custom(char *s)
+char		*ft_clean_char_custom(char *s)
 {
 	int		i;
 	int		j;
@@ -157,7 +57,6 @@ static char *ft_clean_char_custom(char *s)
 		return (NULL);
 	i = -1;
 	while (ret[++i])
-	{
 		if (ret[i] == ',')
 		{
 			j = 0;
@@ -173,8 +72,18 @@ static char *ft_clean_char_custom(char *s)
 				ft_memmove(ret + i + 1, ret + i + j + 1,
 						ft_strlen(ret + i + j + 1) + 1);
 		}
-	}
 	return (ret);
+}
+
+static int	ft_free_arg(char **arg)
+{
+	int		i;
+
+	i = -1;
+	while (arg[++i])
+		free(arg[i]);
+	free(arg);
+	return (ERROR);
 }
 
 static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
@@ -195,49 +104,13 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 		;
 	op = g_op_tab[i];
 	if ((i = ft_get_size_op(a, &op, arg, new_ln)) == ERROR && ft_fruit(1, &tmp))
-	{
-		i = -1;
-		while (arg[++i])
-			free(arg[i]);
-		ft_fruit(1, &arg);
-		return (ERROR);
-	}
+		return (ft_free_arg(arg));
 	new_ln->size = 1 + op.octet_type_arg + i;
 	i = -1;
 	while (arg[++i])
 		ft_fruit(1, arg + i);
 	ft_fruit(2, &tmp, &arg);
 	return (SUCCESS);
-}
-
-static char	*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln)
-{
-	int		i;
-	char	*ret;
-	char	*tmp;
-
-	if (!(ret = ft_strnew(sizeof(char) * ft_strlen(ln))))
-		exit(EXIT_FAILURE);
-	i = ft_start_i(a, ln, 0);
-	if (ln[i] != '\0')
-	{
-		while (ft_strchr(LABEL_CHARS, ln[++i]) && ln[i])
-			;
-		i++;
-		if (ln[i - 1] == '\0')
-		{
-			new_ln->line = ln;
-			ft_err_msg(a, new_ln, "invalid line", 0);
-			ft_fruit(1, &ret);
-			return (NULL);
-		}
-		if (!(tmp = ft_clean_char_custom(ln + i)))
-			exit(EXIT_FAILURE);
-		ft_memcpy(ret + i, tmp, ft_strlen(tmp));
-		ft_fruit(1, &tmp);
-	}
-	ft_memcpy(ret, ln, i);
-	return (ret);
 }
 
 int			ft_handle_line(t_a *a, char *ln, int num_ln)
