@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 18:50:15 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/14 13:19:07 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/08 19:18:28 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ int			ft_regle_de_merde(char **ret, t_arg *arg)
 		new[sz_n - 2] = (new[sz_n - 1] -= new[sz_n - 1] - 'x') ? '0' : '0';
 	if (!(*ret = ft_strfreejoin(*ret, new, sz_n, arg)))
 		return (ERROR);
-	return (ft_fruit(1, ((arg->cmpt += sz_n) ? new : new)));
+	return (ft_free(1, ((arg->cmpt += sz_n) ? new : new)));
 }
