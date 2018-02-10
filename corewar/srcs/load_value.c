@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:29:46 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 22:35:25 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 12:40:22 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ld(t_process *prc, t_a *a)
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	val = rec_memory(a->mem[prc->pc + 1] >> 6, &curs, a, 0);
-	if (rec_memory(a->mem[prc->pc + 1] == 0xd0))
+	val = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
+	if (rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] == 0xd0))
 	{
 		prc->reg[a->mem[curs]] = (int)mem[(prc->pc
 				+ (val % IDX_MOD)) % MEM_SIZE] << 6;
@@ -45,8 +45,8 @@ void	lld(t_process *prc, t_a *a)
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	val = rec_memory(a->mem[prc->pc + 1] >> 6, &curs, a, 0);
-	if (rec_memory(a->mem[prc->pc + 1] == 0xd0))
+	val = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
+	if (a->mem[(prc->pc + 1) % MEM_SIZE] == 0xd0)
 	{
 		prc->reg[a->mem[curs]] = (int)mem[(prc->pc + val) % MEM_SIZE] << 6;
 		prc->reg[a->mem[curs]] += (int)mem[(prc->pc + val + 1)
@@ -69,10 +69,12 @@ void	ldi(t_process *prc, t_a *a)
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	val = rec_memory(a->mem[prc->pc + 1] >> 6, &curs, a, 0);
-	val = (a->mem[prc->pc + 1] >> 6 & 0x03 == 1) ? prc->reg[val] : val;
-	val2 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 0);
-	val2 = (a->mem[prc->pc + 1] >> 4 & 0x03 == 1) ? prc->reg[val2] : val2;
+	val = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
+	val = (a->mem[(prc->pc + 1) % MEM_SIZE] >> 6 & 0x03 == 1) ?
+		prc->reg[val] : val;
+	val2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	val2 = (a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03 == 1) ?
+		prc->reg[val2] : val2;
 	val = (val + val2) % IDX_MOD;
 	prc->reg[a->mem[curs]] = (int)mem[(prc->pc + val) % MEM_SIZE] << 6;
 	prc->reg[a->mem[curs]] += (int)mem[(prc->pc + val + 1)
@@ -87,14 +89,17 @@ void	lldi(t_process *prc, t_a *a)
 {
 	int		val;
 	int		val2;
-	int		curs = (prc->pc + 2) % MEM_SIZE;
+	int		curs;
 
+	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	val = rec_memory(a->mem[prc->pc + 1] >> 6, &curs, a, 0);
-	val = (a->mem[prc->pc + 1] >> 6 & 0x03 == 1) ? prc->reg[val] : val;
-	val2 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 0);
-	val2 = (a->mem[prc->pc + 1] >> 4 & 0x03 == 1) ? prc->reg[val2] : val2;
+	val = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
+	val = (a->mem[(prc->pc + 1) % MEM_SIZE] >> 6 & 0x03 == 1) ?
+		prc->reg[val] : val;
+	val2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	val2 = (a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03 == 1) ?
+		prc->reg[val2] : val2;
 	val = val + val2;
 	prc->reg[a->mem[curs]] = (int)mem[(prc->pc + val) % MEM_SIZE] << 6;
 	prc->reg[a->mem[curs]] += (int)mem[(prc->pc + val + 1)

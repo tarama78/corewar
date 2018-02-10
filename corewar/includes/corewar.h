@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 22:34:55 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 14:42:09 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 # define SUCCESS 0
 # define ERROR -1
+# define NB_COMM 16
 
 typedef struct			s_op
 {
@@ -68,9 +69,11 @@ typedef struct			s_a
 	uint8_t				mem[MEM_SIZE];
 }						t_a;
 
+void					init_command(void *(**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
 int						check_type(t_process *prc, t_a *a);
+t_process				*add_process(t_a *a, t_process *cpy);
 
 void					add(t_process *prc, t_a *a);
 void					sub(t_process *prc, t_a *a);
@@ -83,5 +86,11 @@ void					ldi(t_process *prc, t_a *a);
 void					lldi(t_process *prc, t_a *a);
 void					st(t_process *prc, t_a *a);
 void					sti(t_process *prc, t_a *a);
+void					ft_aff(t_process *prc, t_a *a);
+void					ft_zjmp(t_process *prc, t_a *a);
+void					live(t_process *prc, t_a *a);
+void					fork(t_process *prc, t_a *a);
+void					lfork(t_process *prc, t_a *a);
+void					move(t_porcess *prc, t_a *a);
 
 #endif

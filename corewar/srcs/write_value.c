@@ -6,53 +6,67 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 22:35:11 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 14:24:23 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	st(t_process *prc, t_a *a)
+static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
+{
+	int		i;
+	char	nb_player;
+
+	nb_player = 0;
+	while (a->player[++nb_player - 1] && nb_player <= MAX_PLAYER)
+		if (a->player[nb_player - 1]->player_number_print == prc->num_player)
+			break ;
+	i = -1;
+	while (++i < 4)
+	{
+		a->mem_info[(prc->pc + addr + i) % MEM_SIZE].cycle = a->cycle;
+		a->mem_info[(prc->pc + addr + i) % MEM_SIZE].player = nb_player;
+		a->mem[(prc->pc + addr + i) % MEM_SIZE];
+		= (uint8_t)prc->reg[reg] >> 6 - (2 * 1);
+	}
+}
+
+void		st(t_process *prc, t_a *a)
 {
 	int		addr;
 	int		curs;
 	int		reg;
 
-	curs = (prc->pc + 2) % mem_size;
-	reg = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 1);
-	addr = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 1);
-	addr = (a->mem[prc->pc + 1] >> 4 & 0x03 == 1) ? prc->reg[addr] : addr;
-	addr = addr % idx_mod;
-	mem[(prc->pc + addr) % mem_size] = (uint8_t)prc->reg[reg] >> 6;
-	mem[(prc->pc + addr + 1) % mem_size]
-		= (uint8_t)prc->reg[mem[reg]] >> 4;
-	mem[(prc->pc + addr + 2) % mem_size]
-		= (uint8_t)prc->reg[mem[reg]] >> 2;
-	mem[(prc->pc + addr + 3) % mem_size]
-		= (uint8_t)prc->reg[mem[reg]];
-	prc->pc = (curs + 1) % mem_size;
+	if (!check_cycle(prc, a))
+		return ;
+	curs = (prc->pc + 2) % MEM_SIZE;
+	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
+	addr = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
+	addr = (a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03 == 1) ?
+		prc->reg[addr] : addr;
+	addr = addr % IDX_MOD;
+	write_in_mem(a, prc, reg, addr);
+	prc->pc = (curs + 1) % MEM_SIZE;
 }
 
-void	sti(t_process *prc, t_a *a)
+void		sti(t_process *prc, t_a *a)
 {
 	int		addr;
 	int		addr2;
 	int		curs;
 	int		reg;
 
-	curs = (prc->pc + 2) % mem_size;
-	reg = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 1);
-	addr = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 1);
-	addr = (a->mem[prc->pc + 1] >> 4 & 0x03 == 1) ? prc->reg[addr] : addr;
-	addr2 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 1);
-	addr = (a->mem[prc->pc + 1] >> 4 & 0x03 == 1) ? prc->reg[addr2] : addr2;
-	addr = (addr + addr2) % idx_mod;
-	mem[(prc->pc + addr) % mem_size] = (uint8_t)prc->reg[reg] >> 6;
-	mem[(prc->pc + addr + 1) % mem_size]
-		= (uint8_t)prc->reg[mem[reg]] >> 4;
-	mem[(prc->pc + addr + 2) % mem_size]
-		= (uint8_t)prc->reg[mem[reg]] >> 2;
-	mem[(prc->pc + addr + 3) % mem_size]
-		= (uint8_t)prc->reg[mem[reg]];
-	prc->pc = (curs + 1) % mem_size;
+	if (!check_cycle(prc, a))
+		return ;
+	curs = (prc->pc + 2) % MEM_SIZE;
+	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
+	addr = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
+	addr = (a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03 == 1) ?
+		prc->reg[addr] : addr;
+	addr2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
+	addr = (a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03 == 1) ?
+		prc->reg[addr2] : addr2;
+	addr = (addr + addr2) % IDX_MOD;
+	write_in_mem(a, prc, reg, addr);
+	prc->pc = (curs + 1) % MEM_SIZE;
 }

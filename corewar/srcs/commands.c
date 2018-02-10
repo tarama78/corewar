@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 22:04:26 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 13:59:50 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,27 @@
 
 int		check_cycle(t_process *prc, t_a *a)
 {
+	char	nb_player;
+
 	if (prc->cycle_wait == -1)
 	{
 		while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
 			;
 		prc->cycle_wait = g_op_tab[i].nb_cycle;
+		a->mem_info[prc->pc].process = 1;
+		nb_player = 0;
+		while (a->player[++nb_player - 1] && nb_player <= MAX_PLAYER)
+			if (a->player[nb_player - 1]->player_number_print == prc->num_player)
+				break ;
+		a->mem_info[prc->pc].player_process = nb_player;
 	}
 	else if (prc->cycle_wait >= 0)
 		prc->cycle_wait--;
 	if (prc->cycle_wait == -1)
+	{
+		a->mem_info[prc->pc]->process = 0;
 		return (1);
+	}
 	return (0);
 }
 

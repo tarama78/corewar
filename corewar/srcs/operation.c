@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:22:41 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 22:24:53 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 12:35:57 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	add(t_process *prc, t_a *a)
 		return ;
 	if (a->mem[prc->pc + 1] & 0x54 == 0)
 	{
-		prc->reg[a->mem[prc->pc + 4]] =
-			prc->reg[a->mem[prc->pc + 2]]
-			+ prc->reg[a->mem[prc->pc + 3]];
+		prc->reg[a->mem[(prc->pc + 4) % MEM_SIZE]] =
+			prc->reg[a->mem[(prc->pc + 2) % MEMSIZE]]
+			+ prc->reg[a->mem[(prc->pc + 3) % MEMSIZE]];
 	}
 	prc->pc = (prc->pc + 5) % MEM_SIZE;
 	prc->carry = (prc->carry + 1) % 2;
@@ -49,8 +49,8 @@ void	f_or(t_process *prc, t_a *a)
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	v1 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 0);
-	v2 = rec_memory(a->mem[prc->pc + 1] >> 6, &curs, a, 0);
+	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	v2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
 	prc->reg[a->mem[curs]] = v1 | v2;
 	prc->pc = (curs + 1) % MEM_SIZE;
 	prc->carry = (prc->carry + 1) % 2;
@@ -65,8 +65,8 @@ void	f_xor(t_process *prc, t_a *a)
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	v1 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 0);
-	v2 = rec_memory(a->mem[prc->pc + 1] >> 6, &curs, a, 0);
+	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	v2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
 	prc->reg[a->mem[curs]] = v1 ^ v2;
 	prc->pc = (curs + 1) % MEM_SIZE;
 	prc->carry = (prc->carry + 1) % 2;
@@ -81,8 +81,8 @@ void	f_and(t_process *prc, t_a *a)
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	v1 = rec_memory(a->mem[prc->pc + 1] >> 4, &curs, a, 0);
-	v2 = rec_memory(a->mem[prc->pc + 1] >> 6, &curs, a, 0);
+	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	v2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
 	prc->reg[a->mem[curs]] = v1 & v2;
 	prc->pc = (curs + 1) % MEM_SIZE;
 	prc->carry = (prc->carry + 1) % 2;
