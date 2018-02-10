@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:29:46 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 22:34:09 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 23:27:31 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,12 @@ void	ldi(t_process *prc, t_a *a)
 		prc->reg[val2] : val2;
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
 	val = (val + val2) % IDX_MOD;
-	prc->reg[reg] = (int)a->mem[(prc->pc + val) % MEM_SIZE] << 24;
-	prc->reg[reg] += (int)a->mem[(prc->pc + val + 1)
+	prc->reg[reg] = a->mem[(prc->pc + val) % MEM_SIZE] << 24;
+	prc->reg[reg] += a->mem[(prc->pc + val + 1)
 		% MEM_SIZE] << 16;
-	prc->reg[reg] += (int)a->mem[(prc->pc + val + 2)
+	prc->reg[reg] += a->mem[(prc->pc + val + 2)
 		% MEM_SIZE] << 8;
-	prc->reg[reg] += (int)a->mem[(prc->pc + val + 3) % MEM_SIZE];
-	ft_printf("        %#x", prc->reg[reg]);
+	prc->reg[reg] += a->mem[(prc->pc + val + 3) % MEM_SIZE];
 	prc->pc = curs;
 	prc->carry = (prc->carry + 1) % 2;
 }

@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 21:45:12 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 23:15:41 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,6 @@ int		check_cycle(t_process *prc, t_a *a)
 	}
 	return (0);
 }
-
-/*static int		revers_byte(int val, int size)
-{
-	int	rev_val;
-	int	check;
-	int	byte = size - 1;
-
-	rev_val = 0;
-	check = 1;
-	while (byte >= 0)
-	{
-		rev_val += ((val >> byte) & (check << (size - byte + 1 + (32 - size))));
-		byte--;
-	}
-	return (rev_val);
-}*/
 
 int		rec_memory(char type, int *curs, t_a *a, int addr)
 {

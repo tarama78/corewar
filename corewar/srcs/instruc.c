@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/10 21:44:12 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 23:26:42 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_aff(t_process *prc, t_a *a)
 
 	i = 4;
 	if (!(check_cycle(prc, a)))
-			return ;
+		return ;
 	value = prc->reg[a->mem[(prc->pc + 2 % MEM_SIZE)]];
 	octet = (char*)&value;
 	while (--i >= 0)
@@ -35,7 +35,7 @@ void	ft_zjmp(t_process *prc, t_a *a)
 
 	curs = (prc->pc + 1) % MEM_SIZE;
 	if (!(check_cycle(prc, a)))
-			return ;
+		return ;
 	addr = rec_memory(3, &curs, a, 0);
 	addr = addr % IDX_MOD;
 	if (prc->carry == 1)
@@ -51,7 +51,7 @@ void	live(t_process *prc, t_a *a)
 	int		i;
 
 	if (!(check_cycle(prc, a)))
-			return ;
+		return ;
 	curs = (prc->pc + 1) % MEM_SIZE;
 	player_nb = rec_memory(2, &curs, a, 0);
 	prc->live = 1;
@@ -74,7 +74,7 @@ void	ft_fork(t_process *prc, t_a *a)
 
 	curs = (prc->pc + 1) % MEM_SIZE;
 	if (!(check_cycle(prc, a)))
-			return ;
+		return ;
 	addr = rec_memory(3, &curs, a, 0);
 	addr = addr % IDX_MOD;
 	new_prc = add_process(a, prc);
@@ -90,7 +90,7 @@ void	lfork(t_process *prc, t_a *a)
 
 	curs = (prc->pc + 1) % MEM_SIZE;
 	if (!(check_cycle(prc, a)))
-			return ;
+		return ;
 	addr = rec_memory(3, &curs, a, 0);
 	new_prc = add_process(a, prc);
 	new_prc->pc = (prc->pc + addr) % MEM_SIZE;
