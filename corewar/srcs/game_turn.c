@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 18:58:52 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 22:13:41 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static void		kill_prc(t_a *a)
 			tmp = prc->next->next;
 			free(prc->next);
 			prc->next = tmp;
-		}	
+		}
+		prc = prc->next;
 	}
 }
 
@@ -48,8 +49,8 @@ static int		new_cycle(t_a *a)
 	i = -1;
 	while (++i < a->num_of_player)
 	{
-		a->live += a->player[i].nb_live_current;
-		a->player[i].nb_live_current = 0;
+		a->live += a->player[i + 1].nb_live_current;
+		a->player[i + 1].nb_live_current = 0;
 	}
 	if (a->live >= NBR_LIVE || (a->cycle - a->last_dec_cycle >= MAX_CHECKS))
 	{
@@ -70,11 +71,13 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 	ft_printf("%d\n", a->cycle_to_die);
 	while (a->process && getch() != 27)
 	{
-		a->cycle++;
 		if (a->cycle >= nxt_cycle_die)
 			nxt_cycle_die += new_cycle(a);
+		if (!a->process)
+			return ;
 		game_turn(a, f);
 		ft_print(a);
+		a->cycle++;
 	}
 }
 
