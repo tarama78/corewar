@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:21:37 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/09 22:47:47 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 16:19:52 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	check_label_name(t_a *a, int id_label, t_line *line)
 	int	i;
 
 	i = -1;
-	while (a->label[++i].name)
+	while (++i < a->nb_label)
 		if (!ft_strcmp(a->label[i].name, a->label[id_label].name)
 				&& i != id_label)
 		{

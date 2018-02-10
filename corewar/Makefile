@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/10 15:55:46 by bcozic           ###   ########.fr        #
+#    Updated: 2018/02/10 16:05:43 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,10 @@ FILES = main.c\
 		write_value.c\
 		instruc.c\
 		operation.c\
+		ncurses/init.c\
+		ncurses/color.c\
+		ncurses/print.c\
+		ncurses/free_nc.c\
 		../../commun/srcs/op.c\
 
 HFILES = includes/corewar.h \
@@ -71,7 +75,7 @@ all:
 
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT)
 	@printf $(CYAN)"-> create program : $(NAME)\n"$(NORMAL)
-	@$(CC) -o $(NAME) $(OBJS) $(INC) $(CFLAGS) $(LIBFT_LIB)
+	@$(CC) -o $(NAME) $(OBJS) $(INC) $(CFLAGS) $(LIBFT_LIB) -lncurses -lm
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(HFILES)
 	@printf $(YELLOW)"-> $<\n"$(NORMAL)
