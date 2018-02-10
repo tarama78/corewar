@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 14:24:23 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 14:50:29 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 	char	nb_player;
 
 	nb_player = 0;
-	while (a->player[++nb_player - 1] && nb_player <= MAX_PLAYER)
+	while (++nb_player <= a->num_of_player)
 		if (a->player[nb_player - 1]->player_number_print == prc->num_player)
 			break ;
 	i = -1;
