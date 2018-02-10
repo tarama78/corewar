@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:10:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 15:15:37 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 15:48:59 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ static void	ft_exec(t_a *a)
 	ft_print(a);
 	while ((ch = getch()) != 27)
 	{
+		/////////////////////////////////////
+		a->mem_info[ch].process = 1;
+		a->mem_info[ch].player_process = 1;
+		a->cycle = ch;
+		/////////////////////////////////////
 		ft_print(a);
 		usleep(50);
 	}

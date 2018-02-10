@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 15:21:29 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 15:52:55 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,21 +92,26 @@ static void	ft_print_player(t_a *a, int n)
 	wattron(a->nc.win_player[n], a->nc.color.player[n + 1] | A_BOLD);
 	wprintw(a->nc.win_player[n], "%.*s", WIN_W - 13, a->player[n].name);
 	wattroff(a->nc.win_player[n], a->nc.color.player[n + 1] | A_BOLD);
+	wattron(a->nc.win_player[n], a->nc.color.text);
+	mvwprintw(a->nc.win_player[n], 3, 4, "Process: %23d", a->player[n].nb_process);
+	mvwprintw(a->nc.win_player[n], 4, 4, "Last live: %21d", a->player[n].nb_process);
+	mvwprintw(a->nc.win_player[n], 5, 4, "Last live in cur period: %7d", a->player[n].nb_process);
+	wattroff(a->nc.win_player[n], a->nc.color.text);
 }
 
 void		ft_print(t_a *a)
 {
 	int		i;
 
-	clear();
 	ft_print_border(a);
 	ft_print_memory(a);
+	wrefresh(a->nc.win_mem);
 	ft_print_info(a);
+	wrefresh(a->nc.win_info);
 	i = -1;
 	while (++i < a->num_of_player)
 	{
 		ft_print_player(a, i);
+		wrefresh(a->nc.win_player[i]);
 	}
-//	wrefresh(a->nc.win_mem);
-	refresh();
 }
