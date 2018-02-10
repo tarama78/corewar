@@ -6,14 +6,26 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/09 15:33:10 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/10 16:05:43 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = corewar
 
 FILES = main.c\
-		../../commun/srcs/op.c
+		ft_is_int.c\
+		lst_process.c\
+		commands.c\
+		init_command.c\
+		load_value.c\
+		write_value.c\
+		instruc.c\
+		operation.c\
+		ncurses/init.c\
+		ncurses/color.c\
+		ncurses/print.c\
+		ncurses/free_nc.c\
+		../../commun/srcs/op.c\
 
 HFILES = includes/corewar.h \
 		 ../commun/includes/op.h \
@@ -63,7 +75,7 @@ all:
 
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT)
 	@printf $(CYAN)"-> create program : $(NAME)\n"$(NORMAL)
-	@$(CC) -o $(NAME) $(OBJS) $(INC) $(CFLAGS) $(LIBFT_LIB)
+	@$(CC) -o $(NAME) $(OBJS) $(INC) $(CFLAGS) $(LIBFT_LIB) -lncurses -lm
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(HFILES)
 	@printf $(YELLOW)"-> $<\n"$(NORMAL)
