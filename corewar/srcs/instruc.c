@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/10 23:26:42 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 23:47:23 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void	lfork(t_process *prc, t_a *a)
 	new_prc = add_process(a, prc);
 	new_prc->pc = (prc->pc + addr) % MEM_SIZE;
 	prc->pc = curs;
+	prc->carry = (prc->carry + 1) % 2;
 }
