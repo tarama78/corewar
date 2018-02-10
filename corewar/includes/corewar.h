@@ -42,17 +42,20 @@ typedef struct			s_process
 {
 	struct s_process	*next;
 	int					num_player;
-	int					reg[NB_REG];
+	int					reg[REG_NUMBER];
 	int					pc;
 	int					cycle_wait;
-	bool				carry;
-	bool				live;
+  int				carry;
+  int				live;
 }						t_process;
+
 
 typedef struct			s_player
 {
-	char				name[NAME_SIZE + 1];
-	char				comment[COMMENT_SIZE + 1];
+	char				name[PROG_NAME_LENGTH + 1];
+	char				comment[COMMENT_LENGTH + 1];
+	uint8_t				mem[CHAMP_MAX_SIZE];
+	int					mem_size;
 	int					player_number_print;
 	int					last_live_cycle;
 	int					nb_live_total;
@@ -60,15 +63,34 @@ typedef struct			s_player
 	size_t				nb_process;
 }						t_player;
 
+typedef struct			s_champ_file
+{
+	int					player_number_print;	
+	char				*filename;
+}						t_champ_file;
+
+typedef struct			s_mem_info
+{
+	uint64_t			cycle : 32; //cycle de changement de couleur (pour le surlignement)
+	uint64_t			player : 8; //numero du joueur (pour definir la couleur) commence a 1 (0 = aucun joueur)
+	uint64_t			process : 1; //= 1 si il y as un process sur la case`
+	uint64_t			pad : 23; //libre pour stocker d'autres info
+}						t_mem_info;
+
 typedef struct			s_a
 {
 	t_process			*process;
-	t_player			player[MAX_PLAYER];
+	t_player			player[MAX_PLAYERS];
+	t_champ_file		file[MAX_PLAYERS];
+	int					num_of_player;
+	int					dump_cycle;
 	int					cycle_to_die;
 	uint64_t			cycle;
 	uint8_t				mem[MEM_SIZE];
+	t_mem_info			mem_info[MEM_SIZE];
 }						t_a;
 
+int	ft_is_uint(char *str, int *num);
 void					init_command(void *(**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
