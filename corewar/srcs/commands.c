@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 18:55:15 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 21:45:12 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,39 +40,54 @@ int		check_cycle(t_process *prc, t_a *a)
 	return (0);
 }
 
+/*static int		revers_byte(int val, int size)
+{
+	int	rev_val;
+	int	check;
+	int	byte = size - 1;
+
+	rev_val = 0;
+	check = 1;
+	while (byte >= 0)
+	{
+		rev_val += ((val >> byte) & (check << (size - byte + 1 + (32 - size))));
+		byte--;
+	}
+	return (rev_val);
+}*/
+
 int		rec_memory(char type, int *curs, t_a *a, int addr)
 {
 	int		val;
 
 	val = 0;
-	if ((type & 0x03) == 0x03 && !addr)
+	if ((type & 0x03) == 0x02 && !addr)
 	{
-		val = a->mem[*curs] << 6;
+		val = a->mem[*curs] << 24;
 		*curs = (*curs + 1) % MEM_SIZE;
-		val += a->mem[*curs] << 4;
+		val += a->mem[*curs] << 16;
 		*curs = (*curs + 1) % MEM_SIZE;
-		val += a->mem[*curs] << 2;
+		val += a->mem[*curs] << 8;
 		*curs = (*curs + 1) % MEM_SIZE;
 		val += a->mem[*curs];
 		*curs = (*curs + 1) % MEM_SIZE;
 	}
-	else if (type & 0x02)
+	else if ((type & 0x03) > 1)
 	{
-		val = a->mem[*curs] << 2;
+		val = a->mem[*curs] << 8;
 		*curs = (*curs + 1) % MEM_SIZE;
-		val += a->mem[*curs];
+		val = (char)a->mem[*curs];
 		*curs = (*curs + 1) % MEM_SIZE;
+
 	}
 	else if (type & 0x01)
 	{
 		val = a->mem[*curs];
+		val = val % (REG_NUMBER + 1);
 		*curs = (*curs + 1) % MEM_SIZE;
 	}
 	return (val);
 }
-
-//UTILISE AVANT LE TABLEAU DE POINTEUR SUR FONCTION,
-//SI NON VALIDE, AVANCER D'UNE CASE
 
 int		check_type(t_process *prc, t_a *a)
 {

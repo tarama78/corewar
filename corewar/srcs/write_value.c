@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 19:01:49 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 21:44:28 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 		a->mem_info[(prc->pc + addr + i) % MEM_SIZE].cycle = a->cycle;
 		a->mem_info[(prc->pc + addr + i) % MEM_SIZE].player = nb_player;
 		a->mem[(prc->pc + addr + i) % MEM_SIZE]
-		= (char)prc->reg[reg] >> (6 - (2 * 1));
+		= (char)(prc->reg[reg] >> (6 - (2 * i)));
 	}
 }
 
@@ -40,13 +40,13 @@ void		st(t_process *prc, t_a *a)
 	if (!check_cycle(prc, a))
 		return ;
 	curs = (prc->pc + 2) % MEM_SIZE;
-	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
+	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 1);
 	addr = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
 	addr = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
 		prc->reg[addr] : addr;
 	addr = addr % IDX_MOD;
 	write_in_mem(a, prc, reg, addr);
-	prc->pc = (curs + 1) % MEM_SIZE;
+	prc->pc = curs;
 }
 
 void		sti(t_process *prc, t_a *a)
@@ -59,14 +59,14 @@ void		sti(t_process *prc, t_a *a)
 	if (!check_cycle(prc, a))
 		return ;
 	curs = (prc->pc + 2) % MEM_SIZE;
-	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
+	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
 	addr = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
 	addr = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
 		prc->reg[addr] : addr;
-	addr2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
-	addr = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
+	addr2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 1);
+	addr2 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 2 & 0x03) == 1) ?
 		prc->reg[addr2] : addr2;
 	addr = (addr + addr2) % IDX_MOD;
 	write_in_mem(a, prc, reg, addr);
-	prc->pc = (curs + 1) % MEM_SIZE;
+	prc->pc = curs;
 }
