@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 15:19:30 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 15:42:58 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct			s_a
 }						t_a;
 
 int	ft_is_uint(char *str, int *num);
-void					init_command(void *(**f)(t_process *, t_a *));
+void					init_command(void (**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
 int						check_type(t_process *prc, t_a *a);
@@ -146,7 +146,7 @@ void					ft_zjmp(t_process *prc, t_a *a);
 void					live(t_process *prc, t_a *a);
 void					ft_fork(t_process *prc, t_a *a);
 void					lfork(t_process *prc, t_a *a);
-void					move(t_process *prc, t_a *a);
+void					ft_move(t_process *prc, t_a *a);
 
 /*
 ** ncurses

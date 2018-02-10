@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:22:41 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 12:35:57 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 15:52:37 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	add(t_process *prc, t_a *a)
 {
 	if (!check_cycle(prc, a))
 		return ;
-	if (a->mem[prc->pc + 1] & 0x54 == 0)
+	if ((a->mem[prc->pc + 1] & 0x54) == 0)
 	{
 		prc->reg[a->mem[(prc->pc + 4) % MEM_SIZE]] =
-			prc->reg[a->mem[(prc->pc + 2) % MEMSIZE]]
-			+ prc->reg[a->mem[(prc->pc + 3) % MEMSIZE]];
+			prc->reg[a->mem[(prc->pc + 2) % MEM_SIZE]]
+			+ prc->reg[a->mem[(prc->pc + 3) % MEM_SIZE]];
 	}
 	prc->pc = (prc->pc + 5) % MEM_SIZE;
 	prc->carry = (prc->carry + 1) % 2;
@@ -30,7 +30,7 @@ void	sub(t_process *prc, t_a *a)
 {
 	if (!check_cycle(prc, a))
 		return ;
-	if (a->mem[prc->pc + 1] & 0x54 == 0)
+	if ((a->mem[prc->pc + 1] & 0x54) == 0)
 	{
 		prc->reg[a->mem[prc->pc + 4]] =
 			prc->reg[a->mem[prc->pc + 2]]
