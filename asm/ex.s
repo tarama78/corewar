@@ -1,4 +1,4 @@
-.name "zork"
+.name "heofhhfrioehfijsfkljlkdjsf;djgkljfdsklgjklfdhgfdjsgkljdklgjkldfsjglk;djsglk;djsgkl;jdsklgjfdkljgkldfjsgkl;dfsjg;'lsfdkgl';"
 .comment "just a basic living prog"
 
 l2:	sti	r1,%:live,%1
