@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 14:42:09 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 15:46:36 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct			s_player
 
 typedef struct			s_champ_file
 {
-	int					player_number_print;	
+	int					player_number_print;
 	char				*filename;
 }						t_champ_file;
 
@@ -122,30 +122,30 @@ typedef struct			s_a
 	t_mem_info			mem_info[MEM_SIZE];
 }						t_a;
 
-int	ft_is_uint(char *str, int *num);
-void					init_command(void *(**f)(t_process *, t_a *));
-int						check_cycle(t_process *prc, t_a *a);
-int						rec_memory(char type, int *curs, t_a *a, int addr);
-int						check_type(t_process *prc, t_a *a);
-t_process				*add_process(t_a *a, t_process *cpy);
-
-void					add(t_process *prc, t_a *a);
-void					sub(t_process *prc, t_a *a);
-void					f_or(t_process *prc, t_a *a);
-void					f_xor(t_process *prc, t_a *a);
-void					f_and(t_process *prc, t_a *a);
-void					ld(t_process *prc, t_a *a);
-void					lld(t_process *prc, t_a *a);
-void					ldi(t_process *prc, t_a *a);
-void					lldi(t_process *prc, t_a *a);
-void					st(t_process *prc, t_a *a);
-void					sti(t_process *prc, t_a *a);
-void					ft_aff(t_process *prc, t_a *a);
-void					ft_zjmp(t_process *prc, t_a *a);
-void					live(t_process *prc, t_a *a);
-void					fork(t_process *prc, t_a *a);
-void					lfork(t_process *prc, t_a *a);
-void					move(t_porcess *prc, t_a *a);
+//int	ft_is_uint(char *str, int *num);
+//void					init_command(void *(**f)(t_process *, t_a *));
+//int						check_cycle(t_process *prc, t_a *a);
+//int						rec_memory(char type, int *curs, t_a *a, int addr);
+//int						check_type(t_process *prc, t_a *a);
+//t_process				*add_process(t_a *a, t_process *cpy);
+//
+//void					add(t_process *prc, t_a *a);
+//void					sub(t_process *prc, t_a *a);
+//void					f_or(t_process *prc, t_a *a);
+//void					f_xor(t_process *prc, t_a *a);
+//void					f_and(t_process *prc, t_a *a);
+//void					ld(t_process *prc, t_a *a);
+//void					lld(t_process *prc, t_a *a);
+//void					ldi(t_process *prc, t_a *a);
+//void					lldi(t_process *prc, t_a *a);
+//void					st(t_process *prc, t_a *a);
+//void					sti(t_process *prc, t_a *a);
+//void					ft_aff(t_process *prc, t_a *a);
+//void					ft_zjmp(t_process *prc, t_a *a);
+//void					live(t_process *prc, t_a *a);
+//void					fork(t_process *prc, t_a *a);
+//void					lfork(t_process *prc, t_a *a);
+//void					move(t_porcess *prc, t_a *a);
 
 /*
 ** ncurses
