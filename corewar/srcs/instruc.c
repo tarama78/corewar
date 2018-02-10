@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/10 13:26:19 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 15:19:26 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	live(t_process *prc, t_a *a)
 	prc->pc = (curs + 1) % MEM_SIZE;
 }
 
-void	fork(t_process *prc, t_a *a)
+void	ft_fork(t_process *prc, t_a *a)
 {
 	int			addr;
 	int			curs;

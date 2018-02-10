@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/09 15:33:10 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/10 15:17:29 by bcozic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = corewar
 
 FILES = main.c\
 		ft_is_int.c\
+		lst_process.c\
 		../../commun/srcs/op.c\
 
 HFILES = includes/corewar.h \

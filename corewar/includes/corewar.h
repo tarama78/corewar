@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 14:42:09 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 15:19:30 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct			s_process
 {
 	struct s_process	*next;
 	int					num_player;
-	int					reg[REG_NUMBER];
+	int					reg[REG_NUMBER + 1];
 	int					pc;
 	int					cycle_wait;
   int				carry;
@@ -96,6 +96,7 @@ int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
 int						check_type(t_process *prc, t_a *a);
 t_process				*add_process(t_a *a, t_process *cpy);
+t_process				*first_process(t_a *a, int player, int offset);
 
 void					add(t_process *prc, t_a *a);
 void					sub(t_process *prc, t_a *a);
@@ -111,8 +112,8 @@ void					sti(t_process *prc, t_a *a);
 void					ft_aff(t_process *prc, t_a *a);
 void					ft_zjmp(t_process *prc, t_a *a);
 void					live(t_process *prc, t_a *a);
-void					fork(t_process *prc, t_a *a);
+void					ft_fork(t_process *prc, t_a *a);
 void					lfork(t_process *prc, t_a *a);
-void					move(t_porcess *prc, t_a *a);
+void					move(t_process *prc, t_a *a);
 
 #endif
