@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 15:34:59 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 15:22:15 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,13 +228,15 @@ void	ft_load_memory(t_a *a)
 {
 	int offset;
 	int	i;
+	t_process	*new_prc;
 
 	i = 0;
 	offset = MEM_SIZE / a->num_of_player;
 	while (i < a->num_of_player)
 	{
 		ft_load_memory_player(a->mem + (offset * i), a->mem_info + (offset * i), &(a->player[i]), i + 1);
-		++i;	
+		new_prc = first_process(a, i, offset);
+		++i;
 	}
 }
 
@@ -253,4 +255,5 @@ int			main(int ac, char **av)
 		return (0);
 	}
 	ft_load_memory(&a);
+	//resolv_game(&a)
 }
