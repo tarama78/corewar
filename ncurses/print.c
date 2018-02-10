@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 14:14:24 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 15:21:29 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,25 @@
 #include "../commun/includes/op.h"
 #include "../corewar/includes/corewar.h"
 
+static void	ft_print_border(t_a *a)
+{
+	int		i;
+
+	wattron(a->nc.win_mem, a->nc.color.border);
+	wborder(a->nc.win_mem, '|', '|', '-', '-', '+', '+', '+', '+');
+	wattroff(a->nc.win_mem, a->nc.color.border);
+	wattron(a->nc.win_info, a->nc.color.border);
+	wborder(a->nc.win_info, '|', '|', '-', '-', '+', '+', '+', '+');
+	wattroff(a->nc.win_info, a->nc.color.border);
+	i = -1;
+	while (++i < a->num_of_player)
+	{
+		wattron(a->nc.win_player[i], a->nc.color.border);
+		wborder(a->nc.win_player[i], '|', '|', '-', '-', '+', '+', '+', '+');
+		wattroff(a->nc.win_player[i], a->nc.color.border);
+	}
+}
+
 static void	ft_print_memory(t_a *a)
 {
 	int		i;
@@ -35,9 +54,6 @@ static void	ft_print_memory(t_a *a)
 	int		k;
 	int		color;
 
-	wattron(a->nc.win_mem, a->nc.color.border);
-	wborder(a->nc.win_mem, '|', '|', '-', '-', '+', '+', '+', '+');
-	wattroff(a->nc.win_mem, a->nc.color.border);
 	i = 1;
 	k = 0;
 	while (++i < a->nc.sqrt_mem_size + 1)
@@ -60,9 +76,37 @@ static void	ft_print_memory(t_a *a)
 	}
 }
 
+static void	ft_print_info(t_a *a)
+{
+	wattron(a->nc.win_info, a->nc.color.text);
+	mvwprintw(a->nc.win_info, 1, WIN_W / 2 - 4, "COREWAR");
+	mvwprintw(a->nc.win_info, 2, 2, "Cycle: %d", a->cycle);
+	wattroff(a->nc.win_info, a->nc.color.text);
+}
+
+static void	ft_print_player(t_a *a, int n)
+{
+	wattron(a->nc.win_player[n], a->nc.color.text);
+	mvwprintw(a->nc.win_player[n], 1, 2, "Player %d: ", n + 1);
+	wattroff(a->nc.win_player[n], a->nc.color.text);
+	wattron(a->nc.win_player[n], a->nc.color.player[n + 1] | A_BOLD);
+	wprintw(a->nc.win_player[n], "%.*s", WIN_W - 13, a->player[n].name);
+	wattroff(a->nc.win_player[n], a->nc.color.player[n + 1] | A_BOLD);
+}
+
 void		ft_print(t_a *a)
 {
+	int		i;
+
 	clear();
+	ft_print_border(a);
 	ft_print_memory(a);
-	wrefresh(a->nc.win_mem);
+	ft_print_info(a);
+	i = -1;
+	while (++i < a->num_of_player)
+	{
+		ft_print_player(a, i);
+	}
+//	wrefresh(a->nc.win_mem);
+	refresh();
 }

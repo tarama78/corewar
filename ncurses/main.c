@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:10:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 14:20:43 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 15:15:37 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,18 @@
 #include "../commun/includes/op.h"
 #include "../corewar/includes/corewar.h"
 
+//int		termfd;
+
 static void	ft_exec(t_a *a)
 {
 	int		ch;
-	int		time_start;
 
 	ft_init(a);
 	ft_print(a);
 	while ((ch = getch()) != 27)
 	{
-		time_start = clock();
 		ft_print(a);
-		wattron(a->nc.win_mem, a->nc.color.text);
-		mvwprintw(a->nc.win_mem, 1, 1, "time: %d", time_start);
-		wattroff(a->nc.win_mem, a->nc.color.text);
-		wrefresh(a->nc.win_mem);
+		usleep(50);
 	}
 	ft_free_nc(a);
 }
@@ -126,9 +123,14 @@ int			main(int ac, char **av)
 	t_a		a;
 	int		i;
 
+//	termfd = open("/dev/ttys003", O_RDWR);
 	(void)ac;
 	(void)av;
+	ft_strcpy(a.player[0].name, "percevaliodfhodhgjkhfdsjkhgjkdlshgljkdfhglkjsdhjkgdhfsjkghdsjklghlkjsdfhgfdjkls");
+	ft_strcpy(a.player[1].name, "serge");
+	ft_strcpy(a.player[2].name, "seksek");
 	a.cycle = 0;
+	a.num_of_player = 2;
 	ft_memset(a.mem, 0, MEM_SIZE);
 	i = -1;
 	while (++i < MEM_SIZE)
@@ -170,5 +172,6 @@ int			main(int ac, char **av)
 		a.mem_info[i].player = 2;
 	}
 	ft_exec(&a);
+//	close(termfd);
 	return (0);
 }

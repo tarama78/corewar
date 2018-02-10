@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 12:20:08 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 14:21:53 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 14:50:09 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_color		ft_init_color()
 	int		i;
 	int		start_i;
 
-	init_pair(1, COLOR_BLACK, COLOR_BLACK);
+	init_pair(1, COLOR_WHITE, COLOR_BLACK);
 	c.border = COLOR_PAIR(1) | A_BOLD;
 	init_pair(2, COLOR_BLACK, COLOR_BLACK);
 	c.black = COLOR_PAIR(2);

@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:25:45 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 13:27:47 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 14:53:58 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 
 void		ft_free_nc(t_a *a)
 {
+	int		i;
+
 	ft_fruit(2, &a->nc.win_mem, &a->nc.win_info);
+	i = -1;
+	while (++i < a->num_of_player)
+		ft_fruit(1, &a->nc.win_player[i]);
 	endwin();
 }

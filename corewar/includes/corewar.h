@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 14:16:44 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 15:17:02 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ typedef struct			s_player
 # include <time.h>
 # define NB_COLORS 6
 # define TIME_BOLD_MEM 50
+# define WIN_H 10
+# define WIN_W 50
 typedef struct	s_color
 {
 	int			border;
@@ -80,6 +82,7 @@ typedef struct	s_ncurses
 {
 	WINDOW		*win_mem;
 	WINDOW		*win_info;
+	WINDOW		*win_player[MAX_PLAYERS];
 	int			sqrt_mem_size;
 	t_color		color;
 }				t_ncurses;
@@ -103,6 +106,7 @@ typedef struct			s_a
 	uint64_t			cycle;
 	uint8_t				mem[MEM_SIZE];
 	t_mem_info			mem_info[MEM_SIZE];
+	int					num_of_player;
 	t_ncurses			nc;
 }						t_a;
 
