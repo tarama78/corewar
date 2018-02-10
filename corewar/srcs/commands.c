@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 15:40:29 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 18:55:15 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		check_type(t_process *prc, t_a *a)
 {
 	int		i;
 	int		j;
-	int		arg_code;
+	char	arg_code;
 	int		tmp;
 
 	i = -1;
@@ -88,7 +88,10 @@ int		check_type(t_process *prc, t_a *a)
 		;
 	if (g_op_tab[i].opcode != a->mem[prc->pc])
 		return (0);
-	while (g_op_tab[i].type_arg[++j])
+	if (a->mem[prc->pc] == 1 || a->mem[prc->pc] == 9
+			|| a->mem[prc->pc] == 12 || a->mem[prc->pc] == 15)
+		return (1);
+	while (++j < g_op_tab[i].nb_arg)
 	{
 		tmp = arg_code >> 6;
 		if (tmp == 1 && ((g_op_tab[i].type_arg[j] & 0x01) != 0x1))

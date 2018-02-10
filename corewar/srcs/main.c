@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 16:26:14 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 18:15:31 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ void	ft_load_memory(t_a *a)
 int			main(int ac, char **av)
 {
 	t_a a;
+	void	(*f[NB_COMM + 1])(t_process *prc, t_a *a);
 
 	if (ac == 1)
 		ft_usage(1);
@@ -255,13 +256,15 @@ int			main(int ac, char **av)
 		return (0);
 	}
 	ft_load_memory(&a);
+	a.cycle_to_die = CYCLE_TO_DIE;
 	ft_init(&a);//ncurses
-	ft_print(&a);
-	while (getch() != 27)
-	{
-		ft_print(&a);
-		usleep(50);
-	}
+//	ft_print(&a);
+//	while (getch() != 27)
+//	{
+//		ft_print(&a);
+//		usleep(50);
+//	}
+	init_command(f);
+	game_loop(&a, f);
 	ft_free_nc(&a);//ncurses
-	//resolv_game(&a)
 }

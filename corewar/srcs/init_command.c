@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 14:26:17 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 15:43:15 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 18:58:38 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ void	init_command(void (**f)(t_process *, t_a *))
 
 void	ft_move(t_process *prc, t_a *a)
 {
-	(void)a;
+	char	i;
+
+	i = 0;
+	a->mem_info[prc->pc].process = 0;
+	while (++i <= a->num_of_player)
+		if (a->player[i - 1].player_number_print == prc->num_player)
+			break ;
 	prc->pc = (prc->pc + 1) % MEM_SIZE;
+	a->mem_info[prc->pc].process = 1;
+	a->mem_info[prc->pc].player_process = i;
 }

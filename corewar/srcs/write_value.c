@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 15:48:40 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 19:01:49 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 		a->mem_info[(prc->pc + addr + i) % MEM_SIZE].cycle = a->cycle;
 		a->mem_info[(prc->pc + addr + i) % MEM_SIZE].player = nb_player;
 		a->mem[(prc->pc + addr + i) % MEM_SIZE]
-		= (uint8_t)prc->reg[reg] >> (6 - (2 * 1));
+		= (char)prc->reg[reg] >> (6 - (2 * 1));
 	}
 }
 

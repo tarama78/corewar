@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/10 16:05:43 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/10 17:46:14 by bcozic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ FILES = main.c\
 		write_value.c\
 		instruc.c\
 		operation.c\
+		game_turn.c\
 		ncurses/init.c\
 		ncurses/color.c\
 		ncurses/print.c\

@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/10 15:53:12 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 18:33:52 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ void	live(t_process *prc, t_a *a)
 	int		curs;
 	int		i;
 
+	if (!(check_cycle(prc, a)))
+			return ;
 	curs = (prc->pc + 1) % MEM_SIZE;
 	player_nb = rec_memory(3, &curs, a, 0);
 	prc->live = 1;
 	i = -1;
-	while (i < a->num_of_player)
+	while (++i < a->num_of_player)
 		if (a->player[i].player_number_print == player_nb)
 		{
 			a->player[i].last_live_cycle = (int)a->cycle;
