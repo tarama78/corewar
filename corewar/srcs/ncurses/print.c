@@ -77,9 +77,17 @@ static void	ft_print_memory(t_a *a)
 
 static void	ft_print_info(t_a *a)
 {
+	int		total_process;
+	int		i;
+
+	i = -1;
+	total_process = 0;
+	while (++i < a->num_of_player)
+		total_process += a->player[i].nb_process;
 	wattron(a->nc.win_info, a->nc.color.text);
 	mvwprintw(a->nc.win_info, 1, WIN_W / 2 - 4, "COREWAR");
-	mvwprintw(a->nc.win_info, 2, 2, "Cycle: %d", a->cycle);
+	mvwprintw(a->nc.win_info, 2, 2, "Cycle: %18d", a->cycle);
+	mvwprintw(a->nc.win_info, 3, 2, "Total process: %10d", total_process);
 	wattroff(a->nc.win_info, a->nc.color.text);
 }
 
