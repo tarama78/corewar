@@ -126,7 +126,10 @@ typedef struct			s_a
 	t_mem_info			mem_info[MEM_SIZE];
 }						t_a;
 
-int	ft_is_uint(char *str, int *num);
+int						ft_is_uint(char *str, int *num);
+int						parse_args(t_a *a, int ac, char **av);
+int						load_players(t_a *a);
+void					load_memory(t_a *a);
 void					init_command(void (**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
