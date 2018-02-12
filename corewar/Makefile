@@ -14,6 +14,9 @@ NAME = corewar
 
 FILES = main.c\
 		ft_is_int.c\
+		parse_args.c\
+		load_players.c\
+		load_memory.c\
 		lst_process.c\
 		commands.c\
 		init_command.c\

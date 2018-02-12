@@ -11,32 +11,7 @@
 /* ************************************************************************** */
 
 #include <corewar.h>
-/*
-long	ft_atol(const char *str)
-{
-	int			i;
-	int			signe;
-	long		result;
 
-	i = 0;
-	while ((str[i] == ' ' || (str[i] >= 9 && str[i] <= 13)) && str[i])
-		++i;
-	signe = 1;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			signe = -1;
-		++i;
-	}
-	result = 0;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 + (str[i] - '0');
-		++i;
-	}
-	return (result * signe);
-}
-*/
 int	ft_is_uint(char *str, int *num)
 {
 	int		i;
