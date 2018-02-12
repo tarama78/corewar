@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/12 14:56:42 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/12 16:11:14 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,29 @@ int		rec_memory(char type, int *curs, t_a *a, int addr)
 	return (val);
 }
 
+static int		ft_check_carry(t_process *prc, int i)
+{
+	if (ft_strequ(g_op_tab[i].name,"lfork") ||
+			ft_strequ(g_op_tab[i].name, "add") ||
+			ft_strequ(g_op_tab[i].name, "sub") ||
+			ft_strequ(g_op_tab[i].name, "or") ||
+			ft_strequ(g_op_tab[i].name, "xor") ||
+			ft_strequ(g_op_tab[i].name, "and"))
+	{
+		prc->carry = 0;
+		return (0);
+	}
+	if (ft_strequ(g_op_tab[i].name, "ld") ||
+			ft_strequ(g_op_tab[i].name, "lld") ||
+			ft_strequ(g_op_tab[i].name, "ldi") ||
+			ft_strequ(g_op_tab[i].name, "lldi"))
+	{
+		prc->carry = 0;
+		return (0);
+	}
+	return (1);
+}
+
 int		check_type(t_process *prc, t_a *a)
 {
 	int		i;
@@ -107,16 +130,16 @@ int		check_type(t_process *prc, t_a *a)
 	{
 		tmp = arg_code >> 6;
 		if (tmp == 1 && ((g_op_tab[i].type_arg[j] & 0x01) != 0x1))
-			return (0);
+			return (ft_check_carry(prc, i));
 		else if (tmp == 2 && ((g_op_tab[i].type_arg[j] & 0x02) != 0x02))
-			return (0);
+			return (ft_check_carry(prc, i));
 		else if (tmp == 3 && ((g_op_tab[i].type_arg[j] & 0x03) != 0x03))
-			return (0);
+			return (ft_check_carry(prc, i));
 		if (tmp == 0)
-			return (0);
+			return (ft_check_carry(prc, i));
 		arg_code = arg_code << 2;
 	}
 	if (arg_code != 0)
-		return (0);
+		return (ft_check_carry(prc, i));
 	return (1);
 }

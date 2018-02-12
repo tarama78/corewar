@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:22:41 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/12 14:51:51 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/12 15:24:29 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	add(t_process *prc, t_a *a)
 	prc->reg[reg] = prc->reg[reg1] + prc->reg[reg2];
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }
 
 void	sub(t_process *prc, t_a *a)
@@ -47,7 +47,7 @@ void	sub(t_process *prc, t_a *a)
 	prc->reg[reg] = prc->reg[reg1] - prc->reg[reg2];
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }
 
 void	f_or(t_process *prc, t_a *a)
@@ -66,7 +66,7 @@ void	f_or(t_process *prc, t_a *a)
 	prc->reg[reg] = v1 | v2;
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }
 
 void	f_xor(t_process *prc, t_a *a)
@@ -85,7 +85,7 @@ void	f_xor(t_process *prc, t_a *a)
 	prc->reg[reg] = v1 ^ v2;
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }
 
 void	f_and(t_process *prc, t_a *a)
@@ -104,5 +104,5 @@ void	f_and(t_process *prc, t_a *a)
 	prc->reg[reg] = v1 & v2;
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }
