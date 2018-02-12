@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 23:15:41 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/12 11:50:45 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		check_cycle(t_process *prc, t_a *a)
 				break ;
 		a->mem_info[prc->pc].player_process = nb_player;
 	}
-	else if (prc->cycle_wait >= 0)
+	if (prc->cycle_wait >= 0)
 		prc->cycle_wait--;
 	if (prc->cycle_wait == -1)
 	{
