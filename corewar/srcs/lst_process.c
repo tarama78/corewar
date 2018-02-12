@@ -23,6 +23,8 @@ t_process	*add_process(t_a *a, t_process *cpy)
 	new->next = a->process;
 	a->process = new;
 	new->num_player = cpy->num_player;
+	new->player_index = cpy->player_index;
+	a->player[new->player_index].nb_process++;
 	return (new);
 }
 
@@ -37,7 +39,9 @@ t_process	*first_process(t_a *a, int player, int offset)
 	a->process = new;
 	new->num_player = a->player[player].player_number_print;
 	ft_bzero(new->reg, sizeof(new->reg));
+	a->player[player].nb_process++;
 	new->reg[1] = new->num_player;
+	new->player_index = player;
 	new->pc = offset * player;
 	new->cycle_wait = -1;
 	new->carry = 0;
