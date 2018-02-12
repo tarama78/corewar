@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 16:16:41 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/12 13:31:50 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void				ft_label(t_a *data);
 int					free_content(t_a *data, char *error);
 int					ft_parse_file(t_a *a, int fd);
 void				ft_parse_cmd(int fd, t_a *a, int *num_ln, int *cmd);
-int					ft_label_address(char *label, t_label *tab_label, int dir);
-void				ft_handle_args(int file, char *arg, t_a *data, int index);
+int					ft_label_address(char *label, t_label *tab_label, t_a *data, int dir);
+int					ft_handle_args(int file, char *arg, t_a *data, int index);
 int					ft_typepara(char *arg);
 void				ft_encoding(int file, char **words);
 void				ft_putname_magic(int file, t_a *data);
