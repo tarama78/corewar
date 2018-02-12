@@ -46,8 +46,8 @@ typedef struct			s_process
 	int					reg[REG_NUMBER + 1];
 	int					pc;
 	int					cycle_wait;
-  int				carry;
-  int				live;
+	int					carry;
+	int					live;
 }						t_process;
 
 
@@ -117,6 +117,7 @@ typedef struct			s_a
 	int					visu;
 	int					num_of_player;
 	int					dump_cycle;
+	int					n;
 	uint64_t			cycle_to_die;
 	uint64_t			last_dec_cycle;
 	uint64_t			nxt_cycle_die;
