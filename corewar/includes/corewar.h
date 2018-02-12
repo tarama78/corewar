@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 19:21:40 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/12 14:30:47 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ void					live(t_process *prc, t_a *a);
 void					ft_fork(t_process *prc, t_a *a);
 void					lfork(t_process *prc, t_a *a);
 void					ft_move(t_process *prc, t_a *a);
+
+void 					ft_curseur(t_process *prc, int pc, int curs, t_a *a);
 
 
 /*

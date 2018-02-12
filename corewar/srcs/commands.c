@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 23:15:41 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/12 14:56:42 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		check_cycle(t_process *prc, t_a *a)
 {
-	char	nb_player;
+//	char	nb_player;
 	int		i;
 
 	if (prc->cycle_wait == -1)
@@ -23,21 +23,34 @@ int		check_cycle(t_process *prc, t_a *a)
 		while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
 			;
 		prc->cycle_wait = g_op_tab[i].nb_cycle;
-		a->mem_info[prc->pc].process = 1;
-		nb_player = 0;
-		while (++nb_player <= a->num_of_player)
-			if (a->player[nb_player - 1].player_number_print == prc->num_player)
-				break ;
-		a->mem_info[prc->pc].player_process = nb_player;
+//		a->mem_info[prc->pc].process = 1;
+//		nb_player = 0;
+//		while (++nb_player <= a->num_of_player)
+//			if (a->player[nb_player - 1].player_number_print == prc->num_player)
+//				break ;
+//		a->mem_info[prc->pc].player_process = nb_player;
 	}
-	else if (prc->cycle_wait >= 0)
+	if (prc->cycle_wait >= 0)
 		prc->cycle_wait--;
 	if (prc->cycle_wait == -1)
 	{
-		a->mem_info[prc->pc].process = 0;
+//		a->mem_info[prc->pc].process = 0;
 		return (1);
 	}
 	return (0);
+}
+
+void ft_curseur(t_process *prc, int pc, int curs, t_a *a)
+{
+	char	nb_player;
+
+	a->mem_info[pc].process = 1;
+	a->mem_info[curs].process = 0;
+	nb_player = 0;
+	while (++nb_player <= a->num_of_player)
+		if (a->player[nb_player - 1].player_number_print == prc->num_player)
+			break ;
+	a->mem_info[pc].player_process = nb_player;
 }
 
 int		rec_memory(char type, int *curs, t_a *a, int addr)
