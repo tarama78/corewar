@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 21:17:11 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/12 14:22:06 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int			main(int ac, char **av)
 	}
 	load_memory(&a);
 	a.cycle_to_die = CYCLE_TO_DIE;
-	ft_init(&a);//ncurses
+	if (a.visu)
+		ft_init(&a);//ncurses
 //	ft_print(&a);
 //	while (getch() != 27)
 //	{
@@ -45,5 +46,6 @@ int			main(int ac, char **av)
 //	}
 	init_command(f);
 	game_loop(&a, f);
-	ft_free_nc(&a);//ncurses
+	if (a.visu)
+		ft_free_nc(&a);//ncurses
 }

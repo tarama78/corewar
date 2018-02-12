@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/12 14:30:47 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/12 12:47:49 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct			s_a
 
 	t_champ_file		file[MAX_PLAYERS];
 	int					live;
+	int					visu;
 	int					num_of_player;
 	int					dump_cycle;
 	uint64_t			cycle_to_die;

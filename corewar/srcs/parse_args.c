@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 12:58:42 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/12 12:58:48 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/12 14:23:42 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int			parse_args(t_a *a, int ac, char **av)
 				if (((i + 2 >= ac) || !ft_parse_n(av[++i], &n) || (av[i + 1][0] == '-')))
 					return (ERROR);
 			}
+			else if (ft_strequ("-v", av[i]))
+				a->visu = 1;
 			else
 				return (ERROR);
 		}
