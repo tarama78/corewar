@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/12 19:16:20 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/12 22:54:38 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct			s_champ_file
 # include <time.h>
 # define NB_COLORS 6
 # define TIME_BOLD_MEM 50
-# define WIN_H 10
+# define WIN_H 12
 # define WIN_W 50
 typedef struct	s_color
 {

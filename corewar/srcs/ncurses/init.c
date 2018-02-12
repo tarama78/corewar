@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 12:35:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 16:03:33 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/12 22:53:07 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 void		ft_init(t_a *a)
 {
 	int		i;
+	int		moins_i;
 
 	a->nc.win_mem = NULL;
 	a->nc.win_info = NULL;
@@ -38,10 +39,48 @@ void		ft_init(t_a *a)
 	a->nc.color = ft_init_color();
 	a->nc.sqrt_mem_size = sqrt(MEM_SIZE);
 	a->nc.win_mem = subwin(stdscr, a->nc.sqrt_mem_size + 3, a->nc.sqrt_mem_size * 3 + 5, 0, 0);
-	a->nc.win_info = subwin(stdscr, WIN_H, WIN_W, a->nc.sqrt_mem_size + 2, 0);
-	i = -1;
-	while (++i < a->num_of_player)
+	if (a->nc.sqrt_mem_size * 3 + 5 + WIN_W < COLS)
 	{
-		a->nc.win_player[i] = subwin(stdscr, WIN_H, WIN_W, a->nc.sqrt_mem_size + 2, WIN_W * (i + 1) - i - 1);
+		a->nc.win_info = subwin(stdscr, WIN_H, WIN_W, 0, a->nc.sqrt_mem_size * 3 + 4);
+		i = -1;
+		while (++i < a->num_of_player)
+		{
+			if (WIN_H * (i + 1) - i - 1 + WIN_H <= a->nc.sqrt_mem_size + 3)
+				a->nc.win_player[i] = subwin(stdscr, WIN_H, WIN_W, WIN_H * (i + 1) - i - 1, a->nc.sqrt_mem_size * 3 + 4);
+			else
+				break ;
+		}
+		moins_i = --i;
+		if (a->nc.sqrt_mem_size * 3 + 5 + WIN_W * 2 < COLS)
+		{
+			while (++i < a->num_of_player)
+			{
+				a->nc.win_player[i] = subwin(stdscr, WIN_H, WIN_W, (WIN_H - 1) * (i - moins_i - 1), a->nc.sqrt_mem_size * 3 + 3 + WIN_W);
+			}
+		}
+		else
+		{
+			while (++i < a->num_of_player)
+			{
+				a->nc.win_player[i] = subwin(stdscr, WIN_H, WIN_W, a->nc.sqrt_mem_size + 2, (WIN_W - 1) * (i - moins_i - 1));
+			}
+		}
+	}
+	else
+	{
+		a->nc.win_info = subwin(stdscr, WIN_H, WIN_W, a->nc.sqrt_mem_size + 2, 0);
+		i = -1;
+		while (++i < a->num_of_player)
+		{
+			if (WIN_W * (i + 1) - i - 1 + WIN_W <= a->nc.sqrt_mem_size * 3 + 5)
+				a->nc.win_player[i] = subwin(stdscr, WIN_H, WIN_W, a->nc.sqrt_mem_size + 2, WIN_W * (i + 1) - i - 1);
+			else
+				break ;
+		}
+		moins_i = --i;
+		while (++i < a->num_of_player)
+		{
+			a->nc.win_player[i] = subwin(stdscr, WIN_H, WIN_W, a->nc.sqrt_mem_size + 2 + WIN_H - 1, (WIN_W - 1) * (i - moins_i - 1));
+		}
 	}
 }
