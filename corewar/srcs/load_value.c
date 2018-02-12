@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:29:46 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 23:27:31 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/12 15:04:01 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ void	ld(t_process *prc, t_a *a)
 	}
 	else
 		prc->reg[reg] = val;
+	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }
 
 void	lld(t_process *prc, t_a *a)
@@ -62,8 +63,9 @@ void	lld(t_process *prc, t_a *a)
 	}
 	else
 		prc->reg[reg] = val;
+	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }
 
 void	ldi(t_process *prc, t_a *a)
@@ -91,7 +93,7 @@ void	ldi(t_process *prc, t_a *a)
 		% MEM_SIZE] << 8;
 	prc->reg[reg] += a->mem[(prc->pc + val + 3) % MEM_SIZE];
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }
 
 void	lldi(t_process *prc, t_a *a)
@@ -118,6 +120,7 @@ void	lldi(t_process *prc, t_a *a)
 	prc->reg[reg] += a->mem[(prc->pc + val + 2)
 		% MEM_SIZE] << 8;
 	prc->reg[reg] += a->mem[(prc->pc + val + 3) % MEM_SIZE];
+	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }

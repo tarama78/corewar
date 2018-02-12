@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 23:07:24 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/12 15:11:45 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void		st(t_process *prc, t_a *a)
 		prc->reg[addr] : addr;
 	addr = addr % IDX_MOD;
 	write_in_mem(a, prc, reg, addr);
+	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
 }
 
@@ -86,5 +87,6 @@ void		sti(t_process *prc, t_a *a)
 		prc->reg[addr2] : addr2;
 	addr = (addr + addr2) % IDX_MOD;
 	write_in_mem(a, prc, reg, addr);
+	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
 }

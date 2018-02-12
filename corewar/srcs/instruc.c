@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/10 23:47:23 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/12 15:04:07 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	live(t_process *prc, t_a *a)
 			a->player[i].nb_live_total++;
 			a->player[i].nb_live_current++;
 		}
+	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
 }
 
@@ -79,6 +80,7 @@ void	ft_fork(t_process *prc, t_a *a)
 	addr = addr % IDX_MOD;
 	new_prc = add_process(a, prc);
 	new_prc->pc = (prc->pc + addr) % MEM_SIZE;
+	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
 }
 
@@ -94,6 +96,7 @@ void	lfork(t_process *prc, t_a *a)
 	addr = rec_memory(3, &curs, a, 0);
 	new_prc = add_process(a, prc);
 	new_prc->pc = (prc->pc + addr) % MEM_SIZE;
+	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = (prc->carry + 1) % 2;
+	prc->carry = 1;
 }

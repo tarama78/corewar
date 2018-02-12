@@ -157,6 +157,8 @@ void					ft_fork(t_process *prc, t_a *a);
 void					lfork(t_process *prc, t_a *a);
 void					ft_move(t_process *prc, t_a *a);
 
+void 					ft_curseur(t_process *prc, int pc, int curs, t_a *a);
+
 
 /*
 ** ncurses
