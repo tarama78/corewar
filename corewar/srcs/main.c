@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 21:17:11 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/12 12:50:34 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int			ft_parse_arg(t_a *a, int ac, char **av)
 				if (((i + 2 >= ac) || !ft_parse_n(av[++i], &n) || (av[i + 1][0] == '-')))
 					return (ERROR);
 			}
+			else if (ft_strequ("-v", av[i]))
+				a->visu = 1;
 			else
 				return (ERROR);
 		}
@@ -257,7 +259,8 @@ int			main(int ac, char **av)
 	}
 	ft_load_memory(&a);
 	a.cycle_to_die = CYCLE_TO_DIE;
-	ft_init(&a);//ncurses
+	if (a.visu)
+		ft_init(&a);//ncurses
 //	ft_print(&a);
 //	while (getch() != 27)
 //	{
@@ -266,5 +269,6 @@ int			main(int ac, char **av)
 //	}
 	init_command(f);
 	game_loop(&a, f);
-	ft_free_nc(&a);//ncurses
+	if (a.visu)
+		ft_free_nc(&a);//ncurses
 }
