@@ -16,6 +16,7 @@ FILES = main.c\
 		ft_is_int.c\
 		parse_args.c\
 		load_players.c\
+		load_players_func.c\
 		load_memory.c\
 		lst_process.c\
 		commands.c\
@@ -32,6 +33,7 @@ FILES = main.c\
 		../../commun/srcs/op.c\
 
 HFILES = includes/corewar.h \
+		 includes/load_players.h \
 		 ../commun/includes/op.h \
 		 $(LIBFT_DIR)includes/libft.h \
 
