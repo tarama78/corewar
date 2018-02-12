@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/12 12:47:49 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/12 15:42:02 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct			s_process
 	int					reg[REG_NUMBER + 1];
 	int					pc;
 	int					cycle_wait;
-  int				carry;
-  int				live;
+	int					carry;
+	int					live;
 }						t_process;
 
 
