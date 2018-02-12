@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/12 16:11:14 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/12 17:10:32 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void ft_curseur(t_process *prc, int pc, int curs, t_a *a)
 {
 	char	nb_player;
 
-	a->mem_info[pc].process = 1;
-	a->mem_info[curs].process = 0;
+	a->mem_info[pc].process = 0;
+	a->mem_info[curs].process = 1;
 	nb_player = 0;
 	while (++nb_player <= a->num_of_player)
 		if (a->player[nb_player - 1].player_number_print == prc->num_player)
 			break ;
-	a->mem_info[pc].player_process = nb_player;
+	a->mem_info[curs].player_process = nb_player;
 }
 
 int		rec_memory(char type, int *curs, t_a *a, int addr)
@@ -86,8 +86,9 @@ int		rec_memory(char type, int *curs, t_a *a, int addr)
 	return (val);
 }
 
-static int		ft_check_carry(t_process *prc, int i)
+/*static int		ft_check_carry(t_process *prc, int i)
 {
+	(void)i;
 	if (ft_strequ(g_op_tab[i].name,"lfork") ||
 			ft_strequ(g_op_tab[i].name, "add") ||
 			ft_strequ(g_op_tab[i].name, "sub") ||
@@ -107,7 +108,7 @@ static int		ft_check_carry(t_process *prc, int i)
 		return (0);
 	}
 	return (1);
-}
+}*/
 
 int		check_type(t_process *prc, t_a *a)
 {
@@ -130,16 +131,16 @@ int		check_type(t_process *prc, t_a *a)
 	{
 		tmp = arg_code >> 6;
 		if (tmp == 1 && ((g_op_tab[i].type_arg[j] & 0x01) != 0x1))
-			return (ft_check_carry(prc, i));
+			return (0);
 		else if (tmp == 2 && ((g_op_tab[i].type_arg[j] & 0x02) != 0x02))
-			return (ft_check_carry(prc, i));
+			return (0);
 		else if (tmp == 3 && ((g_op_tab[i].type_arg[j] & 0x03) != 0x03))
-			return (ft_check_carry(prc, i));
+			return (0);
 		if (tmp == 0)
-			return (ft_check_carry(prc, i));
+			return (0);
 		arg_code = arg_code << 2;
 	}
 	if (arg_code != 0)
-		return (ft_check_carry(prc, i));
+		return (0);
 	return (1);
 }

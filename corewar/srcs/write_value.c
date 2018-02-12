@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/12 15:11:45 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/12 17:05:42 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		st(t_process *prc, t_a *a)
 	write_in_mem(a, prc, reg, addr);
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
+	prc->carry = 0;
 }
 
 void		sti(t_process *prc, t_a *a)
@@ -89,4 +90,5 @@ void		sti(t_process *prc, t_a *a)
 	write_in_mem(a, prc, reg, addr);
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
+	prc->carry = 0;
 }
