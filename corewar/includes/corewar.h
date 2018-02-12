@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 15:46:36 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/10 19:21:40 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,22 +113,30 @@ typedef struct			s_a
 	t_player			player[MAX_PLAYERS];
 
 	t_champ_file		file[MAX_PLAYERS];
+	int					live;
 	int					num_of_player;
 	int					dump_cycle;
-	int					cycle_to_die;
+	uint64_t			cycle_to_die;
+	uint64_t			last_dec_cycle;
+	uint64_t			nxt_cycle_die;
 	uint64_t			cycle;
 	uint8_t				mem[MEM_SIZE];
-  t_ncurses   nc;
+	t_ncurses			nc;
 	t_mem_info			mem_info[MEM_SIZE];
 }						t_a;
 
-int	ft_is_uint(char *str, int *num);
+int						ft_is_uint(char *str, int *num);
+int						parse_args(t_a *a, int ac, char **av);
+int						load_players(t_a *a);
+void					load_memory(t_a *a);
 void					init_command(void (**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
 int						check_type(t_process *prc, t_a *a);
 t_process				*add_process(t_a *a, t_process *cpy);
 t_process				*first_process(t_a *a, int player, int offset);
+void					game_loop(t_a *a, void (**f)(t_process *, t_a *));
+void					game_turn(t_a *a, void (**f)(t_process *, t_a *));
 
 void					add(t_process *prc, t_a *a);
 void					sub(t_process *prc, t_a *a);

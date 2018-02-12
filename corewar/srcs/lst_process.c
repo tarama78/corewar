@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:26:40 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 15:36:02 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/10 18:41:51 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_process	*add_process(t_a *a, t_process *cpy)
 	if (!(new = (t_process *)malloc(sizeof(t_process))))
 		return (0);
 	//ERROR MALLOC
-	ft_memcpy(&new, cpy, sizeof(cpy));
+	ft_memcpy(new, cpy, sizeof(t_process));
 	new->next = a->process;
 	a->process = new;
 	new->num_player = cpy->num_player;
