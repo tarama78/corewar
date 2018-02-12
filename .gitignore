@@ -57,3 +57,4 @@ dkms.conf
 *.cor
 a.out
 asm/asm
+corewar/corewar
