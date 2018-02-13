@@ -24,6 +24,7 @@ static void		kill_prc(t_a *a)
 		prc = a->process;
 		a->process = a->process->next;
 		a->mem_info[prc->pc].process = 0;
+		a->player[prc->player_index].nb_process--;
 		free(prc);
 		if (!a->process)
 			return ;
@@ -36,8 +37,9 @@ static void		kill_prc(t_a *a)
 		{
 			tmp = prc->next->next;
 			a->mem_info[prc->next->pc].process = 0;
+			a->player[prc->next->player_index].nb_process--;
 			free(prc->next);
-			prc->next = tmp;
+			prc->next = tmpsss
 		}
 		prc = prc->next;
 		if (prc)
@@ -48,7 +50,6 @@ static void		kill_prc(t_a *a)
 static int		new_cycle(t_a *a)
 {
 	int		i;
-
 
 	kill_prc(a);
 	a->live = 0;

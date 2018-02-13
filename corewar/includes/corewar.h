@@ -43,6 +43,7 @@ typedef struct			s_process
 {
 	struct s_process	*next;
 	int					num_player;
+	int					player_index;
 	int					reg[REG_NUMBER + 1];
 	int					pc;
 	int					cycle_wait;
@@ -131,7 +132,7 @@ typedef struct			s_a
 int						ft_is_uint(char *str, int *num);
 int						parse_args(t_a *a, int ac, char **av);
 int						load_players(t_a *a);
-void					load_memory(t_a *a);
+int						load_memory(t_a *a);
 void					init_command(void (**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
