@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:26:40 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 18:41:51 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/13 11:29:30 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ t_process	*first_process(t_a *a, int player, int offset)
 	a->process = new;
 	new->num_player = a->player[player].player_number_print;
 	ft_bzero(new->reg, sizeof(new->reg));
-	new->reg[1] = new->num_player;
+	new->reg[0] = new->num_player;
 	new->pc = offset * player;
+	a->mem_info[offset *player].player_process = player + 1;
+	a->mem_info[offset *player].process = 1;
 	new->cycle_wait = -1;
 	new->carry = 0;
 	new->live = 0;
