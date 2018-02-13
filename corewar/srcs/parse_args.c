@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 12:58:42 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/12 14:23:42 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/13 11:02:13 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	ft_parse_dump(t_a *a, char *dump)
 	int	num;
 
 	if (!ft_is_uint(dump, &num))
+		return (0);
+	if (num < 0)
 		return (0);
 	a->dump_cycle = num;
 	return (1);
@@ -66,7 +68,7 @@ int			parse_args(t_a *a, int ac, char **av)
 	{
 		if (av[i][0] == '-')
 		{
-			if (ft_strequ("-dumpl", av[i]))
+			if (ft_strequ("-dump", av[i]))
 			{
 				if (((i > 1) || (i + 1 >= ac) || !ft_parse_dump(a, av[++i])))
 					return (ERROR);
