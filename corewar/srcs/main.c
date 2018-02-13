@@ -21,8 +21,8 @@ void		ft_usage(int quit)
 
 int			main(int ac, char **av)
 {
-	t_a a;
 	void	(*f[NB_COMM + 1])(t_process *prc, t_a *a);
+	t_a		a;
 
 	if (ac == 1)
 		ft_usage(1);

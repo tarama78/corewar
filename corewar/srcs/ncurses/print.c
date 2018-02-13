@@ -70,7 +70,7 @@ static void	ft_print_memory(t_a *a)
 				mvwprintw(a->nc.win_mem, i, j + 2, " ");
 				wattroff(a->nc.win_mem, a->nc.color.black);
 			}
-			k++;
+			++k;
 		}
 	}
 }
