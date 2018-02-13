@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/12 17:10:32 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/13 12:18:26 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ int		rec_memory(char type, int *curs, t_a *a, int addr)
 	else if (type & 0x01)
 	{
 		val = a->mem[*curs];
-		val = val % (REG_NUMBER + 1);
+		val = val % (REG_NUMBER);
+		if (val <= 0)
+			val = REG_NUMBER - val;
+		val--;
 		*curs = (*curs + 1) % MEM_SIZE;
 	}
 	return (val);
@@ -114,7 +117,7 @@ int		check_type(t_process *prc, t_a *a)
 {
 	int		i;
 	int		j;
-	char	arg_code;
+	int		arg_code;
 	int		tmp;
 
 	i = -1;
@@ -127,20 +130,20 @@ int		check_type(t_process *prc, t_a *a)
 	if (a->mem[prc->pc] == 1 || a->mem[prc->pc] == 9
 			|| a->mem[prc->pc] == 12 || a->mem[prc->pc] == 15)
 		return (1);
-	while (++j < g_op_tab[i].nb_arg)
+	while (++j < 4/*g_op_tab[i].nb_arg*/)
 	{
 		tmp = arg_code >> 6;
-		if (tmp == 1 && ((g_op_tab[i].type_arg[j] & 0x01) != 0x1))
+		if ((tmp & 0x0003) == 1 && ((g_op_tab[i].type_arg[j] & 0x01) != 0x1))
 			return (0);
-		else if (tmp == 2 && ((g_op_tab[i].type_arg[j] & 0x02) != 0x02))
+		else if ((tmp & 0x0003) == 2 && ((g_op_tab[i].type_arg[j] & 0x02) != 0x02))
 			return (0);
-		else if (tmp == 3 && ((g_op_tab[i].type_arg[j] & 0x03) != 0x03))
+		else if ((tmp & 0x0003) == 3 && ((g_op_tab[i].type_arg[j] & 0x04) != 0x04))
 			return (0);
-		if (tmp == 0)
+		if ((tmp & 0x0003) == 0 && ((g_op_tab[i].type_arg[j] & 0x07) != 0x00))
 			return (0);
 		arg_code = arg_code << 2;
 	}
-	if (arg_code != 0)
-		return (0);
+//	if (arg_code >> 6 != 0)
+//		return (0);
 	return (1);
 }

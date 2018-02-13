@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/12 13:52:58 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/13 11:27:01 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,26 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 
 	pause = 0;
 	command = 0;
-	nodelay(stdscr, TRUE);
+//	nodelay(stdscr, TRUE);
 	nxt_cycle_die = a->cycle_to_die;
 	if (a->visu)
 		ft_print(a);
 	while (a->process && command != 27)
 	{
+		if (a->visu)
+		{
+			nodelay(stdscr, pause);
+			command = getch();
+			if (command == ' ')
+				pause = (pause + 1) % 2;
+		}
 		if (a->cycle >= nxt_cycle_die)
 			nxt_cycle_die += new_cycle(a);
 		if (!a->process)
 			return ;
 		game_turn(a, f);
 		if (a->visu)
-		{
 			ft_print(a);
-			nodelay(stdscr, pause);
-			command = getch();
-			if (command == ' ')
-				pause = (pause + 1) % 2;
-		}
 		a->cycle++;
 	}
 }
