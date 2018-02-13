@@ -109,25 +109,26 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 
 	pause = 0;
 	command = 0;
-	nodelay(stdscr, TRUE);
+//	nodelay(stdscr, TRUE);
 	nxt_cycle_die = a->cycle_to_die;
 	if (a->visu)
 		ft_print(a);
 	while (a->process && command != 27)
 	{
+		if (a->visu)
+		{
+			nodelay(stdscr, pause);
+			command = getch();
+			if (command == ' ')
+				pause = (pause + 1) % 2;
+		}
 		if (a->cycle >= nxt_cycle_die)
 			nxt_cycle_die += new_cycle(a);
 		if (!a->process)
 			return ;
 		game_turn(a, f);
 		if (a->visu)
-		{
 			ft_print(a);
-			nodelay(stdscr, pause);
-			command = getch();
-			if (command == ' ')
-				pause = (pause + 1) % 2;
-		}
 		if (a->dump_cycle != -1)
 			ft_check_dump(a);
 		a->cycle++;

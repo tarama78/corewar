@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/12 17:05:42 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/13 14:56:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@ static int	ft_swap(int val)
 	int	rev;
 	int	tmp;
 
+//	ft_printf("%#x %#x %#x %#x", (val & 0xFF000000), (val & 0x00FF0000), (val & 0x0000FF00), (val & 0x000000FF));
 	rev = 0;
 	tmp = val & 0xFF000000;
-	rev += tmp >> 24;
+	rev += (tmp >> 24) & 0x000000FF;
 	tmp = val & 0x00FF0000;
-	rev += tmp >> 8;
+	rev += (tmp >> 8) & 0x0000FF00;
 	tmp = val & 0x0000FF00;
-	rev += tmp << 8;
+	rev += (tmp << 8) & 0x00FF0000;
 	tmp = val & 0x000000FF;
-	rev += tmp << 24;
+	rev += (tmp << 24) & 0xFF000000;
 	return (rev);
 }
 
@@ -41,6 +42,7 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 			break ;
 	i = -1;
 	tmp = ft_swap(prc->reg[reg]);
+//	ft_printf("%#x\n", tmp);
 	ft_memcpy(a->mem + prc->pc + addr, &tmp, 4);
 	while (++i < 4)
 	{
@@ -60,10 +62,15 @@ void		st(t_process *prc, t_a *a)
 	curs = (prc->pc + 2) % MEM_SIZE;
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 1);
 	addr = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
-	addr = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
-		prc->reg[addr] : addr;
-	addr = addr % IDX_MOD;
-	write_in_mem(a, prc, reg, addr);
+	if (a->mem[(prc->pc + 1) % MEM_SIZE] == 0x50)
+		prc->reg[addr] = prc->reg[reg];
+	else
+	{
+		addr = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
+			prc->reg[addr] : addr;
+		addr = addr % IDX_MOD;
+		write_in_mem(a, prc, reg, addr);
+	}
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
 	prc->carry = 0;
@@ -80,6 +87,9 @@ void		sti(t_process *prc, t_a *a)
 		return ;
 	curs = (prc->pc + 2) % MEM_SIZE;
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 1);
+//	if (prc->reg[reg] == 1)
+//		exit(0);
+//	ft_printf("%#x %d\n", prc->reg[reg], reg);
 	addr = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
 	addr = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
 		prc->reg[addr] : addr;
