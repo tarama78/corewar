@@ -10,10 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include <corewar.h>
 
-void	load_memory_player(uint8_t *mem, t_mem_info *info, t_player *player, int p_num)
+static void	load_memory_player(uint8_t *mem,
+								t_mem_info *info,
+								t_player *player,
+								int p_num)
 {
 	int	i;
 
@@ -26,17 +28,18 @@ void	load_memory_player(uint8_t *mem, t_mem_info *info, t_player *player, int p_
 	}
 }
 
-void	load_memory(t_a *a)
+void		load_memory(t_a *a)
 {
-	int offset;
-	int	i;
 	t_process	*new_prc;
+	int			offset;
+	int			i;
 
 	i = 0;
 	offset = MEM_SIZE / a->num_of_player;
 	while (i < a->num_of_player)
 	{
-		load_memory_player(a->mem + (offset * i), a->mem_info + (offset * i), &(a->player[i]), i + 1);
+		load_memory_player(a->mem + (offset * i), a->mem_info + (offset * i),
+							&(a->player[i]), i + 1);
 		new_prc = first_process(a, i, offset);
 		++i;
 	}

@@ -12,23 +12,6 @@
 
 #include <corewar.h>
 
-static int	ft_parse_dump(t_a *a, char *dump)
-{
-	int	num;
-
-	if (!ft_is_uint(dump, &num))
-		return (0);
-	a->dump_cycle = num;
-	return (1);
-}
-
-int			ft_parse_n(char *s, int *n)
-{
-	if (!ft_is_uint(s, n))
-		return (0);
-	return (1);
-}
-
 static int	ft_add_file(t_champ_file *file, char *file_name, int *n, int player)
 {
 	int next_number;
@@ -53,37 +36,68 @@ static int	ft_add_file(t_champ_file *file, char *file_name, int *n, int player)
 	return (1);
 }
 
+static int	check_dump(char *value, t_a *a, int ac, int *i)
+{
+	if (*i + 1 >= ac)
+		return (0);
+	if (!ft_is_uint(value, &(a->dump_cycle)))
+		return (0);
+	++(*i);
+	return (1);
+}
+
+static int	check_n(char *value, t_a *a, int ac, int *i)
+{
+	if (*i + 2 >= ac)
+		return (0);
+	if (!ft_is_uint(value, &(a->n)))
+		return (0);
+	++(*i);
+	return (1);
+}
+
+static int	check_option(int ac, char **av, t_a *a, int *i)
+{
+	if (ft_strequ("-dump", av[*i]))
+	{
+		if (!check_dump(av[*i + 1], a, ac, i))
+			return (ERROR);
+		return (SUCCESS);
+	}
+	else if (ft_strequ("-n", av[*i]))
+	{
+		if (!check_n(av[*i + 1], a, ac, i))
+			return (ERROR);
+		return (SUCCESS);
+	}
+	else if (ft_strequ("-v", av[*i]))
+	{
+		a->visu = 1;
+		return (SUCCESS);
+	}
+	else
+		return (ERROR);
+}
+
 int			parse_args(t_a *a, int ac, char **av)
 {
+	int player;
 	int i;
-	int	player;
-	int	n;
 
 	i = 0;
-	n = 1;
+	a->n = 1;
 	player = 0;
 	while (++i < ac)
 	{
 		if (av[i][0] == '-')
 		{
-			if (ft_strequ("-dumpl", av[i]))
-			{
-				if (((i > 1) || (i + 1 >= ac) || !ft_parse_dump(a, av[++i])))
-					return (ERROR);
-			}
-			else if (ft_strequ("-n", av[i]))
-			{
-				if (((i + 2 >= ac) || !ft_parse_n(av[++i], &n) || (av[i + 1][0] == '-')))
-					return (ERROR);
-			}
-			else if (ft_strequ("-v", av[i]))
-				a->visu = 1;
-			else
+			if (check_option(ac, av, a, &i) == ERROR)
 				return (ERROR);
 		}
-		else if (!ft_add_file(a->file, av[i], &n, player++))
+		else if (!ft_add_file(a->file, av[i], &(a->n), player++))
 			return (ERROR);
 	}
-	a->num_of_player = player;
+	if (!(a->num_of_player = player))
+		return (ERROR);
 	return (SUCCESS);
 }
