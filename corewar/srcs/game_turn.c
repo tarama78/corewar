@@ -39,7 +39,7 @@ static void		kill_prc(t_a *a)
 			a->mem_info[prc->next->pc].process = 0;
 			a->player[prc->next->player_index].nb_process--;
 			free(prc->next);
-			prc->next = tmpsss
+			prc->next = tmp;
 		}
 		prc = prc->next;
 		if (prc)
