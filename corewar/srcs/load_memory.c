@@ -28,19 +28,21 @@ static void	load_memory_player(uint8_t *mem,
 	}
 }
 
-void		load_memory(t_a *a)
+int			load_memory(t_a *a)
 {
-	t_process	*new_prc;
 	int			offset;
-	int			i;
+	int			player;
 
-	i = 0;
+	player = 0;
 	offset = MEM_SIZE / a->num_of_player;
-	while (i < a->num_of_player)
+	while (player < a->num_of_player)
 	{
-		load_memory_player(a->mem + (offset * i), a->mem_info + (offset * i),
-							&(a->player[i]), i + 1);
-		new_prc = first_process(a, i, offset);
-		++i;
-	}
+		load_memory_player(a->mem + (offset * player),
+							a->mem_info + (offset * player),
+							&(a->player[player]), player + 1);
+		if(!(first_process(a, player, offset)))
+			return (ERROR);
+		++player;
+	 }
+	 return (SUCCESS);
 }
