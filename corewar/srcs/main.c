@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/12 14:22:06 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/13 16:11:44 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int			main(int ac, char **av)
 		return (0);
 	}
 	a.cycle_to_die = CYCLE_TO_DIE;
+	a.speed = SPEED;
 	if (a.visu)
 		ft_init(&a);//ncurses
 //	ft_print(&a);

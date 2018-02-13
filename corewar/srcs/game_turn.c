@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/12 13:52:58 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/13 16:11:07 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 	uint64_t	nxt_cycle_die;
 	int			command;
 	int			pause;
+	int			time_start;
 
 	pause = 0;
 	command = 0;
@@ -82,6 +83,7 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 		ft_print(a);
 	while (a->process && command != 27)
 	{
+		time_start = clock();
 		if (a->cycle >= nxt_cycle_die)
 			nxt_cycle_die += new_cycle(a);
 		if (!a->process)
@@ -93,9 +95,11 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 			nodelay(stdscr, pause);
 			command = getch();
 			if (command == ' ')
-				pause = (pause + 1) % 2;
+				pause = !pause;//(pause + 1) % 2;
 		}
 		a->cycle++;
+		if (clock() - time_start < a->speed)
+			usleep((a->speed - (clock() - time_start)));
 	}
 }
 
