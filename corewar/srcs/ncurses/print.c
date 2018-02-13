@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 16:33:57 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/13 11:14:11 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ static void	ft_print_player(t_a *a, int n)
 void		ft_print(t_a *a)
 {
 	int		i;
-
 	ft_print_border(a);
 	ft_print_memory(a);
 	wrefresh(a->nc.win_mem);
