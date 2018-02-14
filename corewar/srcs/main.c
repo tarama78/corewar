@@ -16,7 +16,7 @@ void		ft_usage(int quit)
 {
 	ft_putstr("./corewar [-dump nbr_cycles] [[-n number] champion1.cor] ...\n");
 	if (quit)
-		exit(0);
+		exit(EXIT_SUCCESS);
 }
 
 int			main(int ac, char **av)
@@ -43,6 +43,7 @@ int			main(int ac, char **av)
 		return (0);
 	}
 	a.cycle_to_die = CYCLE_TO_DIE;
+	a.speed = SPEED;
 	if (a.visu)
 		ft_init(&a);//ncurses
 //	ft_print(&a);

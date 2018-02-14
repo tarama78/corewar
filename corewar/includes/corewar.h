@@ -76,8 +76,10 @@ typedef struct			s_champ_file
 # include <math.h>
 # include <time.h>
 # define NB_COLORS 6
+# define SPEED 100000 // plus la val est grande plus c'est lent (a->speed)
+# define CHANGE_SPEED 10000
 # define TIME_BOLD_MEM 50
-# define WIN_H 10
+# define WIN_H 12
 # define WIN_W 50
 typedef struct	s_color
 {
@@ -127,6 +129,7 @@ typedef struct			s_a
 	uint8_t				mem[MEM_SIZE];
 	t_ncurses			nc;
 	t_mem_info			mem_info[MEM_SIZE];
+	long				speed;
 }						t_a;
 
 int						ft_is_uint(char *str, int *num);
