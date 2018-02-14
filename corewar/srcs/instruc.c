@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/12 17:03:27 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/14 12:34:39 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ void	ft_zjmp(t_process *prc, t_a *a)
 	curs = (prc->pc + 1) % MEM_SIZE;
 	if (!(check_cycle(prc, a)))
 		return ;
-	addr = rec_memory(3, &curs, a, 0);
+	addr = rec_memory(3, &curs, a, 1);
+//	ft_printf("%d %#x\n", addr, addr);
 	addr = addr % IDX_MOD;
 	if (prc->carry == 1)
 	{
 		ft_curseur(prc, prc->pc, (prc->pc + addr) % MEM_SIZE, a);
 		prc->pc = (prc->pc + addr) % MEM_SIZE;
+		if (prc->pc < 0)
+			prc->pc += MEM_SIZE;
 	}
 	else
 	{
@@ -89,6 +92,9 @@ void	ft_fork(t_process *prc, t_a *a)
 	addr = addr % IDX_MOD;
 	new_prc = add_process(a, prc);
 	new_prc->pc = (prc->pc + addr) % MEM_SIZE;
+	if (new_prc->pc < 0)
+		new_prc->pc += MEM_SIZE;
+	ft_curseur(prc, prc->pc, new_prc->pc, a);
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
 	prc->carry = 0;
@@ -106,6 +112,9 @@ void	lfork(t_process *prc, t_a *a)
 	addr = rec_memory(3, &curs, a, 0);
 	new_prc = add_process(a, prc);
 	new_prc->pc = (prc->pc + addr) % MEM_SIZE;
+	if (new_prc->pc < 0)
+		new_prc->pc += MEM_SIZE;
+	ft_curseur(prc, prc->pc, new_prc->pc, a);
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
 	prc->carry = 0;

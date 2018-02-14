@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/13 11:27:01 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/13 18:18:43 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static int		new_cycle(t_a *a)
 	i = -1;
 	while (++i < a->num_of_player)
 	{
-		a->live += a->player[i + 1].nb_live_current;
-		a->player[i + 1].nb_live_current = 0;
+		a->live += a->player[i].nb_live_current;
+		a->player[i].nb_live_current = 0;
 	}
 	if (a->live >= NBR_LIVE || (a->cycle - a->last_dec_cycle >= MAX_CHECKS))
 	{
@@ -64,6 +64,19 @@ static int		new_cycle(t_a *a)
 		a->last_dec_cycle = a->cycle;
 	}
 	return (a->cycle_to_die);
+}
+
+static void	free_process(t_a *a)
+{
+	t_process *tmp;
+
+	tmp = a->process;
+	while (tmp)
+	{
+		a->process = a->process->next;
+		free(tmp);
+		tmp = a->process;
+	}
 }
 
 void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
@@ -74,7 +87,6 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 
 	pause = 0;
 	command = 0;
-//	nodelay(stdscr, TRUE);
 	nxt_cycle_die = a->cycle_to_die;
 	if (a->visu)
 		ft_print(a);
@@ -96,6 +108,7 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 			ft_print(a);
 		a->cycle++;
 	}
+	free_process(a);
 }
 
 void	game_turn(t_a *a, void (**f)(t_process *, t_a *))
