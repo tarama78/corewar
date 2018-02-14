@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 14:23:58 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/14 12:12:42 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void		kill_prc(t_a *a)
 		prc = a->process;
 		a->process = a->process->next;
 		a->mem_info[prc->pc].process = 0;
+		a->player[prc->player_index].nb_process--;
 		free(prc);
 		if (!a->process)
 			return ;
@@ -36,6 +37,7 @@ static void		kill_prc(t_a *a)
 		{
 			tmp = prc->next->next;
 			a->mem_info[prc->next->pc].process = 0;
+			a->player[prc->next->player_index].nb_process--;
 			free(prc->next);
 			prc->next = tmp;
 		}
@@ -49,9 +51,14 @@ static int		new_cycle(t_a *a)
 {
 	int		i;
 
-
 	kill_prc(a);
 	a->live = 0;
+	i = -1;
+	while (++i < a->num_of_player)
+	{
+		if (a->player[i].nb_live_current != 0)
+			a->winner = a->player + i;
+	}
 	i = -1;
 	while (++i < a->num_of_player)
 	{
@@ -113,11 +120,28 @@ void		ft_check_dump(t_a *a)
 		(a->dump_cycle)--;
 }
 
+static int	ft_command(t_a *a, int *pause)
+{
+	int		command;
+
+	command = getch();
+	if (command == ' ')
+		*pause = !(*pause);//(pause + 1) % 2;
+	else if (command == '-')
+		a->speed += (a->speed + CHANGE_SPEED <= 200000) ? CHANGE_SPEED : 0;
+	else if (command == '=')
+		a->speed = SPEED;
+	else if (command == '+')
+		a->speed -= (a->speed - CHANGE_SPEED >= 0) ?  CHANGE_SPEED : 0;
+	return (command);
+}
+
 void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 {
 	uint64_t	nxt_cycle_die;
 	int			command;
 	int			pause;
+	int			time_start;
 
 	pause = 0;
 	command = 0;
@@ -126,25 +150,28 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 		ft_print(a);
 	while (a->process && command != 27)
 	{
-		if (a->visu)
+		if (pause || !a->visu)
 		{
-			nodelay(stdscr, pause);
-			command = getch();
-			if (command == ' ')
-				pause = (pause + 1) % 2;
+			time_start = clock();
+			if (a->cycle >= nxt_cycle_die)
+				nxt_cycle_die += new_cycle(a);
+			if (!a->process)
+				break ;
+			game_turn(a, f);
+	  	if (a->dump_cycle != -1)
+		  	ft_check_dump(a);
+			a->cycle++;
+			if (a->visu && clock() - time_start < (unsigned long)a->speed)
+				usleep((a->speed - (clock() - time_start)));
 		}
-		if (a->cycle >= nxt_cycle_die)
-			nxt_cycle_die += new_cycle(a);
-		if (!a->process)
-			return ;
-		game_turn(a, f);
 		if (a->visu)
+    {
+      command = ft_command(a, &pause);
 			ft_print(a);
-		if (a->dump_cycle != -1)
-			ft_check_dump(a);
-		a->cycle++;
-	}
-	free_process(a);
+
+	  }
+  }
+ free_process(a);
 }
 
 void	game_turn(t_a *a, void (**f)(t_process *, t_a *))

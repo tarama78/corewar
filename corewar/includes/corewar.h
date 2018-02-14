@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/12 15:42:02 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/14 12:17:47 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct			s_process
 {
 	struct s_process	*next;
 	int					num_player;
+	int					player_index;
 	int					reg[REG_NUMBER + 1];
 	int					pc;
 	int					cycle_wait;
@@ -75,8 +76,10 @@ typedef struct			s_champ_file
 # include <math.h>
 # include <time.h>
 # define NB_COLORS 6
+# define SPEED 100000 // plus la val est grande plus c'est lent (a->speed)
+# define CHANGE_SPEED 10000
 # define TIME_BOLD_MEM 50
-# define WIN_H 10
+# define WIN_H 12
 # define WIN_W 50
 typedef struct	s_color
 {
@@ -111,6 +114,7 @@ typedef struct			s_a
 {
 	t_process			*process;
 	t_player			player[MAX_PLAYERS];
+	t_player			*winner;
 
 	t_champ_file		file[MAX_PLAYERS];
 	int					live;
@@ -125,12 +129,13 @@ typedef struct			s_a
 	uint8_t				mem[MEM_SIZE];
 	t_ncurses			nc;
 	t_mem_info			mem_info[MEM_SIZE];
+	long				speed;
 }						t_a;
 
 int						ft_is_uint(char *str, int *num);
 int						parse_args(t_a *a, int ac, char **av);
 int						load_players(t_a *a);
-void					load_memory(t_a *a);
+int						load_memory(t_a *a);
 void					init_command(void (**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
@@ -159,6 +164,7 @@ void					lfork(t_process *prc, t_a *a);
 void					ft_move(t_process *prc, t_a *a);
 
 void 					ft_curseur(t_process *prc, int pc, int curs, t_a *a);
+void					winner(t_a *a);
 
 
 /*
