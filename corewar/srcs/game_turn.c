@@ -73,6 +73,19 @@ static int		new_cycle(t_a *a)
 	return (a->cycle_to_die);
 }
 
+static void	free_process(t_a *a)
+{
+	t_process *tmp;
+
+	tmp = a->process;
+	while (tmp)
+	{
+		a->process = a->process->next;
+		free(tmp);
+		tmp = a->process;
+	}
+}
+
 void		ft_print_dump(t_a *a)
 {
 	int k;
@@ -132,7 +145,6 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 
 	pause = 0;
 	command = 0;
-//	nodelay(stdscr, TRUE);
 	nxt_cycle_die = a->cycle_to_die;
 	if (a->visu)
 		ft_print(a);
@@ -156,8 +168,10 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
     {
       command = ft_command(a, &pause);
 			ft_print(a);
+
 	  }
   }
+ free_process(a);
 }
 
 void	game_turn(t_a *a, void (**f)(t_process *, t_a *))
