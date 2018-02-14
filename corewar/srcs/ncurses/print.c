@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/13 11:14:11 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:23:15 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void	ft_print_player(t_a *a, int n)
 	wattroff(a->nc.win_player[n], a->nc.color.player[n + 1] | A_BOLD);
 	wattron(a->nc.win_player[n], a->nc.color.text);
 	mvwprintw(a->nc.win_player[n], 3, 4, "Process: %23d", a->player[n].nb_process);
-	mvwprintw(a->nc.win_player[n], 4, 4, "Last live: %21d", -1);
+	mvwprintw(a->nc.win_player[n], 4, 4, "Last live: %21d", a->player[n].last_live_cycle);
 	mvwprintw(a->nc.win_player[n], 5, 4, "Last live in cur period: %7d", -1);
 	wattroff(a->nc.win_player[n], a->nc.color.text);
 }
