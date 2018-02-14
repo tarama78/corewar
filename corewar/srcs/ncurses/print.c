@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 11:50:23 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/13 11:14:11 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	ft_print_memory(t_a *a)
 				mvwprintw(a->nc.win_mem, i, j + 2, " ");
 				wattroff(a->nc.win_mem, a->nc.color.black);
 			}
-			k++;
+			++k;
 		}
 	}
 }
@@ -111,7 +111,6 @@ static void	ft_print_player(t_a *a, int n)
 void		ft_print(t_a *a)
 {
 	int		i;
-
 	ft_print_border(a);
 	ft_print_memory(a);
 	wrefresh(a->nc.win_mem);

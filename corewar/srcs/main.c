@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 11:14:07 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/13 12:11:52 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ void		ft_usage(int quit)
 
 int			main(int ac, char **av)
 {
-	t_a a;
 	void	(*f[NB_COMM + 1])(t_process *prc, t_a *a);
+	t_a		a;
 
 	if (ac == 1)
 		ft_usage(1);
 	ft_memset(&a, 0, sizeof(a));
+	a.dump_cycle = -1;
 	if (parse_args(&a, ac, av) == ERROR)
 		ft_usage(1);
 	if (load_players(&a) == ERROR)
