@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 12:28:42 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:52:44 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct	s_ncurses
 	WINDOW		*win_player[MAX_PLAYERS];
 	int			sqrt_mem_size;
 	t_color		color;
+	int			pause;
 }				t_ncurses;
 /////////////////////////////////
 

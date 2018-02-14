@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 15:38:35 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/14 16:40:30 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,15 @@ static void	ft_print_info(t_a *a)
 	i = 0;
 	wattron(a->nc.win_info, a->nc.color.text);
 	mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 4, "COREWAR");
-	mvwprintw(a->nc.win_info, (i += 2), 2, "Cycle: %27d", a->cycle);
-	mvwprintw(a->nc.win_info, ++i, 2, "Total process: %19d", total_process);
-	mvwprintw(a->nc.win_info, ++i, 2, "Speed: %27d", 20 - (a->speed / 10000));
-	mvwprintw(a->nc.win_info, ++i, 2, "Cycle to die: %20d", a->cycle_to_die);
-	mvwprintw(a->nc.win_info, ++i, 2, "Cycle delta: %21d", CYCLE_DELTA);
+	if (a->nc.pause)
+		mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 6, "** PLAY  **");
+	else
+		mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 6, "** PAUSE **");
+	mvwprintw(a->nc.win_info, ++i, 4, "Cycle: %25d", a->cycle);
+	mvwprintw(a->nc.win_info, ++i, 4, "Total process: %17d", total_process);
+	mvwprintw(a->nc.win_info, ++i, 4, "Speed: %25d", 20 - (a->speed / 10000));
+	mvwprintw(a->nc.win_info, ++i, 4, "Cycle to die: %18d", a->cycle_to_die);
+	mvwprintw(a->nc.win_info, ++i, 4, "Cycle delta: %19d", CYCLE_DELTA);
 	wattroff(a->nc.win_info, a->nc.color.text);
 }
 
@@ -113,7 +117,8 @@ static void	ft_print_player(t_a *a, int n)
 void		ft_print(t_a *a)
 {
 	int		i;
-	ft_print_border(a);
+
+//	ft_print_border(a);
 	ft_print_memory(a);
 	wrefresh(a->nc.win_mem);
 	ft_print_info(a);

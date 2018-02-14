@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 12:28:41 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:42:18 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,13 @@ void		ft_check_dump(t_a *a)
 		(a->dump_cycle)--;
 }
 
-static int	ft_command(t_a *a, int *pause)
+static int	ft_command(t_a *a)
 {
 	int		command;
 
 	command = getch();
 	if (command == ' ')
-		*pause = !(*pause);//(pause + 1) % 2;
+		a->nc.pause = !(a->nc.pause);//(pause + 1) % 2;
 	else if (command == '-')
 		a->speed += (a->speed + CHANGE_SPEED <= 200000) ? CHANGE_SPEED : 0;
 	else if (command == '=')
@@ -140,17 +140,16 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 {
 	uint64_t	nxt_cycle_die;
 	int			command;
-	int			pause;
 	int			time_start;
 
-	pause = 0;
+	a->nc.pause = 0;
 	command = 0;
 	nxt_cycle_die = a->cycle_to_die;
 	if (a->visu)
 		ft_print(a);
 	while (a->process && command != 27)
 	{
-		if (pause || !a->visu)
+		if (a->nc.pause || !a->visu)
 		{
 			time_start = clock();
 			if (a->cycle >= nxt_cycle_die)
@@ -158,20 +157,20 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 			if (!a->process)
 				break ;
 			game_turn(a, f);
-	  	if (a->dump_cycle != -1)
-		  	ft_check_dump(a);
+			if (a->dump_cycle != -1)
+				ft_check_dump(a);
 			a->cycle++;
 			if (a->visu && clock() - time_start < (unsigned long)a->speed)
 				usleep((a->speed - (clock() - time_start)));
 		}
 		if (a->visu)
-    {
-      command = ft_command(a, &pause);
+		{
+			command = ft_command(a);
 			ft_print(a);
 
-	  }
-  }
- free_process(a);
+		}
+	}
+	free_process(a);
 }
 
 void	game_turn(t_a *a, void (**f)(t_process *, t_a *))
