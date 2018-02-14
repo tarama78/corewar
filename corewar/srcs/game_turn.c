@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/13 16:59:52 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/14 12:12:42 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void		kill_prc(t_a *a)
 			a->mem_info[prc->next->pc].process = 0;
 			a->player[prc->next->player_index].nb_process--;
 			free(prc->next);
-			prc->next = tmpsss
+			prc->next = tmp;
 		}
 		prc = prc->next;
 		if (prc)
@@ -56,15 +56,14 @@ static int		new_cycle(t_a *a)
 	i = -1;
 	while (++i < a->num_of_player)
 	{
-		if (a->player[i + 1].nb_live_current != 0)
-			a->winner = a->player + i + 1;
-		break ;
+		if (a->player[i].nb_live_current != 0)
+			a->winner = a->player + i;
 	}
 	i = -1;
 	while (++i < a->num_of_player)
 	{
-		a->live += a->player[i + 1].nb_live_current;
-		a->player[i + 1].nb_live_current = 0;
+		a->live += a->player[i].nb_live_current;
+		a->player[i].nb_live_current = 0;
 	}
 	if (a->live >= NBR_LIVE || (a->cycle - a->last_dec_cycle >= MAX_CHECKS))
 	{
