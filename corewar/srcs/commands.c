@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 11:14:40 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/14 15:30:40 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		rec_memory(char type, int *curs, t_a *a, int addr)
 		val = val % (REG_NUMBER);
 		if (val <= 0)
 			val = REG_NUMBER - val;
-		val--;
+//		val--;
 		*curs = (*curs + 1) % MEM_SIZE;
 	}
 	return (val);
