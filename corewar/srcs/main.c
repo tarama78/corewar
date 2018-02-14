@@ -12,9 +12,12 @@
 
 #include <corewar.h>
 
-void		ft_usage(int quit)
+void		ft_usage(int quit, char *name)
 {
-	ft_putstr("./corewar [-dump nbr_cycles] [[-n number] champion1.cor] ...\n");
+	ft_printf("Usage: %s [-v -dump N] <[-n N] champion1.cor> <...>\n"
+			"\t-v %8t: visual mode\n"
+			"\t-dump N %3t: Dumps memory after N cycles then exits\n"
+			"\t-n N %6t: players number\n", name)
 	if (quit)
 		exit(EXIT_SUCCESS);
 }
@@ -25,11 +28,11 @@ int			main(int ac, char **av)
 	t_a		a;
 
 	if (ac == 1)
-		ft_usage(1);
+		ft_usage(1, av[0]);
 	ft_memset(&a, 0, sizeof(a));
 	a.dump_cycle = -1;
 	if (parse_args(&a, ac, av) == ERROR)
-		ft_usage(1);
+		ft_usage(1, av[0]);
 	if (load_players(&a) == ERROR)
 	{
 		ft_printf("ERROR\n");
