@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 12:11:34 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/14 12:17:47 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct			s_a
 {
 	t_process			*process;
 	t_player			player[MAX_PLAYERS];
+	t_player			*winner;
 
 	t_champ_file		file[MAX_PLAYERS];
 	int					live;
@@ -163,6 +164,7 @@ void					lfork(t_process *prc, t_a *a);
 void					ft_move(t_process *prc, t_a *a);
 
 void 					ft_curseur(t_process *prc, int pc, int curs, t_a *a);
+void					winner(t_a *a);
 
 
 /*
