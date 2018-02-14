@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/13 16:11:44 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/14 11:14:07 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		ft_usage(int quit)
 {
 	ft_putstr("./corewar [-dump nbr_cycles] [[-n number] champion1.cor] ...\n");
 	if (quit)
-		exit(0);
+		exit(EXIT_SUCCESS);
 }
 
 int			main(int ac, char **av)

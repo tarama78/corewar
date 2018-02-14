@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 12:35:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/12 22:53:07 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/14 11:13:13 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void		ft_init(t_a *a)
 	initscr();
 	start_color();
 	noecho();
+	nodelay(stdscr, TRUE);
+//	timeout(1);
 	curs_set(0);
 	a->nc.color = ft_init_color();
 	a->nc.sqrt_mem_size = sqrt(MEM_SIZE);

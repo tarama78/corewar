@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/13 16:12:34 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/14 11:51:40 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ typedef struct			s_champ_file
 # include <math.h>
 # include <time.h>
 # define NB_COLORS 6
-# define SPEED 1000 // plus la val est grande plus c'est lent (a->speed)
+# define SPEED 100000 // plus la val est grande plus c'est lent (a->speed)
+# define CHANGE_SPEED 10000
 # define TIME_BOLD_MEM 50
 # define WIN_H 12
 # define WIN_W 50
@@ -127,7 +128,7 @@ typedef struct			s_a
 	uint8_t				mem[MEM_SIZE];
 	t_ncurses			nc;
 	t_mem_info			mem_info[MEM_SIZE];
-	int					speed;
+	long				speed;
 }						t_a;
 
 int						ft_is_uint(char *str, int *num);

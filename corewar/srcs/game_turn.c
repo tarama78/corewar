@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/13 16:11:07 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/14 11:59:44 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,22 @@ static int		new_cycle(t_a *a)
 	return (a->cycle_to_die);
 }
 
+static int	ft_command(t_a *a, int *pause)
+{
+	int		command;
+
+	command = getch();
+	if (command == ' ')
+		*pause = !(*pause);//(pause + 1) % 2;
+	else if (command == '-')
+		a->speed += (a->speed + CHANGE_SPEED <= 200000) ? CHANGE_SPEED : 0;
+	else if (command == '=')
+		a->speed = SPEED;
+	else if (command == '+')
+		a->speed -= (a->speed - CHANGE_SPEED >= 0) ?  CHANGE_SPEED : 0;
+	return (command);
+}
+
 void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 {
 	uint64_t	nxt_cycle_die;
@@ -83,23 +99,21 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 		ft_print(a);
 	while (a->process && command != 27)
 	{
-		time_start = clock();
-		if (a->cycle >= nxt_cycle_die)
-			nxt_cycle_die += new_cycle(a);
-		if (!a->process)
-			return ;
-		game_turn(a, f);
-		if (a->visu)
+		if (pause)
 		{
-			ft_print(a);
-			nodelay(stdscr, pause);
-			command = getch();
-			if (command == ' ')
-				pause = !pause;//(pause + 1) % 2;
+			time_start = clock();
+			if (a->cycle >= nxt_cycle_die)
+				nxt_cycle_die += new_cycle(a);
+			if (!a->process)
+				return ;
+			game_turn(a, f);
+			a->cycle++;
+			if (a->visu && clock() - time_start < (unsigned long)a->speed)
+				usleep((a->speed - (clock() - time_start)));
 		}
-		a->cycle++;
-		if (clock() - time_start < a->speed)
-			usleep((a->speed - (clock() - time_start)));
+		command = ft_command(a, &pause);
+		if (a->visu)
+			ft_print(a);
 	}
 }
 
