@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 14:26:17 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/12 17:10:02 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/14 14:47:23 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,4 @@ void	ft_move(t_process *prc, t_a *a)
 	prc->pc = (prc->pc + 1) % MEM_SIZE;
 	a->mem_info[prc->pc].process = 1;
 	a->mem_info[prc->pc].player_process = i;
-	prc->carry = 0;
 }

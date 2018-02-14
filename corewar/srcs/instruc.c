@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/14 12:34:39 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/14 14:47:49 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	ft_aff(t_process *prc, t_a *a)
 	while (--i >= 0)
 		ft_putchar_fd(octet[i], STDOUT_FILENO);
 	prc->pc = (prc->pc + 3) % MEM_SIZE;
-	prc->carry = 0;
 }
 
 void	ft_zjmp(t_process *prc, t_a *a)
@@ -38,7 +37,6 @@ void	ft_zjmp(t_process *prc, t_a *a)
 	if (!(check_cycle(prc, a)))
 		return ;
 	addr = rec_memory(3, &curs, a, 1);
-//	ft_printf("%d %#x\n", addr, addr);
 	addr = addr % IDX_MOD;
 	if (prc->carry == 1)
 	{
@@ -52,7 +50,6 @@ void	ft_zjmp(t_process *prc, t_a *a)
 		ft_curseur(prc, prc->pc, curs, a);
 		prc->pc = curs;
 	}
-	prc->carry = 0;
 }
 
 void	live(t_process *prc, t_a *a)
@@ -76,7 +73,6 @@ void	live(t_process *prc, t_a *a)
 		}
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = 0;
 }
 
 void	ft_fork(t_process *prc, t_a *a)
@@ -97,7 +93,6 @@ void	ft_fork(t_process *prc, t_a *a)
 	ft_curseur(prc, prc->pc, new_prc->pc, a);
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = 0;
 }
 
 void	lfork(t_process *prc, t_a *a)
@@ -117,5 +112,4 @@ void	lfork(t_process *prc, t_a *a)
 	ft_curseur(prc, prc->pc, new_prc->pc, a);
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	prc->carry = 0;
 }
