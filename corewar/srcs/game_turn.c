@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/13 12:34:15 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/14 12:12:42 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,14 @@ static int		new_cycle(t_a *a)
 	i = -1;
 	while (++i < a->num_of_player)
 	{
-		a->live += a->player[i + 1].nb_live_current;
-		a->player[i + 1].nb_live_current = 0;
+		if (a->player[i].nb_live_current != 0)
+			a->winner = a->player + i;
+	}
+	i = -1;
+	while (++i < a->num_of_player)
+	{
+		a->live += a->player[i].nb_live_current;
+		a->player[i].nb_live_current = 0;
 	}
 	if (a->live >= NBR_LIVE || (a->cycle - a->last_dec_cycle >= MAX_CHECKS))
 	{
@@ -138,7 +144,7 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 			if (a->cycle >= nxt_cycle_die)
 				nxt_cycle_die += new_cycle(a);
 			if (!a->process)
-				return ;
+				break ;
 			game_turn(a, f);
 	  	if (a->dump_cycle != -1)
 		  	ft_check_dump(a);

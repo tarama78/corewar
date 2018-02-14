@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/13 12:11:52 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/13 16:53:50 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			main(int ac, char **av)
 //	}
 	init_command(f);
 	game_loop(&a, f);
+	winner(&a);
 	if (a.visu)
 		ft_free_nc(&a);//ncurses
 }
