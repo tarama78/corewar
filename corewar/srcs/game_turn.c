@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/13 18:18:43 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/14 14:23:58 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,40 @@ static void	free_process(t_a *a)
 	}
 }
 
+void		ft_print_dump(t_a *a)
+{
+	int k;
+	int i;
+	int cmpt;
+
+	k = 0;
+	cmpt = 0;
+	i = 0;
+	while (k < MEM_SIZE)
+	{
+		ft_printf("%#05x : ", 32 * i);
+		while (cmpt < 32 && k < MEM_SIZE)
+		{
+			ft_printf("%02hhx ", a->mem[k++]);
+			cmpt++;
+		}
+		i++;
+		ft_putstr("\n");
+		cmpt = 0;
+	}
+}
+
+void		ft_check_dump(t_a *a)
+{
+	if (a->dump_cycle == 0)
+	{
+		ft_print_dump(a);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		(a->dump_cycle)--;
+}
+
 void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 {
 	uint64_t	nxt_cycle_die;
@@ -106,6 +140,8 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 		game_turn(a, f);
 		if (a->visu)
 			ft_print(a);
+		if (a->dump_cycle != -1)
+			ft_check_dump(a);
 		a->cycle++;
 	}
 	free_process(a);
