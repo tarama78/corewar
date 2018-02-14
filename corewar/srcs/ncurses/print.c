@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 15:23:15 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:38:35 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,11 @@ static void	ft_print_info(t_a *a)
 	i = 0;
 	wattron(a->nc.win_info, a->nc.color.text);
 	mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 4, "COREWAR");
-	mvwprintw(a->nc.win_info, (i += 2), 2, "Cycle: %18d", a->cycle);
-	mvwprintw(a->nc.win_info, ++i, 2, "Total process: %10d", total_process);
-	mvwprintw(a->nc.win_info, ++i, 2, "Speed: %18d", 20 - (a->speed / 10000));
+	mvwprintw(a->nc.win_info, (i += 2), 2, "Cycle: %27d", a->cycle);
+	mvwprintw(a->nc.win_info, ++i, 2, "Total process: %19d", total_process);
+	mvwprintw(a->nc.win_info, ++i, 2, "Speed: %27d", 20 - (a->speed / 10000));
+	mvwprintw(a->nc.win_info, ++i, 2, "Cycle to die: %20d", a->cycle_to_die);
+	mvwprintw(a->nc.win_info, ++i, 2, "Cycle delta: %21d", CYCLE_DELTA);
 	wattroff(a->nc.win_info, a->nc.color.text);
 }
 
