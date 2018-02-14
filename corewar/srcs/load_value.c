@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:29:46 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/13 12:35:13 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/14 14:10:54 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@ void	ld(t_process *prc, t_a *a)
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
 	if (a->mem[(prc->pc + 1) % MEM_SIZE] == 0xd0)
 	{
+		val %= IDX_MOD;
 		prc->reg[reg] = a->mem[(prc->pc
-				+ (val % IDX_MOD)) % MEM_SIZE] << 24;
+				+ val) % MEM_SIZE] << 24;
 		prc->reg[reg] += a->mem[(prc->pc
-				+ (val % IDX_MOD + 1)) % MEM_SIZE] << 16;
+				+ val + 1) % MEM_SIZE] << 16;
 		prc->reg[reg] += a->mem[(prc->pc
-				+ (val % IDX_MOD + 2)) % MEM_SIZE] << 8;
+				+ val % + 2) % MEM_SIZE] << 8;
 		prc->reg[reg] += a->mem[(prc->pc
-				+ (val % IDX_MOD +3)) % MEM_SIZE];
+				+ val % + 3) % MEM_SIZE];
 	}
 	else
 		prc->reg[reg] = val;
@@ -53,7 +54,7 @@ void	lld(t_process *prc, t_a *a)
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	val = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
+	val = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 1);
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
 	if (a->mem[(prc->pc + 1) % MEM_SIZE] == 0xd0)
 	{
