@@ -1,36 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_int.c                                        :+:      :+:    :+:   */
+/*   load_players.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/19 18:58:32 by atripard          #+#    #+#             */
-/*   Updated: 2018/01/19 19:07:55 by atripard         ###   ########.fr       */
+/*   Created: 2018/02/12 16:02:42 by atripard          #+#    #+#             */
+/*   Updated: 2018/02/12 16:04:15 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef LOAD_PLAYERS_H
+# define LOAD_PLAYERS_H
+
 #include <corewar.h>
 
-int	ft_is_uint(char *str, int *num)
-{
-	int		i;
-	long	number;
+int		check_magic_number(int fd);
+int		check_prog_size(int fd, t_player *player);
+int		load_name(int fd, t_player *player);
+int		load_comment(int fd, t_player *player);
+int		load_prog(int fd, t_player *player);
 
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		++i;
-	}
-	if (i > 11)
-		return (0);
-	number = ft_atol(str);
-	if (number > 2147483647 || number < -2147483647)
-		return (0);
-	*num = number;
-	return (1);
-}
+#endif

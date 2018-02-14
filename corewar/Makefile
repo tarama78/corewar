@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/10 16:05:43 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/13 16:49:31 by ynacache         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,10 @@ NAME = corewar
 
 FILES = main.c\
 		ft_is_int.c\
+		parse_args.c\
+		load_players.c\
+		load_players_func.c\
+		load_memory.c\
 		lst_process.c\
 		commands.c\
 		init_command.c\
@@ -21,6 +25,8 @@ FILES = main.c\
 		write_value.c\
 		instruc.c\
 		operation.c\
+		game_turn.c\
+		winner.c\
 		ncurses/init.c\
 		ncurses/color.c\
 		ncurses/print.c\
@@ -28,6 +34,7 @@ FILES = main.c\
 		../../commun/srcs/op.c\
 
 HFILES = includes/corewar.h \
+		 includes/load_players.h \
 		 ../commun/includes/op.h \
 		 $(LIBFT_DIR)includes/libft.h \
 

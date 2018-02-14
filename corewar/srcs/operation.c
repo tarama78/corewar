@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:22:41 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 15:52:37 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/13 11:17:47 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,48 @@
 
 void	add(t_process *prc, t_a *a)
 {
+	int	reg1;
+	int	reg2;
+	int	reg;
+	int	curs;
+
 	if (!check_cycle(prc, a))
 		return ;
-	if ((a->mem[prc->pc + 1] & 0x54) == 0)
-	{
-		prc->reg[a->mem[(prc->pc + 4) % MEM_SIZE]] =
-			prc->reg[a->mem[(prc->pc + 2) % MEM_SIZE]]
-			+ prc->reg[a->mem[(prc->pc + 3) % MEM_SIZE]];
-	}
-	prc->pc = (prc->pc + 5) % MEM_SIZE;
-	prc->carry = (prc->carry + 1) % 2;
+	curs = (prc->pc + 2) % MEM_SIZE;
+	reg1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
+	reg2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
+	if (!(reg == 0 || reg1 == 0 || reg2 == 0))
+		prc->reg[reg] = prc->reg[reg1] + prc->reg[reg2];
+	ft_curseur(prc, prc->pc, curs, a);
+	prc->pc = curs;
+	if (prc->reg[reg] == 0)
+		prc->carry = 1;
+	else
+		prc->carry = 0;
 }
 
 void	sub(t_process *prc, t_a *a)
 {
+	int	reg1;
+	int	reg2;
+	int	reg;
+	int	curs;
+
 	if (!check_cycle(prc, a))
 		return ;
-	if ((a->mem[prc->pc + 1] & 0x54) == 0)
-	{
-		prc->reg[a->mem[prc->pc + 4]] =
-			prc->reg[a->mem[prc->pc + 2]]
-			- prc->reg[a->mem[prc->pc + 3]];
-	}
-	prc->pc = (prc->pc + 5) % MEM_SIZE;
-	prc->carry = (prc->carry + 1) % 2;
+	curs = (prc->pc + 2) % MEM_SIZE;
+	reg1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
+	reg2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
+	if (!(reg == 0 || reg1 == 0 || reg2 == 0))
+		prc->reg[reg] = prc->reg[reg1] - prc->reg[reg2];
+	ft_curseur(prc, prc->pc, curs, a);
+	prc->pc = curs;
+	if (prc->reg[reg] == 0)
+		prc->carry = 1;
+	else
+		prc->carry = 0;
 }
 
 void	f_or(t_process *prc, t_a *a)
@@ -45,15 +63,22 @@ void	f_or(t_process *prc, t_a *a)
 	int	v1;
 	int	v2;
 	int	curs;
+	int	reg;
 
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
 	v2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
-	prc->reg[a->mem[curs]] = v1 | v2;
-	prc->pc = (curs + 1) % MEM_SIZE;
-	prc->carry = (prc->carry + 1) % 2;
+	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
+	if (reg != 0)
+		prc->reg[reg] = v1 | v2;
+	ft_curseur(prc, prc->pc, curs, a);
+	prc->pc = curs;
+	if (prc->reg[reg] == 0)
+		prc->carry = 1;
+	else
+		prc->carry = 0;
 }
 
 void	f_xor(t_process *prc, t_a *a)
@@ -61,15 +86,22 @@ void	f_xor(t_process *prc, t_a *a)
 	int	v1;
 	int	v2;
 	int	curs;
+	int	reg;
 
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
 	v2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
-	prc->reg[a->mem[curs]] = v1 ^ v2;
-	prc->pc = (curs + 1) % MEM_SIZE;
-	prc->carry = (prc->carry + 1) % 2;
+	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
+	if (reg != 0)
+		prc->reg[reg] = v1 ^ v2;
+	ft_curseur(prc, prc->pc, curs, a);
+	prc->pc = curs;
+	if (prc->reg[reg] == 0)
+		prc->carry = 1;
+	else
+		prc->carry = 0;
 }
 
 void	f_and(t_process *prc, t_a *a)
@@ -77,13 +109,20 @@ void	f_and(t_process *prc, t_a *a)
 	int	v1;
 	int	v2;
 	int	curs;
+	int	reg;
 
 	curs = (prc->pc + 2) % MEM_SIZE;
 	if (!check_cycle(prc, a))
 		return ;
-	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
 	v2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
-	prc->reg[a->mem[curs]] = v1 & v2;
-	prc->pc = (curs + 1) % MEM_SIZE;
-	prc->carry = (prc->carry + 1) % 2;
+	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
+	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
+	if (reg != 0)
+		prc->reg[reg] = v1 & v2;
+	ft_curseur(prc, prc->pc, curs, a);
+	prc->pc = curs;
+	if (prc->reg[reg] == 0)
+		prc->carry = 1;
+	else
+		prc->carry = 0;
 }

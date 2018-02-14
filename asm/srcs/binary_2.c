@@ -6,27 +6,33 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 12:43:42 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/09 12:48:21 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/12 13:45:16 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <corewar.h>
 
-int		ft_label_address(char *label, t_label *tab_label, int dir)
+int		ft_label_address(char *label, t_label *tlabel, t_a *data, int dir)
 {
 	int i;
 
 	i = -1;
-	while (ft_strequ(label + ((dir == 1) ? 2 : 1), tab_label[++i].name) != 1)
+	if (tlabel == NULL || data->nb_label == 0)
+		return (ERROR);
+	while (i < data->nb_label &&
+			ft_strequ(label + ((dir == 1) ? 2 : 1), tlabel[++i].name) != 1)
 		;
-	return (tab_label[i].addr);
+	if (i == data->nb_label)
+		return (ERROR);
+	return (i);
 }
 
-void	ft_handle_args(int file, char *arg, t_a *data, int index)
+int		ft_handle_args(int file, char *arg, t_a *data, int index)
 {
 	char	*octet;
 	int		i;
 	int		value;
+	int 	k;
 
 	if (arg[0] == 'r')
 		ft_putchar_fd((char)ft_atoi(arg + 1), file);
@@ -36,10 +42,18 @@ void	ft_handle_args(int file, char *arg, t_a *data, int index)
 		i = (g_op_tab[index].size_change == 1 ? 2 : i);
 		if (arg[0] == '%' && arg[1] == ':')
 		{
-			value = ft_label_address(arg, data->label, 1) - data->cmpt;
+			k = ft_label_address(arg, data->label, data, 1);
+			if (k == ERROR)
+				return (ERROR);
+			value = data->label[k].addr - data->cmpt;
 		}
 		else if (arg[0] == ':')
-			value = ft_label_address(arg, data->label, 0) - data->cmpt;
+		{
+			k = ft_label_address(arg, data->label, data, 0);
+			if (k == ERROR)
+				return (ERROR);
+			value = data->label[k].addr - data->cmpt;
+		}
 		else if (arg[0] == '%')
 			value = ft_atoi(arg + 1);
 		else
@@ -48,6 +62,7 @@ void	ft_handle_args(int file, char *arg, t_a *data, int index)
 		while (--i >= 0)
 			ft_putchar_fd(octet[i], file);
 	}
+	return (SUCCESS);
 }
 
 int		ft_typepara(char *arg)
