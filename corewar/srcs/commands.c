@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/13 12:18:26 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/14 11:14:40 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,14 @@ int		rec_memory(char type, int *curs, t_a *a, int addr)
 	}
 	else if ((type & 0x03) > 1)
 	{
-		val = a->mem[*curs] << 8;
+		val = ((char)a->mem[*curs] << 8) & 0x0000FF00;
 		*curs = (*curs + 1) % MEM_SIZE;
-		val = (char)a->mem[*curs];
+		//val +=  (char)a->mem[*curs];
+		val += (((char)a->mem[*curs])) & 0x000000FF;
+		val = val & 0x0000FFFF;
+		if ((short)val < 0)
+			val = val | 0xFFFF0000;
 		*curs = (*curs + 1) % MEM_SIZE;
-
 	}
 	else if (type & 0x01)
 	{
