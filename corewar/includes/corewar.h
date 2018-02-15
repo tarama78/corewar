@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/15 15:34:03 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/15 17:43:05 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void					free_process(t_a *a);
 int						new_cycle(t_a *a);
 void					kill_prc(t_a *a);
 void					ft_check_dump(t_a *a);
+void					error_malloc(t_a *a) __attribute__((noreturn));
 
 
 /*
