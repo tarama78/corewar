@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:26:40 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/15 13:55:59 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/15 14:05:17 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ t_process	*add_process(t_a *a, t_process *cpy)
 	t_process *new;
 
 	if (!(new = (t_process *)malloc(sizeof(t_process))))
-		return (0);
-	//ERROR MALLOC
+		exit(EXIT_FAILURE);
 	ft_memcpy(new, cpy, sizeof(t_process));
 	new->next = a->process;
 	a->process = new;
@@ -33,8 +32,7 @@ t_process	*first_process(t_a *a, int player, int offset)
 	t_process *new;
 
 	if (!(new = (t_process *)malloc(sizeof(t_process))))
-		return (0);
-	//ERROR MALLOC
+		exit(EXIT_FAILURE);
 	new->next = a->process;
 	a->process = new;
 	new->num_player = a->player[player].player_number_print;
