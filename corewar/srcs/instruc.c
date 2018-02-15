@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/14 14:47:49 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:51:37 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ void	ft_zjmp(t_process *prc, t_a *a)
 		return ;
 	addr = rec_memory(3, &curs, a, 1);
 	addr = addr % IDX_MOD;
+	addr = (prc->pc + addr) % MEM_SIZE;
+	if (addr < 0)
+		addr += MEM_SIZE;
 	if (prc->carry == 1)
 	{
-		ft_curseur(prc, prc->pc, (prc->pc + addr) % MEM_SIZE, a);
-		prc->pc = (prc->pc + addr) % MEM_SIZE;
+		ft_curseur(prc, prc->pc, addr, a);
+		prc->pc = addr;
 		if (prc->pc < 0)
 			prc->pc += MEM_SIZE;
 	}
