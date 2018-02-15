@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 12:35:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 18:51:53 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/15 17:59:45 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,32 @@ static void	ft_init_windows_2(t_a *a)
 	}
 }
 
+static int			ft_testmalloc(t_a *a)
+{
+	int i;
+	int check;
+
+	check = SUCCESS;
+
+	if (a->nc.win_mem == NULL || a->nc.win_info == NULL)
+		check = ERROR;
+	i= -1;
+	while (++i < a->num_of_player)
+		if (a->nc.win_player[i] == NULL)
+			check = ERROR;
+	if (check == SUCCESS)
+		return (SUCCESS);
+	delwin(a->nc.win_mem);
+	delwin(a->nc.win_info);
+	i= -1;
+	while (++i < a->num_of_player)
+		delwin(a->nc.win_player[i]);
+	return (ERROR);
+}
+
 void		ft_init(t_a *a)
 {
+	delwin(NULL);
 	a->nc.win_mem = NULL;
 	a->nc.win_info = NULL;
 	initscr();
@@ -94,4 +118,5 @@ void		ft_init(t_a *a)
 		ft_init_windows_1(a);
 	else
 		ft_init_windows_2(a);
+	ft_testmalloc(a);
 }
