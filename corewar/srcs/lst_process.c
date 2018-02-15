@@ -17,7 +17,7 @@ t_process	*add_process(t_a *a, t_process *cpy)
 	t_process *new;
 
 	if (!(new = (t_process *)malloc(sizeof(t_process))))
-		exit(EXIT_FAILURE);
+		error_malloc(a);
 	ft_memcpy(new, cpy, sizeof(t_process));
 	new->next = a->process;
 	a->process = new;
@@ -32,7 +32,7 @@ void		first_process(t_a *a, int player, int offset)
 	t_process *new;
 
 	if (!(new = (t_process *)malloc(sizeof(t_process))))
-		exit(EXIT_FAILURE);
+		error_malloc(a);
 	new->next = a->process;
 	a->process = new;
 	new->num_player = a->player[player].player_number_print;

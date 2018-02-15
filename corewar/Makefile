@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/15 16:18:44 by ynacache         ###   ########.fr        #
+#    Updated: 2018/02/15 17:43:40 by bcozic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ FILES = main.c\
 		game_turn.c\
 		game_turn_2.c\
 		winner.c\
+		error.c\
 		ncurses/init.c\
 		ncurses/color.c\
 		ncurses/print.c\
