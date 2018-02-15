@@ -6,13 +6,13 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 13:16:45 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/12 13:16:49 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/15 14:34:23 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <corewar.h>
 
-static void	load_memory_player(uint8_t *mem,
+static void		load_memory_player(uint8_t *mem,
 								t_mem_info *info,
 								t_player *player,
 								int p_num)
@@ -28,7 +28,7 @@ static void	load_memory_player(uint8_t *mem,
 	}
 }
 
-int			load_memory(t_a *a)
+void			load_memory(t_a *a)
 {
 	int			offset;
 	int			player;
@@ -40,9 +40,7 @@ int			load_memory(t_a *a)
 		load_memory_player(a->mem + (offset * player),
 							a->mem_info + (offset * player),
 							&(a->player[player]), player + 1);
-		if(!(first_process(a, player, offset)))
-			return (ERROR);
+		first_process(a, player, offset);
 		++player;
-	 }
-	 return (SUCCESS);
+	}
 }

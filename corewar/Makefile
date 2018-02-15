@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/13 16:49:31 by ynacache         ###   ########.fr        #
+#    Updated: 2018/02/15 16:18:44 by ynacache         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,14 @@ FILES = main.c\
 		load_memory.c\
 		lst_process.c\
 		commands.c\
+		commands_2.c\
 		init_command.c\
 		load_value.c\
 		write_value.c\
 		instruc.c\
 		operation.c\
 		game_turn.c\
+		game_turn_2.c\
 		winner.c\
 		ncurses/init.c\
 		ncurses/color.c\
