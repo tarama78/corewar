@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 16:55:51 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:28:03 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 	new_addr = (prc->pc + addr) % MEM_SIZE;
 	if (new_addr < 0)
 		new_addr += MEM_SIZE;
-	ft_memcpy(a->mem + new_addr, &tmp, 4);
 	while (++i < 4)
 	{
+		a->mem[(new_addr + i) % MEM_SIZE] = (char)tmp;
 		a->mem_info[(new_addr + i) % MEM_SIZE].cycle = a->cycle;
 		a->mem_info[(new_addr + i) % MEM_SIZE].player = nb_player;
+		tmp = tmp >> 8;
 	}
 }
 
