@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 15:42:18 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/15 13:59:42 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ void	game_loop(t_a *a, void (**f)(t_process *, t_a *))
 		{
 			command = ft_command(a);
 			ft_print(a);
-
 		}
 	}
 	free_process(a);
@@ -180,10 +179,14 @@ void	game_turn(t_a *a, void (**f)(t_process *, t_a *))
 	prc = a->process;
 	while (prc)
 	{
-		if (!check_type(prc, a))
-			ft_move(prc, a);
-		else if (a->mem[prc->pc] <= NB_COMM)
-			f[a->mem[prc->pc]](prc, a);
+		if (--prc->cycle_wait <= 0)
+		{
+			ft_printf("%d\n", prc->cycle_wait);
+			if (!check_type(prc, a))
+				ft_move(prc, a);
+			else if (a->mem[prc->pc] <= NB_COMM)
+				f[a->mem[prc->pc]](prc, a);
+		}
 		prc = prc->next;
 	}
 }
