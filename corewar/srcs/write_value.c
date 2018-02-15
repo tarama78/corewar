@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/15 12:28:03 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:47:54 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 	i = -1;
 	tmp = ft_swap(prc->reg[reg]);
 	new_addr = (prc->pc + addr) % MEM_SIZE;
-	if (new_addr < 0)
+	while (new_addr < 0)
 		new_addr += MEM_SIZE;
 	while (++i < 4)
 	{
