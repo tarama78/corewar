@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 15:52:44 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/15 15:34:03 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,16 +127,16 @@ typedef struct			s_a
 	uint64_t			last_dec_cycle;
 	uint64_t			nxt_cycle_die;
 	uint64_t			cycle;
-	uint8_t				mem[MEM_SIZE];
 	t_ncurses			nc;
 	t_mem_info			mem_info[MEM_SIZE];
 	long				speed;
+	uint8_t				mem[MEM_SIZE];
 }						t_a;
 
 int						ft_is_uint(char *str, int *num);
 int						parse_args(t_a *a, int ac, char **av);
 int						load_players(t_a *a);
-int						load_memory(t_a *a);
+void					load_memory(t_a *a);
 void					init_command(void (**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
@@ -166,6 +166,11 @@ void					ft_move(t_process *prc, t_a *a);
 
 void 					ft_curseur(t_process *prc, int pc, int curs, t_a *a);
 void					winner(t_a *a);
+
+void					free_process(t_a *a);
+int						new_cycle(t_a *a);
+void					kill_prc(t_a *a);
+void					ft_check_dump(t_a *a);
 
 
 /*

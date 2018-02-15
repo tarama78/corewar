@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/15 13:57:41 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/15 15:25:42 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ int		check_cycle(t_process *prc, t_a *a)
 			a->mem_info[prc->pc].process = 1;
 			nb_player = 0;
 			while (++nb_player <= a->num_of_player)
-				if (a->player[nb_player - 1].player_number_print == prc->num_player)
+				if (a->player[nb_player - 1].player_number_print
+						== prc->num_player)
 					break ;
 			a->mem_info[prc->pc].player_process = nb_player;
 		}
 	}
-//	prc->cycle_wait--;
 	if (prc->cycle_wait == 0)
 		return (1);
 	return (0);
 }
 
-void ft_curseur(t_process *prc, int pc, int curs, t_a *a)
+void	ft_curseur(t_process *prc, int pc, int curs, t_a *a)
 {
 	char	nb_player;
 
@@ -109,13 +109,17 @@ int		check_type(t_process *prc, t_a *a)
 	while (++j < 4)
 	{
 		tmp = arg_code >> 6;
-		if ((tmp & 0x0003) == 1 && ((g_op_tab[i].type_arg[j] & 0x01) != 0x1))
+		if ((tmp & 0x0003) == 1 &&
+				((g_op_tab[i].type_arg[j] & 0x01) != 0x1))
 			return (0);
-		else if ((tmp & 0x0003) == 2 && ((g_op_tab[i].type_arg[j] & 0x02) != 0x02))
+		else if ((tmp & 0x0003) == 2 &&
+				((g_op_tab[i].type_arg[j] & 0x02) != 0x02))
 			return (0);
-		else if ((tmp & 0x0003) == 3 && ((g_op_tab[i].type_arg[j] & 0x04) != 0x04))
+		else if ((tmp & 0x0003) == 3 &&
+				((g_op_tab[i].type_arg[j] & 0x04) != 0x04))
 			return (0);
-		if ((tmp & 0x0003) == 0 && ((g_op_tab[i].type_arg[j] & 0x07) != 0x00))
+		if ((tmp & 0x0003) == 0 &&
+				((g_op_tab[i].type_arg[j] & 0x07) != 0x00))
 			return (0);
 		arg_code = arg_code << 2;
 	}

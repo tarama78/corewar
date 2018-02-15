@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 12:18:05 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/15 16:03:40 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		ft_usage(int quit, char *name)
 	ft_printf("Usage: %s [-v -dump N] <[-n N] champion1.cor> <...>\n"
 			"\t-v %8t: visual mode\n"
 			"\t-dump N %3t: Dumps memory after N cycles then exits\n"
-			"\t-n N %6t: players number\n", name)
+			"\t-n N %6t: players number\n", name);
 	if (quit)
 		exit(EXIT_SUCCESS);
 }
@@ -38,13 +38,7 @@ int			main(int ac, char **av)
 		ft_printf("ERROR\n");
 		return (0);
 	}
-	if (load_memory(&a) == ERROR)
-	{
-		// Error malloc first process
-		// free
-		ft_printf("ERROR\n");
-		return (0);
-	}
+	load_memory(&a);
 	a.cycle_to_die = CYCLE_TO_DIE;
 	a.speed = SPEED;
 	if (a.visu)
