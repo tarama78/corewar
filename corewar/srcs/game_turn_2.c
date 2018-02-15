@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:28:13 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/15 16:12:44 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/15 16:37:29 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,11 @@ void			game_loop(t_a *a, void (**f)(t_process *, t_a *))
 				break ;
 			game_loop_2(a, f, time_start);
 		}
-		if (a->visu && (command = ft_command(a)) > 0)
+		if (a->visu)
+		{
+			command = ft_command(a);
 			ft_print(a);
+		}
 	}
 	free_process(a);
 }
@@ -89,7 +92,6 @@ void			game_turn(t_a *a, void (**f)(t_process *, t_a *))
 	{
 		if (--prc->cycle_wait <= 0)
 		{
-			ft_printf("%d\n", prc->cycle_wait);
 			if (!check_type(prc, a))
 				ft_move(prc, a);
 			else if (a->mem[prc->pc] <= NB_COMM)

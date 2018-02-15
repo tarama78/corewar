@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/15 16:29:47 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/15 16:42:49 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ int		rec_memory(char type, int *curs, t_a *a, int addr)
 	return (val);
 }
 
-int		check_type_2(int tmp, int i, int j)
+int		check_type_2(int *tmp, int i, int j)
 {
-	if ((tmp & 0x0003) == 1 &&
+	if ((*tmp & 0x0003) == 1 &&
 			((g_op_tab[i].type_arg[j] & 0x01) != 0x1))
 		return (0);
-	else if ((tmp & 0x0003) == 2 &&
+	else if ((*tmp & 0x0003) == 2 &&
 			((g_op_tab[i].type_arg[j] & 0x02) != 0x02))
 		return (0);
-	else if ((tmp & 0x0003) == 3 &&
+	else if ((*tmp & 0x0003) == 3 &&
 			((g_op_tab[i].type_arg[j] & 0x04) != 0x04))
 		return (0);
-	if ((tmp & 0x0003) == 0 &&
+	if ((*tmp & 0x0003) == 0 &&
 			((g_op_tab[i].type_arg[j] & 0x07) != 0x00))
 		return (0);
 	return (1);
@@ -89,7 +89,7 @@ int		check_type(t_process *prc, t_a *a)
 	while (++j < 4)
 	{
 		tmp = arg_code >> 6;
-		if (check_type_2(tmp, i, j) == 0)
+		if (check_type_2(&tmp, i, j) == 0)
 			return (0);
 		arg_code = arg_code << 2;
 	}
