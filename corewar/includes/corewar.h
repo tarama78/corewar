@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/15 14:34:59 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/15 14:36:30 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ void					init_command(void (**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
 int						check_type(t_process *prc, t_a *a);
-void					*add_process(t_a *a, t_process *cpy);
-void					*first_process(t_a *a, int player, int offset);
+void					add_process(t_a *a, t_process *cpy);
+void					first_process(t_a *a, int player, int offset);
 void					game_loop(t_a *a, void (**f)(t_process *, t_a *));
 void					game_turn(t_a *a, void (**f)(t_process *, t_a *));
 
