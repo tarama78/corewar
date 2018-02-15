@@ -6,11 +6,23 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/15 16:22:03 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/15 16:29:47 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+void	rec_memory_2(int *val, t_a *a, int *curs)
+{
+	*val = a->mem[*curs] << 24;
+	*curs = (*curs + 1) % MEM_SIZE;
+	*val += a->mem[*curs] << 16;
+	*curs = (*curs + 1) % MEM_SIZE;
+	*val += a->mem[*curs] << 8;
+	*curs = (*curs + 1) % MEM_SIZE;
+	*val += a->mem[*curs];
+	*curs = (*curs + 1) % MEM_SIZE;
+}
 
 int		rec_memory(char type, int *curs, t_a *a, int addr)
 {
@@ -18,16 +30,7 @@ int		rec_memory(char type, int *curs, t_a *a, int addr)
 
 	val = 0;
 	if ((type & 0x03) == 0x02 && !addr)
-	{
-		val = a->mem[*curs] << 24;
-		*curs = (*curs + 1) % MEM_SIZE;
-		val += a->mem[*curs] << 16;
-		*curs = (*curs + 1) % MEM_SIZE;
-		val += a->mem[*curs] << 8;
-		*curs = (*curs + 1) % MEM_SIZE;
-		val += a->mem[*curs];
-		*curs = (*curs + 1) % MEM_SIZE;
-	}
+		rec_memory_2(&val, a, curs);
 	else if ((type & 0x03) > 1)
 	{
 		val = ((char)a->mem[*curs] << 8) & 0x0000FF00;
