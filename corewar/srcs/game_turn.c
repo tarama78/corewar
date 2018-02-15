@@ -6,16 +6,32 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/15 15:33:17 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/15 16:11:55 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
+static void		kill_prc_2(t_a *a, t_process *prc)
+{
+	t_process	*tmp;
+
+	if (prc->next->live == 0)
+	{
+		tmp = prc->next->next;
+		a->mem_info[prc->next->pc].process = 0;
+		a->player[prc->next->player_index].nb_process--;
+		free(prc->next);
+		prc->next = tmp;
+	}
+	prc = prc->next;
+	if (prc)
+		prc->live = 0;
+}
+
 void			kill_prc(t_a *a)
 {
 	t_process	*prc;
-	t_process	*tmp;
 
 	if (!a->process)
 		return ;
@@ -32,19 +48,7 @@ void			kill_prc(t_a *a)
 	prc = a->process;
 	prc->live = 0;
 	while (prc && prc->next)
-	{
-		if (prc->next->live == 0)
-		{
-			tmp = prc->next->next;
-			a->mem_info[prc->next->pc].process = 0;
-			a->player[prc->next->player_index].nb_process--;
-			free(prc->next);
-			prc->next = tmp;
-		}
-		prc = prc->next;
-		if (prc)
-			prc->live = 0;
-	}
+		kill_prc_2(a, prc);
 }
 
 int				new_cycle(t_a *a)
@@ -71,19 +75,6 @@ int				new_cycle(t_a *a)
 		a->last_dec_cycle = a->cycle;
 	}
 	return (a->cycle_to_die);
-}
-
-void			free_process(t_a *a)
-{
-	t_process *tmp;
-
-	tmp = a->process;
-	while (tmp)
-	{
-		a->process = a->process->next;
-		free(tmp);
-		tmp = a->process;
-	}
 }
 
 static void		ft_print_dump(t_a *a)

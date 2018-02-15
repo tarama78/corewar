@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:28:13 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/15 16:01:15 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/15 16:10:46 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,19 @@ static int		ft_command(t_a *a)
 	else if (command == '+')
 		a->speed -= (a->speed - CHANGE_SPEED >= 0) ? CHANGE_SPEED : 0;
 	return (command);
+}
+
+void			free_process(t_a *a)
+{
+	t_process *tmp;
+
+	tmp = a->process;
+	while (tmp)
+	{
+		a->process = a->process->next;
+		free(tmp);
+		tmp = a->process;
+	}
 }
 
 static void		game_loop_2(t_a *a, void (**f)(t_process *, t_a *),
