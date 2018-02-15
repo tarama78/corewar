@@ -6,15 +6,13 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 16:40:10 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/13 16:48:44 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/15 14:24:33 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <corewar.h>
 
 void	winner(t_a *a)
 {
-
 	ft_printf("winner is %s\n", a->winner->name);
 }
