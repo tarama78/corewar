@@ -42,16 +42,10 @@ int			main(int ac, char **av)
 	a.cycle_to_die = CYCLE_TO_DIE;
 	a.speed = SPEED;
 	if (a.visu)
-		ft_init(&a);//ncurses
-//	ft_print(&a);
-//	while (getch() != 27)
-//	{
-//		ft_print(&a);
-//		usleep(50);
-//	}
+		ft_init(&a);
 	init_command(f);
 	game_loop(&a, f);
 	winner(&a);
 	if (a.visu)
-		ft_free_nc(&a);//ncurses
+		ft_free_nc(&a);
 }

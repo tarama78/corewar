@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:22:41 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 17:29:15 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/15 14:24:13 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ void	f_or(t_process *prc, t_a *a)
 	if (!check_cycle(prc, a))
 		return ;
 	v2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
-	v2 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 6 & 0x03) == 1) ? prc->reg[v2] : v2;
+	v2 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 6 & 0x03) == 1) ?
+		prc->reg[v2] : v2;
 	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
-	v1 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ? prc->reg[v1] : v1;
+	v1 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
+		prc->reg[v1] : v1;
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
 	if (reg != 0)
 		prc->reg[reg] = v1 | v2;
@@ -97,9 +99,11 @@ void	f_xor(t_process *prc, t_a *a)
 	if (!check_cycle(prc, a))
 		return ;
 	v2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
-	v2 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 6 & 0x03) == 1) ? prc->reg[v2] : v2;
+	v2 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 6 & 0x03) == 1) ?
+		prc->reg[v2] : v2;
 	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
-	v1 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ? prc->reg[v1] : v1;
+	v1 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
+		prc->reg[v1] : v1;
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
 	if (reg != 0)
 		prc->reg[reg] = v1 ^ v2;
@@ -123,9 +127,11 @@ void	f_and(t_process *prc, t_a *a)
 	if (!check_cycle(prc, a))
 		return ;
 	v2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 0);
-	v2 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 6 & 0x03) == 1) ? prc->reg[v2] : v2;
+	v2 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 6 & 0x03) == 1) ?
+		prc->reg[v2] : v2;
 	v1 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 0);
-	v1 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ? prc->reg[v1] : v1;
+	v1 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
+		prc->reg[v1] : v1;
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
 	if (reg != 0)
 		prc->reg[reg] = v1 & v2;

@@ -142,7 +142,7 @@ int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, int *curs, t_a *a, int addr);
 int						check_type(t_process *prc, t_a *a);
 t_process				*add_process(t_a *a, t_process *cpy);
-t_process				*first_process(t_a *a, int player, int offset);
+void					first_process(t_a *a, int player, int offset);
 void					game_loop(t_a *a, void (**f)(t_process *, t_a *));
 void					game_turn(t_a *a, void (**f)(t_process *, t_a *));
 
