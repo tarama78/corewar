@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:28:13 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/15 16:37:29 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/15 16:50:52 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,8 @@ void			game_loop(t_a *a, void (**f)(t_process *, t_a *))
 				break ;
 			game_loop_2(a, f, time_start);
 		}
-		if (a->visu)
-		{
-			command = ft_command(a);
+		if (a->visu && (command = ft_command(a)) != 27)
 			ft_print(a);
-		}
 	}
 	free_process(a);
 }
