@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/15 16:44:22 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 12:13:40 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,21 @@ int				new_cycle(t_a *a)
 
 static void		ft_print_dump(t_a *a)
 {
-	int k;
-	int i;
-	int cmpt;
+	static char	*color[7] = {WHITE, GREEN, YELLOW, MAGENTA, BLUE, RED, CYAN};
+	int			k;
+	int			i;
+	int			cmpt;
 
 	k = 0;
 	cmpt = 0;
 	i = 0;
 	while (k < MEM_SIZE)
 	{
-		ft_printf("%#05x : ", 32 * i);
+		ft_printf("%s%#05x : ", WHITE, 32 * i);
 		while (cmpt < 32 && k < MEM_SIZE)
 		{
-			ft_printf("%02hhx ", a->mem[k++]);
+			ft_printf("%s%02hhx ", color[a->mem_info[k].player % 7], a->mem[k]);
+			k++;
 			cmpt++;
 		}
 		i++;
