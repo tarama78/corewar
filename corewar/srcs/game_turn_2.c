@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:28:13 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/15 16:50:52 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 11:06:59 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,26 @@ void			game_loop(t_a *a, void (**f)(t_process *, t_a *))
 	int			command;
 	int			time_start;
 
-	a->nc.pause = 0;
+	a->nc.pause = 1;
 	command = 0;
 	nxt_cycle_die = a->cycle_to_die;
 	if (a->visu)
 		ft_print(a);
-	while (a->process && command != 27)
+	while ((a->process && command != 27) || a->nc.pause)
 	{
-		if (a->nc.pause || !a->visu)
+		if ((a->nc.pause || !a->visu) && a->process)
 		{
 			time_start = clock();
 			if (a->cycle >= nxt_cycle_die)
 				nxt_cycle_die += new_cycle(a);
-			if (!a->process)
-				break ;
-			game_loop_2(a, f, time_start);
+			if (a->process)
+				game_loop_2(a, f, time_start);
+			else
+				a->nc.pause = 1;
 		}
 		if (a->visu && (command = ft_command(a)) != 27)
 			ft_print(a);
+
 	}
 	free_process(a);
 }

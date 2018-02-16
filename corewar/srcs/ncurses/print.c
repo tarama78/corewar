@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 16:40:30 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 11:09:12 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void	ft_print_info(t_a *a)
 	i = 0;
 	wattron(a->nc.win_info, a->nc.color.text);
 	mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 4, "COREWAR");
-	if (a->nc.pause)
+	if (!a->nc.pause)
 		mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 6, "** PLAY  **");
 	else
 		mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 6, "** PAUSE **");
@@ -96,6 +96,8 @@ static void	ft_print_info(t_a *a)
 	mvwprintw(a->nc.win_info, ++i, 4, "Speed: %25d", 20 - (a->speed / 10000));
 	mvwprintw(a->nc.win_info, ++i, 4, "Cycle to die: %18d", a->cycle_to_die);
 	mvwprintw(a->nc.win_info, ++i, 4, "Cycle delta: %19d", CYCLE_DELTA);
+	if (!a->process)
+		mvwprintw(a->nc.win_info, ++i, 4, "Winner %19s", a->winner->name);
 	wattroff(a->nc.win_info, a->nc.color.text);
 }
 
