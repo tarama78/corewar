@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/16 11:25:03 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 11:38:46 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ static int	ft_compile_file(t_a *data, int fd, int fd_2, char *argvi)
 	else
 	{
 		if (ft_binary(fd_2, data) == ERROR)
-		{ft_printf("{red}{bold}compilation failed: {eoc}"
+		{
+			ft_printf("{red}{bold}compilation failed: {eoc}"
 				"{yellow}%s{eoc}\n", "mauvais label");
-
 			return (EXIT_FAILURE);
 		}
 		ft_printf("{green}{bold}compilation success: {eoc}{yellow}%s"
