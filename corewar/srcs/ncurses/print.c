@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/16 14:57:54 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:12:38 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_print_memory(t_a *a)
 
 	i = 1;
 	k = 0;
-	while (++i < a->nc.sqrt_mem_size + 1)
+	while (++i < a->nc.sqrt_mem_size + 2)
 	{
 		j = 0;
 		while ((j += 3) < a->nc.sqrt_mem_size * 3 + 1)
@@ -116,10 +116,12 @@ static void	ft_print_player(t_a *a, int n)
 	wattroff(a->nc.win_player[n], a->nc.color.text);
 }
 
-void		ft_print(t_a *a)
+int			ft_print(t_a *a)
 {
 	int		i;
 
+	if (!a->visu)
+		return (1);
 	if (PRINT_BORDER)
 		ft_print_border(a);
 	ft_print_memory(a);
@@ -132,4 +134,5 @@ void		ft_print(t_a *a)
 		ft_print_player(a, i);
 		wrefresh(a->nc.win_player[i]);
 	}
+	return (1);
 }

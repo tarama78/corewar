@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/16 14:56:13 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:11:42 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct			s_champ_file
 # define TIME_BOLD_MEM 50
 # define WIN_H 12
 # define WIN_W 50
-# define PRINT_BORDER 1
+# define PRINT_BORDER 0
 typedef struct	s_color
 {
 	int			border;
@@ -182,7 +182,7 @@ void					error_malloc(t_a *a) __attribute__((noreturn));
 void		ft_init(t_a *a);
 t_color		ft_init_color();
 int			ft_get_color(t_a *a, int k);
-void		ft_print(t_a *a);
+int			ft_print(t_a *a);
 void		ft_free_nc(t_a *a);
 
 #endif
