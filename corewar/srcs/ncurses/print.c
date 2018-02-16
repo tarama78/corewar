@@ -104,15 +104,19 @@ static void	ft_print_info(t_a *a)
 static void	ft_print_player(t_a *a, int n)
 {
 	wattron(a->nc.win_player[n], a->nc.color.text);
-	mvwprintw(a->nc.win_player[n], 1, 2, "Player %d: ", a->player[n].player_number_print);
+	mvwprintw(a->nc.win_player[n], 1, 2, "Player %d: ",
+							a->player[n].player_number_print);
 	wattroff(a->nc.win_player[n], a->nc.color.text);
 	wattron(a->nc.win_player[n], a->nc.color.player[n + 1] | A_BOLD);
 	wprintw(a->nc.win_player[n], "%.*s", WIN_W - 13, a->player[n].name);
 	wattroff(a->nc.win_player[n], a->nc.color.player[n + 1] | A_BOLD);
 	wattron(a->nc.win_player[n], a->nc.color.text);
-	mvwprintw(a->nc.win_player[n], 3, 4, "Process: %23d", a->player[n].nb_process);
-	mvwprintw(a->nc.win_player[n], 4, 4, "Last live: %21d", a->player[n].last_live_cycle);
-	mvwprintw(a->nc.win_player[n], 5, 4, "Last live in cur period: %7d", a->player[n].nb_live_current);
+	mvwprintw(a->nc.win_player[n], 3, 4, "Process: %23d",
+							a->player[n].nb_process);
+	mvwprintw(a->nc.win_player[n], 4, 4, "Last live: %21d",
+							a->player[n].last_live_cycle);
+	mvwprintw(a->nc.win_player[n], 5, 4, "Last live in cur period: %7d",
+							a->player[n].nb_live_current);
 	wattroff(a->nc.win_player[n], a->nc.color.text);
 }
 

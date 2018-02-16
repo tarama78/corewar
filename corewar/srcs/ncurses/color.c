@@ -35,7 +35,7 @@ static int	ft_get_color_player(int player)
 	return (colors[(player - 1) % NB_COLORS]);
 }
 
-t_color		ft_init_color()
+t_color		ft_init_color(void)
 {
 	t_color	c;
 	int		i;
@@ -49,7 +49,6 @@ t_color		ft_init_color()
 	c.defaut = COLOR_PAIR(3) | A_BOLD;
 	init_pair(4, COLOR_WHITE, COLOR_BLACK);
 	c.text = COLOR_PAIR(4) | A_BOLD;
-
 	c.player[0] = c.defaut;
 	start_i = 10;
 	i = 0;
