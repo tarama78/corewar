@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/16 11:38:46 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 11:46:10 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 **   | main.c                                                   |
 **   |     init_struct(6 lines)                                 |
 **   |     file_name(9 lines)                                   |
-**   |     ft_open_files(17 lines)                              |
-**   |     ft_compile_file(24 lines)                            |
+**   |     ft_open_files(18 lines)                              |
+**   |     ft_compile_file(29 lines)                            |
+**   |         MEUUUU too many lines                            |
 **   |     main(25 lines)                                       |
 **   ------------------------------------------------------------
 **           __n__n__  /
