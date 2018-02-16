@@ -6,17 +6,19 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 12:43:42 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/12 13:45:16 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:51:44 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <corewar.h>
 
-int		ft_label_address(char *label, t_label *tlabel, t_a *data, int dir)
+int		ft_label_address(char *label, t_label *tlabel, t_a *data)
 {
 	int i;
+	int dir;
 
 	i = -1;
+	dir = ((label[0] == '%' && label[1] == ':') ? 1 : 0);
 	if (tlabel == NULL || data->nb_label == 0)
 		return (ERROR);
 	while (i < data->nb_label &&
@@ -32,36 +34,27 @@ int		ft_handle_args(int file, char *arg, t_a *data, int index)
 	char	*octet;
 	int		i;
 	int		value;
-	int 	k;
+	int		k;
 
+	k = MEM_SIZE + 10;
 	if (arg[0] == 'r')
-		ft_putchar_fd((char)ft_atoi(arg + 1), file);
-	else
 	{
-		i = (arg[0] == '%' ? DIR_SIZE : IND_SIZE);
-		i = (g_op_tab[index].size_change == 1 ? 2 : i);
-		if (arg[0] == '%' && arg[1] == ':')
-		{
-			k = ft_label_address(arg, data->label, data, 1);
-			if (k == ERROR)
-				return (ERROR);
-			value = data->label[k].addr - data->cmpt;
-		}
-		else if (arg[0] == ':')
-		{
-			k = ft_label_address(arg, data->label, data, 0);
-			if (k == ERROR)
-				return (ERROR);
-			value = data->label[k].addr - data->cmpt;
-		}
-		else if (arg[0] == '%')
-			value = ft_atoi(arg + 1);
-		else
-			value = ft_atoi(arg);
-		octet = (char*)&value;
-		while (--i >= 0)
-			ft_putchar_fd(octet[i], file);
+		ft_putchar_fd((char)ft_atoi(arg + 1), file);
+		return (SUCCESS);
 	}
+	i = (arg[0] == DIRECT_CHAR ? DIR_SIZE : IND_SIZE);
+	i = (g_op_tab[index].size_change == 1 ? 2 : i);
+	if ((arg[0] == DIRECT_CHAR && arg[1] == LABEL_CHAR) || arg[0] == LABEL_CHAR)
+		k = ft_label_address(arg, data->label, data);
+	if (k == ERROR)
+		return (ERROR);
+	if (k != MEM_SIZE + 10)
+		value = data->label[k].addr - data->cmpt;
+	else
+		value = ((arg[0] == DIRECT_CHAR) ? ft_atoi(arg + 1) : ft_atoi(arg));
+	octet = (char*)&value;
+	while (--i >= 0)
+		ft_putchar_fd(octet[i], file);
 	return (SUCCESS);
 }
 

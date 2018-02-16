@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:29:46 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 14:10:54 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/15 15:23:03 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,17 @@ void	ld(t_process *prc, t_a *a)
 	if (a->mem[(prc->pc + 1) % MEM_SIZE] == 0xd0)
 	{
 		val %= IDX_MOD;
-		prc->reg[reg] = a->mem[(prc->pc
-				+ val) % MEM_SIZE] << 24;
-		prc->reg[reg] += a->mem[(prc->pc
-				+ val + 1) % MEM_SIZE] << 16;
-		prc->reg[reg] += a->mem[(prc->pc
-				+ val % + 2) % MEM_SIZE] << 8;
-		prc->reg[reg] += a->mem[(prc->pc
-				+ val % + 3) % MEM_SIZE];
+		prc->reg[reg] = a->mem[(prc->pc + val) % MEM_SIZE] << 24;
+		prc->reg[reg] += a->mem[(prc->pc + val + 1) % MEM_SIZE] << 16;
+		prc->reg[reg] += a->mem[(prc->pc + val + 2) % MEM_SIZE] << 8;
+		prc->reg[reg] += a->mem[(prc->pc + val + 3) % MEM_SIZE];
 	}
 	else
 		prc->reg[reg] = val;
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	if (prc->reg[reg] == 0)
-		prc->carry = 1;
-	else
-		prc->carry = 0;
+	prc->carry = ((prc->reg[reg] == 0 && reg != 0) ? 1 : 0);
+	prc->reg[0] = 0;
 }
 
 void	lld(t_process *prc, t_a *a)
@@ -59,20 +53,19 @@ void	lld(t_process *prc, t_a *a)
 	if (a->mem[(prc->pc + 1) % MEM_SIZE] == 0xd0)
 	{
 		prc->reg[reg] = a->mem[(prc->pc + val) % MEM_SIZE] << 24;
-		prc->reg[reg] += a->mem[(prc->pc + val + 1)
-			% MEM_SIZE] << 16;
-		prc->reg[reg] += a->mem[(prc->pc + val + 2)
-			% MEM_SIZE] << 8;
+		prc->reg[reg] += a->mem[(prc->pc + val + 1) % MEM_SIZE] << 16;
+		prc->reg[reg] += a->mem[(prc->pc + val + 2) % MEM_SIZE] << 8;
 		prc->reg[reg] += a->mem[(prc->pc + val + 3) % MEM_SIZE];
 	}
 	else
 		prc->reg[reg] = val;
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	if (prc->reg[reg] == 0)
+	if (prc->reg[reg] == 0 && reg != 0)
 		prc->carry = 1;
 	else
 		prc->carry = 0;
+	prc->reg[0] = 0;
 }
 
 void	ldi(t_process *prc, t_a *a)
@@ -94,17 +87,13 @@ void	ldi(t_process *prc, t_a *a)
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
 	val = (val + val2) % IDX_MOD;
 	prc->reg[reg] = a->mem[(prc->pc + val) % MEM_SIZE] << 24;
-	prc->reg[reg] += a->mem[(prc->pc + val + 1)
-		% MEM_SIZE] << 16;
-	prc->reg[reg] += a->mem[(prc->pc + val + 2)
-		% MEM_SIZE] << 8;
+	prc->reg[reg] += a->mem[(prc->pc + val + 1) % MEM_SIZE] << 16;
+	prc->reg[reg] += a->mem[(prc->pc + val + 2) % MEM_SIZE] << 8;
 	prc->reg[reg] += a->mem[(prc->pc + val + 3) % MEM_SIZE];
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	if (prc->reg[reg] == 0)
-		prc->carry = 1;
-	else
-		prc->carry = 0;
+	prc->carry = ((prc->reg[reg] == 0 && reg != 0) ? 1 : 0);
+	prc->reg[0] = 0;
 }
 
 void	lldi(t_process *prc, t_a *a)
@@ -126,15 +115,11 @@ void	lldi(t_process *prc, t_a *a)
 	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 0);
 	val = val + val2;
 	prc->reg[reg] = a->mem[(prc->pc + val) % MEM_SIZE] << 24;
-	prc->reg[reg] += a->mem[(prc->pc + val + 1)
-		% MEM_SIZE] << 16;
-	prc->reg[reg] += a->mem[(prc->pc + val + 2)
-		% MEM_SIZE] << 8;
+	prc->reg[reg] += a->mem[(prc->pc + val + 1) % MEM_SIZE] << 16;
+	prc->reg[reg] += a->mem[(prc->pc + val + 2) % MEM_SIZE] << 8;
 	prc->reg[reg] += a->mem[(prc->pc + val + 3) % MEM_SIZE];
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
-	if (prc->reg[reg] == 0)
-		prc->carry = 1;
-	else
-		prc->carry = 0;
+	prc->carry = ((prc->reg[reg] == 0 && reg != 0) ? 1 : 0);
+	prc->reg[0] = 0;
 }

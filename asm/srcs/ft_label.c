@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:21:37 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 16:19:52 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:46:12 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void		ft_label(t_a *data)
 	current = data->line;
 	while (current)
 	{
-		len_name = 0;
 		len_name = check_line(current);
 		if (len_name)
 		{
@@ -77,6 +76,5 @@ void		ft_label(t_a *data)
 		addr += current->size;
 		current = current->next;
 	}
-	i = -1;
 	data->prog_size = addr;
 }

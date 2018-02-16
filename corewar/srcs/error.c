@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   winner.c                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/13 16:40:10 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/15 14:24:33 by bcozic           ###   ########.fr       */
+/*   Created: 2018/02/15 17:39:42 by bcozic            #+#    #+#             */
+/*   Updated: 2018/02/15 17:42:25 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <corewar.h>
+#include "corewar.h"
 
-void	winner(t_a *a)
+void	error_malloc(t_a *a)
 {
-	ft_printf("winner is %s\n", a->winner->name);
+	free_process(a);
+	if (a->nc.win_mem)
+		ft_free_nc(a);
+	exit(EXIT_FAILURE);
 }

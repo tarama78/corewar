@@ -34,3 +34,32 @@ int	ft_is_uint(char *str, int *num)
 	*num = number;
 	return (1);
 }
+
+int	ft_is_int(char *str, int *num)
+{
+	int		i;
+	long	number;
+
+	if (!str)
+		return (0);
+	i = 0;
+	if (str[0] == '-')
+	{
+		++i;
+		if (str[i] == '\0')
+			return (0);
+	}
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		++i;
+	}
+	if (i > 11)
+		return (0);
+	number = ft_atol(str);
+	if (number > 2147483647 || number < -2147483647)
+		return (0);
+	*num = number;
+	return (1);
+}

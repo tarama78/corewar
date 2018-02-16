@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/12 13:31:50 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:57:54 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct		s_lst
 
 int					ft_err_msg(t_a *a, t_line *new_ln, char *txt, int quit);
 int					ft_warning_msg(t_a *a, t_line *new_ln, char *txt);
+t_lst				*ft_lst_get_last(t_lst *lst);
 void				ft_lst_add_end(t_lst **begin, t_lst *new);
 char				*ft_get_name(char *ln);
 int					ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_l);
@@ -81,7 +82,8 @@ void				ft_label(t_a *data);
 int					free_content(t_a *data, char *error);
 int					ft_parse_file(t_a *a, int fd);
 void				ft_parse_cmd(int fd, t_a *a, int *num_ln, int *cmd);
-int					ft_label_address(char *label, t_label *tab_label, t_a *data, int dir);
+int					ft_label_address(char *label, t_label *tab_label,
+																	t_a *data);
 int					ft_handle_args(int file, char *arg, t_a *data, int index);
 int					ft_typepara(char *arg);
 void				ft_encoding(int file, char **words);
