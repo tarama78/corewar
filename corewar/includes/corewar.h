@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/16 16:11:42 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:29:00 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdbool.h>
+
+/*
+** ncurses
+*/
+# include <ncurses.h>
+# include <math.h>
+# include <time.h>
 
 # define SUCCESS 0
 # define ERROR -1
@@ -51,7 +58,6 @@ typedef struct			s_process
 	int					live;
 }						t_process;
 
-
 typedef struct			s_player
 {
 	char				name[PROG_NAME_LENGTH + 1];
@@ -71,10 +77,9 @@ typedef struct			s_champ_file
 	char				*filename;
 }						t_champ_file;
 
-//////////////////////////ncurses
-# include <ncurses.h>
-# include <math.h>
-# include <time.h>
+/*
+** ncurses
+*/
 # define NB_COLORS 6
 # define SPEED 0
 # define CHANGE_SPEED 10000
@@ -82,26 +87,30 @@ typedef struct			s_champ_file
 # define WIN_H 12
 # define WIN_W 50
 # define PRINT_BORDER 0
-typedef struct	s_color
-{
-	int			border;
-	int			black;
-	int			text;
-	int			defaut;
-	int			player[MAX_PLAYERS + 1];
-	int			player_live[MAX_PLAYERS + 1];
-}				t_color;
 
-typedef struct	s_ncurses
+typedef struct			s_color
 {
-	WINDOW		*win_mem;
-	WINDOW		*win_info;
-	WINDOW		*win_player[MAX_PLAYERS];
-	int			sqrt_mem_size;
-	t_color		color;
-	int			pause;
-}				t_ncurses;
-/////////////////////////////////
+	int					border;
+	int					black;
+	int					text;
+	int					defaut;
+	int					player[MAX_PLAYERS + 1];
+	int					player_live[MAX_PLAYERS + 1];
+}						t_color;
+
+typedef struct			s_ncurses
+{
+	WINDOW				*win_mem;
+	WINDOW				*win_info;
+	WINDOW				*win_player[MAX_PLAYERS];
+	int					sqrt_mem_size;
+	t_color				color;
+	int					pause;
+}						t_ncurses;
+
+/*
+** ncurses
+*/
 
 typedef struct			s_mem_info
 {
@@ -165,7 +174,7 @@ void					ft_fork(t_process *prc, t_a *a);
 void					lfork(t_process *prc, t_a *a);
 void					ft_move(t_process *prc, t_a *a);
 
-void 					ft_curseur(t_process *prc, int pc, int curs, t_a *a);
+void					ft_curseur(t_process *prc, int pc, int curs, t_a *a);
 void					winner(t_a *a);
 
 void					free_process(t_a *a);
@@ -174,15 +183,14 @@ void					kill_prc(t_a *a);
 void					ft_check_dump(t_a *a);
 void					error_malloc(t_a *a) __attribute__((noreturn));
 
-
 /*
 ** ncurses
 */
 
-void		ft_init(t_a *a);
-t_color		ft_init_color();
-int			ft_get_color(t_a *a, int k);
-int			ft_print(t_a *a);
-void		ft_free_nc(t_a *a);
+void					ft_init(t_a *a);
+t_color					ft_init_color();
+int						ft_get_color(t_a *a, int k);
+int						ft_print(t_a *a);
+void					ft_free_nc(t_a *a);
 
 #endif
