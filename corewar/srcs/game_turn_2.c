@@ -57,11 +57,13 @@ void			game_loop(t_a *a, void (**f)(t_process *, t_a *))
 	uint64_t	nxt_cycle_die;
 	int			command;
 	int			time_start;
+	int			end;
 
+	end = 0;
 	command = 0;
 	nxt_cycle_die = a->cycle_to_die;
 	ft_print(a);
-	while (command != 27)
+	while ((command != 27 && a->visu && end) || !end)
 	{
 		if ((a->nc.pause || !a->visu) && a->process)
 		{
@@ -71,15 +73,9 @@ void			game_loop(t_a *a, void (**f)(t_process *, t_a *))
 			if (a->process)
 				game_loop_2(a, f, time_start);
 			else
-				break ;
+				end = 1;
 		}
 		(a->visu) && ((command = ft_command(a)) != 27) && ft_print(a);
-	}
-	if (a->visu && a->process == NULL && )
-	{
-		ft_print(a);
-		while (getch() != 27)
-			;
 	}
 	free_process(a);
 }
