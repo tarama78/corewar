@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/15 17:43:05 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/16 14:56:13 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,12 @@ typedef struct			s_champ_file
 # include <math.h>
 # include <time.h>
 # define NB_COLORS 6
-# define SPEED 100000 // plus la val est grande plus c'est lent (a->speed)
+# define SPEED 0
 # define CHANGE_SPEED 10000
 # define TIME_BOLD_MEM 50
 # define WIN_H 12
 # define WIN_W 50
+# define PRINT_BORDER 1
 typedef struct	s_color
 {
 	int			border;
@@ -104,11 +105,11 @@ typedef struct	s_ncurses
 
 typedef struct			s_mem_info
 {
-	uint64_t			cycle : 32; //cycle de changement de couleur (pour le surlignement);
-	uint64_t			player : 8; //numero du joueur (pour definir la couleur) commence a 1 (0 = aucun joueur);
-	uint64_t			player_process : 8; //numero du joueur (pour definir la couleur) commence a 1 (0 = aucun joueur);
-	uint64_t			process : 1; //= 1 si il y as un process sur la case
-	uint64_t			pad : 15; //libre pour stocker d'autres info
+	uint64_t			cycle : 32;
+	uint64_t			player : 8;
+	uint64_t			player_process : 8;
+	uint64_t			process : 1;
+	uint64_t			pad : 15;
 }						t_mem_info;
 
 typedef struct			s_a
@@ -177,6 +178,7 @@ void					error_malloc(t_a *a) __attribute__((noreturn));
 /*
 ** ncurses
 */
+
 void		ft_init(t_a *a);
 t_color		ft_init_color();
 int			ft_get_color(t_a *a, int k);
