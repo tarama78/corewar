@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 12:43:42 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/12 13:45:16 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 12:39:34 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ int		ft_handle_args(int file, char *arg, t_a *data, int index)
 	char	*octet;
 	int		i;
 	int		value;
-	int 	k;
+	int		k;
 
+	k = MEM_SIZE + 10;
 	if (arg[0] == 'r')
 		ft_putchar_fd((char)ft_atoi(arg + 1), file);
 	else
@@ -41,19 +42,13 @@ int		ft_handle_args(int file, char *arg, t_a *data, int index)
 		i = (arg[0] == '%' ? DIR_SIZE : IND_SIZE);
 		i = (g_op_tab[index].size_change == 1 ? 2 : i);
 		if (arg[0] == '%' && arg[1] == ':')
-		{
 			k = ft_label_address(arg, data->label, data, 1);
-			if (k == ERROR)
-				return (ERROR);
-			value = data->label[k].addr - data->cmpt;
-		}
-		else if (arg[0] == ':')
-		{
+		if (arg[0] == ':')
 			k = ft_label_address(arg, data->label, data, 0);
-			if (k == ERROR)
-				return (ERROR);
+		if (k == ERROR)
+			return (ERROR);
+		if (k != MEM_SIZE + 10)
 			value = data->label[k].addr - data->cmpt;
-		}
 		else if (arg[0] == '%')
 			value = ft_atoi(arg + 1);
 		else

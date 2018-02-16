@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/16 12:15:33 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 12:55:20 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int		ft_binary_1(int file, t_a *data, t_line *tmp, int i)
 	char	**word;
 	char	**args;
 
-	while (tmp != NULL && (k = -1 ? 1 : 1))
+	while (tmp != NULL && ((k = -1) ? 1 : 1))
 	{
 		if (ft_binary_2(&j, &i, &word, tmp) == ERROR)
 			return (ERROR);
