@@ -75,9 +75,12 @@ void			game_loop(t_a *a, void (**f)(t_process *, t_a *))
 		}
 		(a->visu) && ((command = ft_command(a)) != 27) && ft_print(a);
 	}
-	if (a->visu && a->process == NULL)
+	if (a->visu && a->process == NULL && )
+	{
+		ft_print(a);
 		while (getch() != 27)
 			;
+	}
 	free_process(a);
 }
 
