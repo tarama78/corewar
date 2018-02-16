@@ -22,12 +22,12 @@ static int	ft_add_file(t_champ_file *file, char *file_name, int *n, int player)
 	file[player].filename = file_name;
 	file[player].player_number_print = *n;
 	i = 0;
-	next_number = 1;
+	next_number = -1;
 	while (i < player + 1)
 	{
 		if (next_number == file[i].player_number_print)
 		{
-			++next_number;
+			--next_number;
 			i = -1;
 		}
 		++i;
@@ -50,7 +50,7 @@ static int	check_n(char **av, t_a *a, int ac, int *i)
 {
 	if (*i + 2 >= ac || av[*i + 2][0] == '-')
 		return (0);
-	if (!ft_is_uint(av[*i + 1], &(a->n)))
+	if (!ft_is_int(av[*i + 1], &(a->n)))
 		return (0);
 	++(*i);
 	return (1);
@@ -85,7 +85,7 @@ int			parse_args(t_a *a, int ac, char **av)
 	int i;
 
 	i = 0;
-	a->n = 1;
+	a->n = -1;
 	player = 0;
 	while (++i < ac)
 	{
