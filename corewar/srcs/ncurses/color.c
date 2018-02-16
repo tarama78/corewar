@@ -27,7 +27,7 @@
 
 #include <corewar.h>
 
-static int	ft_get_color_player(int player)
+static int		ft_get_color_player(int player)
 {
 	static int	colors[NB_COLORS] = {COLOR_GREEN, COLOR_YELLOW, COLOR_MAGENTA,
 		COLOR_BLUE, COLOR_RED, COLOR_CYAN};
@@ -35,7 +35,7 @@ static int	ft_get_color_player(int player)
 	return (colors[(player - 1) % NB_COLORS]);
 }
 
-t_color		ft_init_color()
+t_color			ft_init_color(void)
 {
 	t_color	c;
 	int		i;
@@ -49,7 +49,6 @@ t_color		ft_init_color()
 	c.defaut = COLOR_PAIR(3) | A_BOLD;
 	init_pair(4, COLOR_WHITE, COLOR_BLACK);
 	c.text = COLOR_PAIR(4) | A_BOLD;
-
 	c.player[0] = c.defaut;
 	start_i = 10;
 	i = 0;
@@ -64,7 +63,7 @@ t_color		ft_init_color()
 	return (c);
 }
 
-int			ft_get_color(t_a *a, int k)
+int				ft_get_color(t_a *a, int k)
 {
 	int		color;
 
