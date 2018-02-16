@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 16:05:28 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 12:38:54 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,54 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	return (SUCCESS);
 }
 
+static int	ft_islabel(t_line *ln, int ret)
+{
+	int		nb_label;
+	int		i;
+
+	if (ln == NULL)
+		return (0);
+	i = 0;
+	nb_label = 0;
+	while (ln->line[i])
+	{
+		while (ft_strchr(LABEL_CHARS, ln->line[++i]) && ln->line[i])
+			;
+		if (ln->line[i] == ':')
+			nb_label++;
+		else
+			break ;
+		while (ln->line[++i] == ' ')
+			;
+		if (ln->line[i] == '\0')
+			break ;
+	}
+	while (ln->line[++i] == ' ')
+		;
+	if (ln->line[i] == '\0' && nb_label == 1)
+		return (1);
+	if (ln->line[i] != '\0' && nb_label == 1 && ret == 1)
+		return (0);
+	return (nb_label);
+}
+
+static void	ft_check_double_label(t_a *a, t_line *new_ln)
+{
+	int		nb_lab;
+
+	if ((nb_lab = ft_islabel(new_ln, 0)) == 0)
+		return ;
+	if (nb_lab >= 2)
+	{
+		ft_warning_msg(a, new_ln, "more than 1 label on a single line");
+		return ;
+	}
+	if (ft_islabel((t_line*)ft_lst_get_last((t_lst*)a->line), 1) != 1)
+		return ;
+	ft_warning_msg(a, new_ln, "2 label in a row");
+//	ft_printf("\t\t%s\n", ((t_line*)ft_lst_get_last((t_lst*)a->line))->line);
+}
+
 int			ft_handle_line(t_a *a, char *ln, int num_ln)
 {
 	char	*name;
@@ -135,6 +183,7 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 				ft_fruit(3, &name, &new_ln->line, &new_ln))
 			return (ERROR);
 	}
+	ft_check_double_label(a, new_ln);
 	ft_lst_add_end((t_lst**)&a->line, (t_lst*)new_ln);
 	ft_fruit(1, &name);
 	return (SUCCESS);

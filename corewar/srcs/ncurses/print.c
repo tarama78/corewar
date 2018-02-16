@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/16 11:09:12 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 14:57:54 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,15 @@ static void	ft_print_info(t_a *a)
 	i = 0;
 	wattron(a->nc.win_info, a->nc.color.text);
 	mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 4, "COREWAR");
-	if (!a->nc.pause)
+	if (a->nc.pause)
 		mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 6, "** PLAY  **");
 	else
 		mvwprintw(a->nc.win_info, ++i, WIN_W / 2 - 6, "** PAUSE **");
 	mvwprintw(a->nc.win_info, ++i, 4, "Cycle: %25d", a->cycle);
 	mvwprintw(a->nc.win_info, ++i, 4, "Total process: %17d", total_process);
 	mvwprintw(a->nc.win_info, ++i, 4, "Speed: %25d", 20 - (a->speed / 10000));
-	mvwprintw(a->nc.win_info, ++i, 4, "Cycle to die: %18d", a->cycle_to_die);
-	mvwprintw(a->nc.win_info, ++i, 4, "Cycle delta: %19d", CYCLE_DELTA);
+	mvwprintw(a->nc.win_info, ++i, 4, "CYCLE_TO_DIE %19d", a->cycle_to_die);
+	mvwprintw(a->nc.win_info, ++i, 4, "CYCLE_DELTA %20d", CYCLE_DELTA);
 	if (!a->process)
 		mvwprintw(a->nc.win_info, ++i, 4, "Winner %19s", a->winner->name);
 	wattroff(a->nc.win_info, a->nc.color.text);
@@ -112,7 +112,7 @@ static void	ft_print_player(t_a *a, int n)
 	wattron(a->nc.win_player[n], a->nc.color.text);
 	mvwprintw(a->nc.win_player[n], 3, 4, "Process: %23d", a->player[n].nb_process);
 	mvwprintw(a->nc.win_player[n], 4, 4, "Last live: %21d", a->player[n].last_live_cycle);
-	mvwprintw(a->nc.win_player[n], 5, 4, "Last live in cur period: %7d", -1);
+	mvwprintw(a->nc.win_player[n], 5, 4, "Last live in cur period: %7d", a->player[n].nb_live_current);
 	wattroff(a->nc.win_player[n], a->nc.color.text);
 }
 
@@ -120,7 +120,8 @@ void		ft_print(t_a *a)
 {
 	int		i;
 
-//	ft_print_border(a);
+	if (PRINT_BORDER)
+		ft_print_border(a);
 	ft_print_memory(a);
 	wrefresh(a->nc.win_mem);
 	ft_print_info(a);
