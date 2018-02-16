@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:21:37 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/10 16:19:52 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:17:47 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,41 @@
 #include <unistd.h>
 #include "ft_printf.h"
 
-static int	check_line(t_line *line)
+static int	check_line(t_line *line, int *curs)
 {
-	int	i;
+	int		i;
 
-	i = -1;
-	while (line->line[++i])
+	*curs += 1;
+	i = 0;
+	while (ft_isspace(line->line[*curs]))
+		*curs += 1;
+	while (line->line[*curs])
 	{
-		if (line->line[i] == LABEL_CHAR)
+		if (line->line[*curs] == LABEL_CHAR)
 			return (i);
-		if (!ft_strchr(LABEL_CHARS, line->line[i]))
+		if (!ft_strchr(LABEL_CHARS, line->line[*curs]))
 			return (0);
+		*curs += 1;
+		i++;
 	}
 	return (0);
 }
 
-static void	new_label(t_label *label, int len_name, int addr, t_line *line)
+static void	new_label(t_label *label, int curs, int len_name, t_line *line)
 {
-	if (!(label->name = ft_strndup(line->line, len_name)))
+	if (!(label->name = ft_strndup(line->line + curs - len_name, len_name)))
 		ft_err_msg(NULL, line, "malloc fail", 1);
-	label->addr = addr;
+}
+
+static void	init_label(t_a *data)
+{
+	int		i;
+
+	if (!(data->label = (t_label *)malloc(sizeof(t_label) * data->nb_label)))
+		ft_err_msg(data, NULL, "malloc fail", 1);
+	i = -1;
+	while (++i < data->nb_label)
+		ft_bzero(&data->label[i], sizeof(t_label));
 }
 
 static void	check_label_name(t_a *a, int id_label, t_line *line)
@@ -55,23 +70,20 @@ void		ft_label(t_a *data)
 	t_line	*current;
 	int		len_name;
 	int		addr;
+	int		curs;
 	int		i;
 
-	if (!(data->label = (t_label *)malloc(sizeof(t_label) * data->nb_label)))
-		ft_err_msg(data, NULL, "malloc fail", 1);
-	i = -1;
-	while (++i < data->nb_label)
-		ft_bzero(&data->label[i], sizeof(t_label));
+	init_label(data);
 	addr = 0;
 	i = -1;
 	current = data->line;
 	while (current)
 	{
-		len_name = 0;
-		len_name = check_line(current);
-		if (len_name)
+		curs = -1;
+		while ((len_name = check_line(current, &curs)))
 		{
-			new_label(&data->label[++i], len_name, addr, current);
+			new_label(&data->label[++i], curs, len_name, current);
+			data->label[i].addr = addr;
 			check_label_name(data, i, current);
 		}
 		addr += current->size;
