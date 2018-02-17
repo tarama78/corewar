@@ -6,11 +6,46 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/15 16:42:49 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/16 18:59:41 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+void	mod_carry(t_process *prc, t_a *a)
+{
+	int	comm;
+	int	curs;
+	int	code;
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
+		;
+	curs = prc->pc + 1;
+	code = a->mem[curs % MEM_SIZE];
+	comm = a->mem[prc->pc];
+	if (comm == 2 || comm == 4 || comm == 5 || comm == 6 || comm == 7
+			|| comm == 8 || comm == 10 || comm == 13 || comm == 14)
+		prc->carry = 0;
+	while (g_op_tab[i].type_arg[++j])
+	{
+		if (((code >> 8) & 0x03) == 0)
+			code = code << 2;
+		if ((g_op_tab[i].type_arg[j] & 0x01) && ((code >> 8) & 0x03) == 1)
+			curs++;
+		else if ((g_op_tab[i].type_arg[j] & 0x02) && ((code >> 8) & 0x03) == 2)
+			curs += 2;
+		else if ((g_op_tab[i].type_arg[j] & 0x04) && ((code >> 8) & 0x03) == 3)
+			curs += 4;
+		code = code << 2;
+	}
+	curs = curs % MEM_SIZE;
+	ft_curseur(prc, prc->pc, curs, a);
+	prc->pc = curs;
+}
 
 void	rec_memory_2(int *val, t_a *a, int *curs)
 {
@@ -44,7 +79,6 @@ int		rec_memory(char type, int *curs, t_a *a, int addr)
 	else if (type & 0x01)
 	{
 		val = a->mem[*curs];
-		val = val % (REG_NUMBER);
 		if (val <= 0 || val > REG_NUMBER)
 			val = 0;
 		*curs = (*curs + 1) % MEM_SIZE;

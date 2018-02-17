@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/15 17:43:05 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/16 14:28:14 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ t_process				*add_process(t_a *a, t_process *cpy);
 void					first_process(t_a *a, int player, int offset);
 void					game_loop(t_a *a, void (**f)(t_process *, t_a *));
 void					game_turn(t_a *a, void (**f)(t_process *, t_a *));
+void					mod_carry(t_process *prc, t_a *a);
 
 void					add(t_process *prc, t_a *a);
 void					sub(t_process *prc, t_a *a);
