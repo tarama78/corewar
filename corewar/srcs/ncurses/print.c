@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 16:40:30 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:14:06 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_print_memory(t_a *a)
 
 	i = 1;
 	k = 0;
-	while (++i < a->nc.sqrt_mem_size + 1)
+	while (++i < a->nc.sqrt_mem_size + 2)
 	{
 		j = 0;
 		while ((j += 3) < a->nc.sqrt_mem_size * 3 + 1)

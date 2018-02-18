@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/16 18:59:41 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/18 07:27:14 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,56 +32,81 @@ void	mod_carry(t_process *prc, t_a *a)
 		prc->carry = 0;
 	while (g_op_tab[i].type_arg[++j])
 	{
-		if (((code >> 8) & 0x03) == 0)
-			code = code << 2;
-		if ((g_op_tab[i].type_arg[j] & 0x01) && ((code >> 8) & 0x03) == 1)
+//		if (((code >> 8) & 0x03) == 0)
+//			code = code << 2;
+		if (g_op_tab[i].type_arg[j] & 0x01)
 			curs++;
-		else if ((g_op_tab[i].type_arg[j] & 0x02) && ((code >> 8) & 0x03) == 2)
+		else if (g_op_tab[i].type_arg[j] & 0x02)
 			curs += 2;
-		else if ((g_op_tab[i].type_arg[j] & 0x04) && ((code >> 8) & 0x03) == 3)
+		else if (g_op_tab[i].type_arg[j] & 0x04)
 			curs += 4;
-		code = code << 2;
+//		code = code << 2;
 	}
-	curs = curs % MEM_SIZE;
+	curs = (curs /*+ j + g_op_tab[i].octet_type_arg*/) % MEM_SIZE;
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
 }
 
-void	rec_memory_2(int *val, t_a *a, int *curs)
+void	rec_memory_2(int *val, t_a *a, t_process *prc)
 {
-	*val = a->mem[*curs] << 24;
-	*curs = (*curs + 1) % MEM_SIZE;
-	*val += a->mem[*curs] << 16;
-	*curs = (*curs + 1) % MEM_SIZE;
-	*val += a->mem[*curs] << 8;
-	*curs = (*curs + 1) % MEM_SIZE;
-	*val += a->mem[*curs];
-	*curs = (*curs + 1) % MEM_SIZE;
+	int	addr;
+	int	i;
+
+	i = -1;
+	addr = a->mem[prc->pc] << 8;
+	prc->pc = (prc->pc + 1) % MEM_SIZE;
+	addr += a->mem[prc->pc];
+	prc->pc = (prc->pc + 1) % MEM_SIZE;
+	addr = addr % IDX_MOD;
+	while (++i < IND_SIZE)
+	{
+		*val = *val << 8;
+		*val += (((char)a->mem[(addr + i + prc->tmp_pc) % MEM_SIZE])) & 0x000000FF;
+	}
+	if (IND_SIZE == 2)
+		if ((short)(*val) < 0)
+			*val = *val | 0xFFFF0000;
 }
 
-int		rec_memory(char type, int *curs, t_a *a, int addr)
+int		rec_memory(char type, t_process *prc, t_a *a, int size)
 {
 	int		val;
+	int		i;
 
 	val = 0;
-	if ((type & 0x03) == 0x02 && !addr)
-		rec_memory_2(&val, a, curs);
+	i = -1;
+	if (size == 0)
+		size = ((type & 0x03) == 0x03) ? IND_SIZE : REG_SIZE;
+	if ((type & 0x03) == 0x03 && (prc->pc - prc->tmp_pc) > 1 && size != REG_SIZE && a->mem[prc->tmp_pc] != 3 && a->mem[prc->tmp_pc] != 11)
+		rec_memory_2(&val, a, prc);
 	else if ((type & 0x03) > 1)
 	{
-		val = ((char)a->mem[*curs] << 8) & 0x0000FF00;
-		*curs = (*curs + 1) % MEM_SIZE;
-		val += (((char)a->mem[*curs])) & 0x000000FF;
-		val = val & 0x0000FFFF;
-		if ((short)val < 0)
-			val = val | 0xFFFF0000;
-		*curs = (*curs + 1) % MEM_SIZE;
+		while (++i < size)
+		{
+			val = val << 8;
+			val += (((char)a->mem[prc->pc])) & 0x000000FF;
+			prc->pc = (prc->pc + 1) % MEM_SIZE;
+			if (i == 0)
+				val = val & 0x000000FF;
+			else if (i == 1)
+				val = val & 0x0000FFFF;
+			else if( i == 2)
+				val = val & 0x00FFFFFF;
+		}
+		ft_dprintf(fd, "%d\n", size);
+	//	val = ((char)a->mem[prc->pc] << 8) & 0x0000FF00;
+	//	val += (((char)a->mem[prc->pc])) & 0x000000FF;
+		if (size == 2)
+			if ((short)val < 0)
+				val = val | 0xFFFF0000;
+	//	prc->pc = (prc->pc + 1) % MEM_SIZE;
 	}
 	else if (type & 0x01)
 	{
-		val = a->mem[*curs];
+		val = a->mem[prc->pc];
 		if (val <= 0 || val > REG_NUMBER)
 			val = 0;
-		*curs = (*curs + 1) % MEM_SIZE;
+		prc->pc = (prc->pc + 1) % MEM_SIZE;
 	}
 	return (val);
 }
