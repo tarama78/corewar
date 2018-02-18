@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 16:13:45 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/16 11:58:06 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/18 08:41:23 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,23 @@ void	ft_curseur(t_process *prc, int pc, int curs, t_a *a)
 		if (a->player[nb_player - 1].player_number_print == prc->num_player)
 			break ;
 	a->mem_info[curs].player_process = nb_player;
+}
+
+int		rec_memory_xbyte(t_process *prc, int size, t_a *a)
+{
+	int	val;
+	int	i;
+
+	val = 0;
+	i = -1;
+	while (++i < size)
+	{
+		val = val << 8;
+		val += ((char)a->mem[prc->pc]) & 0x000000FF;
+		prc->pc = (prc->pc + 1) % MEM_SIZE;
+	}
+	if (size == 2)
+		if ((short)val < 0)
+			val |= 0xFFFF0000;
+	return (val);
 }

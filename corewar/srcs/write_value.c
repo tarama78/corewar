@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/18 06:40:53 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/18 08:24:31 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void		st(t_process *prc, t_a *a)
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 2) % MEM_SIZE;
 	reg = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6, prc, a, 0);
-	addr = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4, prc, a, IND_SIZE);
+	addr = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4,
+			prc, a, IND_SIZE);
 	if (a->mem[(prc->tmp_pc + 1) % MEM_SIZE] == 0x50)
 		prc->reg[addr] = prc->reg[reg];
 	else
@@ -87,10 +88,12 @@ void		sti(t_process *prc, t_a *a)
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 2) % MEM_SIZE;
 	reg = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6, prc, a, 0);
-	addr = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4, prc, a, IND_SIZE);
+	addr = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4,
+			prc, a, IND_SIZE);
 	addr = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
 		prc->reg[addr] : addr;
-	addr2 = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 2, prc, a, IND_SIZE);
+	addr2 = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 2,
+			prc, a, IND_SIZE);
 	addr2 = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 2 & 0x03) == 1) ?
 		prc->reg[addr2] : addr2;
 	addr = (addr + addr2) % IDX_MOD;

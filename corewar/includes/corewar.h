@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/18 08:03:47 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/18 08:41:06 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define SUCCESS 0
 # define ERROR -1
 # define NB_COMM 16
-int	fd; ////////////////////////////////////////////////////
+
 typedef struct			s_op
 {
 	char				*name;
@@ -57,7 +57,6 @@ typedef struct			s_process
 	int					cycle_wait;
 	int					carry;
 	int					live;
-	int					nb_prc;
 }						t_process;
 
 typedef struct			s_player
@@ -152,6 +151,7 @@ void					load_memory(t_a *a);
 void					init_command(void (**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
 int						rec_memory(char type, t_process *prc, t_a *a, int size);
+int						rec_memory_xbyte(t_process *prc, int size, t_a *a);
 int						check_type(t_process *prc, t_a *a);
 t_process				*add_process(t_a *a, t_process *cpy);
 void					first_process(t_a *a, int player, int offset);

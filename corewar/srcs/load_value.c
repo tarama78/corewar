@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:29:46 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/18 07:49:39 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/18 08:28:28 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,13 @@ void	ld(t_process *prc, t_a *a)
 	if (a->mem[(prc->tmp_pc + 1) % MEM_SIZE] == 0xd0)
 	{
 		val %= IDX_MOD;
-		ft_dprintf(fd, "%#x%x%x%x\n", a->mem[(prc->tmp_pc + val) % MEM_SIZE], a->mem[(prc->tmp_pc + val + 1) % MEM_SIZE], a->mem[(prc->tmp_pc + val + 2) % MEM_SIZE], a->mem[(prc->tmp_pc + val + 3) % MEM_SIZE]);
 		prc->reg[reg] = a->mem[(prc->tmp_pc + val) % MEM_SIZE] << 24;
 		prc->reg[reg] += a->mem[(prc->tmp_pc + val + 1) % MEM_SIZE] << 16;
 		prc->reg[reg] += a->mem[(prc->tmp_pc + val + 2) % MEM_SIZE] << 8;
 		prc->reg[reg] += a->mem[(prc->tmp_pc + val + 3) % MEM_SIZE];
 	}
 	else
-	{
 		prc->reg[reg] = val;
-		ft_dprintf(fd, "%#x\n", val);
-	}
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 	prc->carry = ((prc->reg[reg] == 0 && reg != 0) ? 1 : 0);
 	prc->reg[0] = 0;
@@ -80,10 +76,12 @@ void	ldi(t_process *prc, t_a *a)
 		return ;
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 2) % MEM_SIZE;
-	val = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6, prc, a, IND_SIZE);
+	val = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6,
+			prc, a, IND_SIZE);
 	val = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6 & 0x03) == 1) ?
 		prc->reg[val] : val;
-	val2 = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4, prc, a, IND_SIZE);
+	val2 = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4,
+			prc, a, IND_SIZE);
 	val2 = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
 		prc->reg[val2] : val2;
 	reg = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 2, prc, a, 0);
@@ -107,10 +105,12 @@ void	lldi(t_process *prc, t_a *a)
 		return ;
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 2) % MEM_SIZE;
-	val = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6, prc, a, IND_SIZE);
+	val = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6,
+			prc, a, IND_SIZE);
 	val = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6 & 0x03) == 1) ?
 		prc->reg[val] : val;
-	val2 = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4, prc, a, IND_SIZE);
+	val2 = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4,
+			prc, a, IND_SIZE);
 	val2 = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
 		prc->reg[val2] : val2;
 	reg = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 2, prc, a, 0);
