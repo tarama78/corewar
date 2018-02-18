@@ -6,7 +6,7 @@
 #    By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 09:45:36 by tnicolas          #+#    #+#              #
-#    Updated: 2018/02/08 19:15:50 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/16 15:33:19 by bcozic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,6 +95,7 @@ FILES = ft_strlen.c \
 		bonus/ft_get2arg.c \
 		bonus/ft_islower.c \
 		bonus/ft_isupper.c \
+		bonus/ft_isspace.c\
 		bonus/ft_swap_int.c \
 		bonus/ft_clean_char.c \
 		bonus/ft_test_malloc.c \

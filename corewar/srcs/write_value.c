@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/15 12:47:54 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/18 06:40:53 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 	int		i;
 	char	nb_player;
 	int		tmp;
-	int		new_addr;
 
 	nb_player = 0;
 	while (++nb_player <= a->num_of_player)
@@ -42,14 +41,13 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 			break ;
 	i = -1;
 	tmp = ft_swap(prc->reg[reg]);
-	new_addr = (prc->pc + addr) % MEM_SIZE;
-	while (new_addr < 0)
-		new_addr += MEM_SIZE;
+	while (addr < 0)
+		addr += MEM_SIZE;
 	while (++i < 4)
 	{
-		a->mem[(new_addr + i) % MEM_SIZE] = (char)tmp;
-		a->mem_info[(new_addr + i) % MEM_SIZE].cycle = a->cycle;
-		a->mem_info[(new_addr + i) % MEM_SIZE].player = nb_player;
+		a->mem[(addr + i) % MEM_SIZE] = (char)tmp;
+		a->mem_info[(addr + i) % MEM_SIZE].cycle = a->cycle;
+		a->mem_info[(addr + i) % MEM_SIZE].player = nb_player;
 		tmp = tmp >> 8;
 	}
 }
@@ -57,25 +55,24 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 void		st(t_process *prc, t_a *a)
 {
 	int		addr;
-	int		curs;
 	int		reg;
 
 	if (!check_cycle(prc, a))
 		return ;
-	curs = (prc->pc + 2) % MEM_SIZE;
-	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 1);
-	addr = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
-	if (a->mem[(prc->pc + 1) % MEM_SIZE] == 0x50)
+	prc->tmp_pc = prc->pc;
+	prc->pc = (prc->pc + 2) % MEM_SIZE;
+	reg = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6, prc, a, 0);
+	addr = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4, prc, a, IND_SIZE);
+	if (a->mem[(prc->tmp_pc + 1) % MEM_SIZE] == 0x50)
 		prc->reg[addr] = prc->reg[reg];
 	else
 	{
-		addr = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
+		addr = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
 			prc->reg[addr] : addr;
 		addr = addr % IDX_MOD;
-		write_in_mem(a, prc, reg, addr);
+		write_in_mem(a, prc, reg, (prc->tmp_pc + addr) % MEM_SIZE);
 	}
-	ft_curseur(prc, prc->pc, curs, a);
-	prc->pc = curs;
+	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 	prc->reg[0] = 0;
 }
 
@@ -83,21 +80,20 @@ void		sti(t_process *prc, t_a *a)
 {
 	int		addr;
 	int		addr2;
-	int		curs;
 	int		reg;
 
 	if (!check_cycle(prc, a))
 		return ;
-	curs = (prc->pc + 2) % MEM_SIZE;
-	reg = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 6, &curs, a, 1);
-	addr = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 4, &curs, a, 1);
-	addr = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
+	prc->tmp_pc = prc->pc;
+	prc->pc = (prc->pc + 2) % MEM_SIZE;
+	reg = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6, prc, a, 0);
+	addr = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4, prc, a, IND_SIZE);
+	addr = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
 		prc->reg[addr] : addr;
-	addr2 = rec_memory(a->mem[(prc->pc + 1) % MEM_SIZE] >> 2, &curs, a, 1);
-	addr2 = ((a->mem[(prc->pc + 1) % MEM_SIZE] >> 2 & 0x03) == 1) ?
+	addr2 = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 2, prc, a, IND_SIZE);
+	addr2 = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 2 & 0x03) == 1) ?
 		prc->reg[addr2] : addr2;
 	addr = (addr + addr2) % IDX_MOD;
-	write_in_mem(a, prc, reg, addr);
-	ft_curseur(prc, prc->pc, curs, a);
-	prc->pc = curs;
+	write_in_mem(a, prc, reg, (prc->tmp_pc + addr) % MEM_SIZE);
+	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 }
