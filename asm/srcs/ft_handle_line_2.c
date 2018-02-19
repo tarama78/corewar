@@ -28,7 +28,7 @@
 
 #include <corewar.h>
 
-char		*ft_get_name(char *ln)
+char		*ft_get_name(char *ln, t_a *a, t_line *new_ln)
 {
 	int		i;
 	char	*ret;
@@ -36,6 +36,8 @@ char		*ft_get_name(char *ln)
 	i = -1;
 	while (ft_strchr(LABEL_CHARS, ln[++i]))
 		;
+	if (ln[i] != ' ')
+		ft_err_msg(a, new_ln, "invalid line", 1);
 	if (!(ret = malloc(sizeof(char) * (i + 1))))
 		exit(EXIT_FAILURE);
 	ret[i] = '\0';

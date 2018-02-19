@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/16 12:48:37 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/19 12:44:26 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,13 @@ static void	file_name(char *name)
 		}
 }
 
-static int	ft_open_files(char *filename, int *fd1, int *fd2, int *ret)
+static int	ft_open_files(char *filename, int *fd1, char **name2, int *ret)
 {
-	char *name2;
-
-	if (!(name2 = malloc(sizeof(char) * (ft_strlen(filename) + 5))))
+	if (!(*name2 = malloc(sizeof(char) * (ft_strlen(filename) + 5))))
 		ft_err_msg(NULL, NULL, "malloc fail", 1);
-	ft_strncpy(name2, filename, ft_strlen(filename) + 1);
-	file_name(name2);
-	ft_strcat(name2, ".cor");
+	ft_strncpy(*name2, filename, ft_strlen(filename) + 1);
+	file_name(*name2);
+	ft_strcat(*name2, ".cor");
 	if ((*fd1 = open(filename, O_RDONLY)) == -1)
 	{
 		*ret = EXIT_FAILURE;
@@ -60,15 +58,12 @@ static int	ft_open_files(char *filename, int *fd1, int *fd2, int *ret)
 		ft_printf("{red}Can't read source file{yellow} %s{eoc}\n", filename);
 		return (ERROR);
 	}
-	if ((*fd2 = open(name2, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU)) == -1)
-		exit(EXIT_FAILURE);
-	free(name2);
 	return (SUCCESS);
 }
 
-static int	ft_compile_file2(t_a *data, int fd_2, char *argvi)
+static int	ft_compile_file2(t_a *data, char *filename, char *argvi)
 {
-	if (ft_binary(fd_2, data) == ERROR)
+	if (ft_binary(filename, data) == ERROR)
 	{
 		ft_printf("{red}{bold}compilation failed: {eoc}"
 				"{yellow}%s{eoc}\n",
@@ -80,7 +75,7 @@ static int	ft_compile_file2(t_a *data, int fd_2, char *argvi)
 	return (SUCCESS);
 }
 
-static int	ft_compile_file(t_a *data, int fd, int fd_2, char *argvi)
+static int	ft_compile_file(t_a *data, int fd, char *filename, char *argvi)
 {
 	int ret;
 
@@ -96,21 +91,20 @@ static int	ft_compile_file(t_a *data, int fd, int fd_2, char *argvi)
 					"{yellow}%s.s{eoc}\n", argvi);
 		ret = EXIT_FAILURE;
 	}
-	else if (ft_compile_file2(data, fd_2, argvi) == ERROR)
+	else if (ft_compile_file2(data, filename, argvi) == ERROR)
 		return (EXIT_FAILURE);
 	free_content(data, 0);
 	close(fd);
-	close(fd_2);
 	return (ret);
 }
 
 int			main(int argc, char **argv)
 {
-	t_a data;
-	int fd;
-	int fd_2;
-	int i;
-	int ret;
+	t_a		data;
+	int		fd;
+	char	*filename;
+	int		i;
+	int		ret;
 
 	ft_test_malloc(128);
 	ret = EXIT_SUCCESS;
@@ -122,10 +116,10 @@ int			main(int argc, char **argv)
 	i = 0;
 	while (++i < argc)
 	{
-		if (ft_open_files(argv[i], &fd, &fd_2, &ret) == SUCCESS)
+		if (ft_open_files(argv[i], &fd, &filename, &ret) == SUCCESS)
 		{
-			ret = (ft_compile_file(&data, fd, fd_2, argv[i]) == EXIT_SUCCESS &&
-					ret == EXIT_SUCCESS) ? EXIT_SUCCESS : EXIT_FAILURE;
+			ret = (ft_compile_file(&data, fd, filename, argv[i]) == EXIT_SUCCESS
+					&& ret == EXIT_SUCCESS) ? EXIT_SUCCESS : EXIT_FAILURE;
 			if (i + 1 < argc)
 				ft_printf("\n");
 		}
