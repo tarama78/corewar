@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:28:13 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/16 16:16:16 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/18 08:45:42 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,15 @@ void			game_loop(t_a *a, void (**f)(t_process *, t_a *))
 			time_start = clock();
 			if (a->cycle >= nxt_cycle_die)
 				nxt_cycle_die += new_cycle(a);
-			if (a->process)
-				game_loop_2(a, f, time_start);
-			else
-				end = 1;
+			if (!a->process)
+				break ;
+			game_loop_2(a, f, time_start);
 		}
 		(a->visu) && ((command = ft_command(a)) != 27) && ft_print(a);
 	}
+	if (a->visu && a->process == NULL && ft_print(a))
+		while (getch() != 27)
+			;
 	free_process(a);
 }
 
@@ -89,11 +91,15 @@ void			game_turn(t_a *a, void (**f)(t_process *, t_a *))
 	{
 		if (--prc->cycle_wait <= 0)
 		{
-			if (!check_type(prc, a))
+			if (a->mem[prc->pc] <= 0 || a->mem[prc->pc] > 16)
 				ft_move(prc, a);
+			else if (prc->cycle_wait == 0 && !check_type(prc, a))
+				mod_carry(prc, a);
 			else if (a->mem[prc->pc] <= NB_COMM)
 				f[a->mem[prc->pc]](prc, a);
 		}
+		if (a->mem_info[prc->pc].process == 0)
+			ft_curseur(prc, prc->pc, prc->pc, a);
 		prc = prc->next;
 	}
 }
