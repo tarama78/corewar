@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/19 12:39:29 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/19 12:44:26 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void	file_name(char *name)
 
 static int	ft_open_files(char *filename, int *fd1, char **name2, int *ret)
 {
-
 	if (!(*name2 = malloc(sizeof(char) * (ft_strlen(filename) + 5))))
 		ft_err_msg(NULL, NULL, "malloc fail", 1);
 	ft_strncpy(*name2, filename, ft_strlen(filename) + 1);
