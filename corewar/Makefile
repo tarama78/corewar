@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/15 17:43:40 by bcozic           ###   ########.fr        #
+#    Updated: 2018/02/19 14:22:55 by atripard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ FILES = main.c\
 		ncurses/color.c\
 		ncurses/print.c\
 		ncurses/free_nc.c\
+		ncurses/print_winner.c\
 		../../commun/srcs/op.c\
 
 HFILES = includes/corewar.h \
