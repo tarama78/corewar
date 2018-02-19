@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/18 06:11:07 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 15:13:51 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	live(t_process *prc, t_a *a)
 			a->player[i].nb_live_total++;
 			a->player[i].nb_live_current++;
 			a->winner = a->player + i;
+			if (a->live_option)
+				ft_printf("A process shows that player %d (%s) is alive\n",
+						a->player[i].player_number_print, a->player[i].name);
 		}
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 }
