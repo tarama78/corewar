@@ -74,7 +74,7 @@ int					ft_err_msg(t_a *a, t_line *new_ln, char *txt, int quit);
 int					ft_warning_msg(t_a *a, t_line *new_ln, char *txt);
 t_lst				*ft_lst_get_last(t_lst *lst);
 void				ft_lst_add_end(t_lst **begin, t_lst *new);
-char				*ft_get_name(char *ln);
+char				*ft_get_name(char *ln, t_a *a, t_line *new_ln);
 int					ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_l);
 char				*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln);
 int					ft_start_i(t_a *a, char *ln, int label);
