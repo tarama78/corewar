@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/08 19:14:10 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/19 11:52:55 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,7 @@ int			ft_dprintf(int fd, const char *format, ...);
 int			ft_vdprintf(int fd, const char *format, va_list ap);
 int			ft_asprintf(char **str, const char *format, ...);
 int			ft_vasprintf(char **ret, const char *format, va_list ap);
+int			ft_joinprintf(char **str, const char *format, ...);
+int			ft_joinnprintf(char **str, int n, const char *format, ...);
 
 #endif

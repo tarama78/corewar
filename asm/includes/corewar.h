@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/16 15:57:54 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/19 12:21:27 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct		s_a
 	int				nb_label;
 	int				cmpt;
 	int				prog_size;
+	char			*str;
+	int				len_str;
 }					t_a;
 
 typedef struct		s_lst
@@ -84,10 +86,12 @@ int					ft_parse_file(t_a *a, int fd);
 void				ft_parse_cmd(int fd, t_a *a, int *num_ln, int *cmd);
 int					ft_label_address(char *label, t_label *tab_label,
 																	t_a *data);
-int					ft_handle_args(int file, char *arg, t_a *data, int index);
+int					ft_handle_args(char *arg, t_a *data, int index);
 int					ft_typepara(char *arg);
-void				ft_encoding(int file, char **words);
-void				ft_putname_magic(int file, t_a *data);
-int					ft_binary(int file, t_a *data);
+void				ft_encoding(t_a *data, char **words);
+void				ft_putname_magic(t_a *data);
+int					ft_binary(char *filename, t_a *data);
+void				ft_add_char(t_a *a, char c);
+void				ft_add_str(t_a *a, char *str, int n);
 
 #endif

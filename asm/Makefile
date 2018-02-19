@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/09 15:35:20 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/19 12:09:43 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ FILES = main.c\
 		binary.c\
 		binary_2.c\
 		ft_error.c\
+		ft_add_str.c\
 		../../commun/srcs/op.c
 
 HFILES = includes/corewar.h \
