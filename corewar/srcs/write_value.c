@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 14:48:35 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:47:54 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ static void	write_in_mem(t_a *a, t_process *prc, int reg, int addr)
 	i = -1;
 	tmp = ft_swap(prc->reg[reg]);
 	new_addr = (prc->pc + addr) % MEM_SIZE;
-	if (new_addr < 0)
+	while (new_addr < 0)
 		new_addr += MEM_SIZE;
-	ft_memcpy(a->mem + new_addr, &tmp, 4);
 	while (++i < 4)
 	{
+		a->mem[(new_addr + i) % MEM_SIZE] = (char)tmp;
 		a->mem_info[(new_addr + i) % MEM_SIZE].cycle = a->cycle;
 		a->mem_info[(new_addr + i) % MEM_SIZE].player = nb_player;
+		tmp = tmp >> 8;
 	}
 }
 
@@ -75,6 +76,7 @@ void		st(t_process *prc, t_a *a)
 	}
 	ft_curseur(prc, prc->pc, curs, a);
 	prc->pc = curs;
+	prc->reg[0] = 0;
 }
 
 void		sti(t_process *prc, t_a *a)

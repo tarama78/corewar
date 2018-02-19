@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 15:34:46 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 12:18:05 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/15 17:39:36 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		ft_usage(int quit, char *name)
 	ft_printf("Usage: %s [-v -dump N] <[-n N] champion1.cor> <...>\n"
 			"\t-v %8t: visual mode\n"
 			"\t-dump N %3t: Dumps memory after N cycles then exits\n"
-			"\t-n N %6t: players number\n", name)
+			"\t-n N %6t: players number\n", name);
 	if (quit)
 		exit(EXIT_SUCCESS);
 }
@@ -38,26 +38,14 @@ int			main(int ac, char **av)
 		ft_printf("ERROR\n");
 		return (0);
 	}
-	if (load_memory(&a) == ERROR)
-	{
-		// Error malloc first process
-		// free
-		ft_printf("ERROR\n");
-		return (0);
-	}
+	load_memory(&a);
 	a.cycle_to_die = CYCLE_TO_DIE;
 	a.speed = SPEED;
 	if (a.visu)
-		ft_init(&a);//ncurses
-//	ft_print(&a);
-//	while (getch() != 27)
-//	{
-//		ft_print(&a);
-//		usleep(50);
-//	}
+		ft_init(&a);
 	init_command(f);
 	game_loop(&a, f);
 	winner(&a);
 	if (a.visu)
-		ft_free_nc(&a);//ncurses
+		ft_free_nc(&a);
 }

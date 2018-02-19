@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 16:40:30 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:12:38 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_print_memory(t_a *a)
 
 	i = 1;
 	k = 0;
-	while (++i < a->nc.sqrt_mem_size + 1)
+	while (++i < a->nc.sqrt_mem_size + 2)
 	{
 		j = 0;
 		while ((j += 3) < a->nc.sqrt_mem_size * 3 + 1)
@@ -94,31 +94,40 @@ static void	ft_print_info(t_a *a)
 	mvwprintw(a->nc.win_info, ++i, 4, "Cycle: %25d", a->cycle);
 	mvwprintw(a->nc.win_info, ++i, 4, "Total process: %17d", total_process);
 	mvwprintw(a->nc.win_info, ++i, 4, "Speed: %25d", 20 - (a->speed / 10000));
-	mvwprintw(a->nc.win_info, ++i, 4, "Cycle to die: %18d", a->cycle_to_die);
-	mvwprintw(a->nc.win_info, ++i, 4, "Cycle delta: %19d", CYCLE_DELTA);
+	mvwprintw(a->nc.win_info, ++i, 4, "CYCLE_TO_DIE %19d", a->cycle_to_die);
+	mvwprintw(a->nc.win_info, ++i, 4, "CYCLE_DELTA %20d", CYCLE_DELTA);
+	if (!a->process || a->cycle_to_die <= 0)
+		mvwprintw(a->nc.win_info, ++i, 4, "Winner %19s", a->winner->name);
 	wattroff(a->nc.win_info, a->nc.color.text);
 }
 
 static void	ft_print_player(t_a *a, int n)
 {
 	wattron(a->nc.win_player[n], a->nc.color.text);
-	mvwprintw(a->nc.win_player[n], 1, 2, "Player %d: ", a->player[n].player_number_print);
+	mvwprintw(a->nc.win_player[n], 1, 2, "Player %d: ",
+							a->player[n].player_number_print);
 	wattroff(a->nc.win_player[n], a->nc.color.text);
 	wattron(a->nc.win_player[n], a->nc.color.player[n + 1] | A_BOLD);
 	wprintw(a->nc.win_player[n], "%.*s", WIN_W - 13, a->player[n].name);
 	wattroff(a->nc.win_player[n], a->nc.color.player[n + 1] | A_BOLD);
 	wattron(a->nc.win_player[n], a->nc.color.text);
-	mvwprintw(a->nc.win_player[n], 3, 4, "Process: %23d", a->player[n].nb_process);
-	mvwprintw(a->nc.win_player[n], 4, 4, "Last live: %21d", a->player[n].last_live_cycle);
-	mvwprintw(a->nc.win_player[n], 5, 4, "Last live in cur period: %7d", -1);
+	mvwprintw(a->nc.win_player[n], 3, 4, "Process: %23d",
+							a->player[n].nb_process);
+	mvwprintw(a->nc.win_player[n], 4, 4, "Last live: %21d",
+							a->player[n].last_live_cycle);
+	mvwprintw(a->nc.win_player[n], 5, 4, "Last live in cur period: %7d",
+							a->player[n].nb_live_current);
 	wattroff(a->nc.win_player[n], a->nc.color.text);
 }
 
-void		ft_print(t_a *a)
+int			ft_print(t_a *a)
 {
 	int		i;
 
-//	ft_print_border(a);
+	if (!a->visu)
+		return (1);
+	if (PRINT_BORDER)
+		ft_print_border(a);
 	ft_print_memory(a);
 	wrefresh(a->nc.win_mem);
 	ft_print_info(a);
@@ -129,4 +138,5 @@ void		ft_print(t_a *a)
 		ft_print_player(a, i);
 		wrefresh(a->nc.win_player[i]);
 	}
+	return (1);
 }

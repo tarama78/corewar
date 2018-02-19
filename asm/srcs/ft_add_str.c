@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_add_end.c                                   :+:      :+:    :+:   */
+/*   ft_add_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/05 17:58:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/16 11:56:13 by tnicolas         ###   ########.fr       */
+/*   Created: 2018/02/19 12:00:53 by tnicolas          #+#    #+#             */
+/*   Updated: 2018/02/19 12:17:47 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
-**   | ft_lst_add_end.c                                         |
-**   |     ft_lst_get_last(7 lines)                             |
-**   |     ft_lst_add_end(15 lines)                             |
+**   | ft_add_str.c                                             |
+**   |     ft_add_char(2 lines)                                 |
+**   |     ft_add_str(5 lines)                                  |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -26,32 +26,17 @@
 
 #include <corewar.h>
 
-t_lst		*ft_lst_get_last(t_lst *lst)
+void	ft_add_char(t_a *a, char c)
 {
-	while (lst)
-	{
-		if (lst->next == NULL)
-			return (lst);
-		lst = lst->next;
-	}
-	return (NULL);
+	ft_joinnprintf(&a->str, a->len_str, "%c", c);
+	a->len_str++;
 }
 
-void		ft_lst_add_end(t_lst **begin, t_lst *new)
+void	ft_add_str(t_a *a, char *str, int n)
 {
-	t_lst	*lst;
+	int		i;
 
-	if (begin == NULL)
-		return ;
-	if (*begin == NULL)
-	{
-		*begin = new;
-		new->next = NULL;
-		return ;
-	}
-	lst = *begin;
-	while (lst->next)
-		lst = lst->next;
-	lst->next = new;
-	new->next = NULL;
+	i = -1;
+	while (++i < n)
+		ft_add_char(a, str[i]);
 }

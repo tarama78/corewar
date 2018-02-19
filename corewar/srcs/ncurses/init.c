@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 12:35:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/14 16:40:09 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 14:56:04 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,19 @@ static void	ft_init_windows_2(t_a *a)
 	}
 }
 
+static int	ft_testmalloc(t_a *a)
+{
+	int i;
+
+	if (a->nc.win_mem == NULL || a->nc.win_info == NULL)
+		return (ERROR);
+	i = -1;
+	while (++i < a->num_of_player)
+		if (a->nc.win_player[i] == NULL)
+			return (ERROR);
+	return (SUCCESS);
+}
+
 void		ft_init(t_a *a)
 {
 	a->nc.win_mem = NULL;
@@ -94,4 +107,6 @@ void		ft_init(t_a *a)
 		ft_init_windows_1(a);
 	else
 		ft_init_windows_2(a);
+	if (ft_testmalloc(a) == ERROR)
+		error_malloc(a);
 }
