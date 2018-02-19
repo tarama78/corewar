@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/19 12:44:26 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/19 15:53:39 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int			main(int argc, char **argv)
 					&& ret == EXIT_SUCCESS) ? EXIT_SUCCESS : EXIT_FAILURE;
 			if (i + 1 < argc)
 				ft_printf("\n");
+			free(filename);
 		}
 	}
 	return (ret);
