@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/15 17:43:40 by bcozic           ###   ########.fr        #
+#    Updated: 2018/02/19 14:46:25 by ynacache         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ FILES = main.c\
 		ncurses/init.c\
 		ncurses/color.c\
 		ncurses/print.c\
+		ncurses/print_winner.c\
 		ncurses/free_nc.c\
 		../../commun/srcs/op.c\
 

@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   winner.c                                           :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/13 16:40:10 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/15 14:24:33 by bcozic           ###   ########.fr       */
+/*   Created: 2017/11/10 10:24:22 by bcozic            #+#    #+#             */
+/*   Updated: 2018/01/09 20:29:27 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <corewar.h>
+#include "libft.h"
 
-void	winner(t_a *a)
+int		ft_isspace(int c)
 {
-	if (a->winner)
-		ft_printf("le joueur %d(%s) a gagne\n",
-			a->winner->player_number_print,
-			a->winner->name);
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v'
+			|| c == '\f' || c == '\r')
+		return (1);
+	return (0);
 }

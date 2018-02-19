@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/16 16:29:00 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/18 08:41:06 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct			s_process
 	int					player_index;
 	int					reg[REG_NUMBER + 1];
 	int					pc;
+	int					tmp_pc;
 	int					cycle_wait;
 	int					carry;
 	int					live;
@@ -69,6 +70,7 @@ typedef struct			s_player
 	int					nb_live_total;
 	int					nb_live_current;
 	size_t				nb_process;
+	int					n;
 }						t_player;
 
 typedef struct			s_champ_file
@@ -144,17 +146,20 @@ typedef struct			s_a
 }						t_a;
 
 int						ft_is_uint(char *str, int *num);
+int						ft_is_int(char *str, int *num);
 int						parse_args(t_a *a, int ac, char **av);
 int						load_players(t_a *a);
 void					load_memory(t_a *a);
 void					init_command(void (**f)(t_process *, t_a *));
 int						check_cycle(t_process *prc, t_a *a);
-int						rec_memory(char type, int *curs, t_a *a, int addr);
+int						rec_memory(char type, t_process *prc, t_a *a, int size);
+int						rec_memory_xbyte(t_process *prc, int size, t_a *a);
 int						check_type(t_process *prc, t_a *a);
 t_process				*add_process(t_a *a, t_process *cpy);
 void					first_process(t_a *a, int player, int offset);
 void					game_loop(t_a *a, void (**f)(t_process *, t_a *));
 void					game_turn(t_a *a, void (**f)(t_process *, t_a *));
+void					mod_carry(t_process *prc, t_a *a);
 
 void					add(t_process *prc, t_a *a);
 void					sub(t_process *prc, t_a *a);
@@ -176,6 +181,7 @@ void					ft_move(t_process *prc, t_a *a);
 
 void					ft_curseur(t_process *prc, int pc, int curs, t_a *a);
 void					winner(t_a *a);
+void					ft_print_winner(t_a *a, int *i);
 
 void					free_process(t_a *a);
 int						new_cycle(t_a *a);

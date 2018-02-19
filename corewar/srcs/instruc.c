@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/15 12:51:37 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/18 06:11:07 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,37 @@ void	ft_aff(t_process *prc, t_a *a)
 void	ft_zjmp(t_process *prc, t_a *a)
 {
 	int		addr;
-	int		curs;
 
-	curs = (prc->pc + 1) % MEM_SIZE;
 	if (!(check_cycle(prc, a)))
 		return ;
-	addr = rec_memory(3, &curs, a, 1);
+	prc->tmp_pc = prc->pc;
+	prc->pc = (prc->pc + 1) % MEM_SIZE;
+	addr = rec_memory(3, prc, a, IND_SIZE);
 	addr = addr % IDX_MOD;
-	addr = (prc->pc + addr) % MEM_SIZE;
+	addr = (prc->tmp_pc + addr) % MEM_SIZE;
 	if (addr < 0)
 		addr += MEM_SIZE;
 	if (prc->carry == 1)
 	{
-		ft_curseur(prc, prc->pc, addr, a);
+		ft_curseur(prc, prc->tmp_pc, addr, a);
 		prc->pc = addr;
 		if (prc->pc < 0)
 			prc->pc += MEM_SIZE;
 	}
 	else
-	{
-		ft_curseur(prc, prc->pc, curs, a);
-		prc->pc = curs;
-	}
+		ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 }
 
 void	live(t_process *prc, t_a *a)
 {
 	int		player_nb;
-	int		curs;
 	int		i;
 
 	if (!(check_cycle(prc, a)))
 		return ;
-	curs = (prc->pc + 1) % MEM_SIZE;
-	player_nb = rec_memory(2, &curs, a, 0);
+	prc->tmp_pc = prc->pc;
+	prc->pc = (prc->pc + 1) % MEM_SIZE;
+	player_nb = rec_memory(2, prc, a, 4);
 	prc->live = 1;
 	i = -1;
 	while (++i < a->num_of_player)
@@ -73,46 +70,44 @@ void	live(t_process *prc, t_a *a)
 			a->player[i].last_live_cycle = (int)a->cycle;
 			a->player[i].nb_live_total++;
 			a->player[i].nb_live_current++;
+			a->winner = a->player + i;
 		}
-	ft_curseur(prc, prc->pc, curs, a);
-	prc->pc = curs;
+	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 }
 
 void	ft_fork(t_process *prc, t_a *a)
 {
 	int			addr;
-	int			curs;
 	t_process	*new_prc;
 
-	curs = (prc->pc + 1) % MEM_SIZE;
 	if (!(check_cycle(prc, a)))
 		return ;
-	addr = rec_memory(3, &curs, a, 0);
+	prc->tmp_pc = prc->pc;
+	prc->pc = (prc->pc + 1) % MEM_SIZE;
+	addr = rec_memory(3, prc, a, IND_SIZE);
 	addr = addr % IDX_MOD;
 	new_prc = add_process(a, prc);
-	new_prc->pc = (prc->pc + addr) % MEM_SIZE;
+	new_prc->pc = (prc->tmp_pc + addr) % MEM_SIZE;
 	if (new_prc->pc < 0)
 		new_prc->pc += MEM_SIZE;
-	ft_curseur(prc, prc->pc, new_prc->pc, a);
-	ft_curseur(prc, prc->pc, curs, a);
-	prc->pc = curs;
+	ft_curseur(prc, prc->tmp_pc, new_prc->pc, a);
+	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 }
 
 void	lfork(t_process *prc, t_a *a)
 {
 	int			addr;
-	int			curs;
 	t_process	*new_prc;
 
-	curs = (prc->pc + 1) % MEM_SIZE;
 	if (!(check_cycle(prc, a)))
 		return ;
-	addr = rec_memory(3, &curs, a, 0);
+	prc->tmp_pc = prc->pc;
+	prc->pc = (prc->pc + 1) % MEM_SIZE;
+	addr = rec_memory(3, prc, a, IND_SIZE);
 	new_prc = add_process(a, prc);
-	new_prc->pc = (prc->pc + addr) % MEM_SIZE;
+	new_prc->pc = (prc->tmp_pc + addr) % MEM_SIZE;
 	if (new_prc->pc < 0)
 		new_prc->pc += MEM_SIZE;
-	ft_curseur(prc, prc->pc, new_prc->pc, a);
-	ft_curseur(prc, prc->pc, curs, a);
-	prc->pc = curs;
+	ft_curseur(prc, prc->tmp_pc, new_prc->pc, a);
+	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 }

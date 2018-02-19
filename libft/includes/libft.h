@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/19 11:52:55 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:32:49 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int			ft_isascii(int c);
 int			ft_isprint(int c);
 int			ft_islower(int c);
 int			ft_isupper(int c);
+int			ft_isspace(int c);
 int			ft_atoi(const char *nptr);
 char		*ft_itoa(int n);
 char		*ft_strstr(const char *haystack, const char *needle);
