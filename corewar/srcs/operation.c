@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:22:41 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/18 06:30:45 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 13:30:38 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	add(t_process *prc, t_a *a)
 	if (!(reg == 0 || reg1 == 0 || reg2 == 0))
 		prc->reg[reg] = prc->reg[reg1] + prc->reg[reg2];
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	if (prc->reg[reg] == 0 && reg != 0)
+	if (prc->reg[reg] == 0)
 		prc->carry = 1;
 	else
 		prc->carry = 0;
@@ -51,7 +51,7 @@ void	sub(t_process *prc, t_a *a)
 	if (!(reg == 0 || reg1 == 0 || reg2 == 0))
 		prc->reg[reg] = prc->reg[reg1] - prc->reg[reg2];
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	if (prc->reg[reg] == 0 && reg != 0)
+	if (prc->reg[reg] == 0)
 		prc->carry = 1;
 	else
 		prc->carry = 0;
@@ -78,7 +78,7 @@ void	f_or(t_process *prc, t_a *a)
 	if (reg != 0)
 		prc->reg[reg] = v1 | v2;
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	if (prc->reg[reg] == 0 && reg != 0)
+	if (prc->reg[reg] == 0)
 		prc->carry = 1;
 	else
 		prc->carry = 0;
@@ -105,7 +105,7 @@ void	f_xor(t_process *prc, t_a *a)
 	if (reg != 0)
 		prc->reg[reg] = v1 ^ v2;
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	if (prc->reg[reg] == 0 && reg != 0)
+	if (prc->reg[reg] == 0)
 		prc->carry = 1;
 	else
 		prc->carry = 0;
@@ -132,7 +132,7 @@ void	f_and(t_process *prc, t_a *a)
 	if (reg != 0)
 		prc->reg[reg] = v1 & v2;
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	if (prc->reg[reg] == 0 && reg != 0)
+	if (prc->reg[reg] == 0)
 		prc->carry = 1;
 	else
 		prc->carry = 0;

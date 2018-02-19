@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 16:13:45 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/18 08:41:23 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 13:54:54 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		check_cycle(t_process *prc, t_a *a)
 	if (prc->cycle_wait <= -1)
 	{
 		i = -1;
-		while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
+		while (g_op_tab[++i].opcode != prc->cmd && g_op_tab[i].opcode)
 			;
 		prc->cycle_wait = g_op_tab[i].nb_cycle - 1;
 	}

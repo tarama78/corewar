@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:29:46 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/18 08:28:28 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 13:30:02 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ld(t_process *prc, t_a *a)
 	else
 		prc->reg[reg] = val;
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	prc->carry = ((prc->reg[reg] == 0 && reg != 0) ? 1 : 0);
+	prc->carry = ((prc->reg[reg] == 0) ? 1 : 0);
 	prc->reg[0] = 0;
 }
 
@@ -59,7 +59,7 @@ void	lld(t_process *prc, t_a *a)
 	else
 		prc->reg[reg] = val;
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	if (prc->reg[reg] == 0 && reg != 0)
+	if (prc->reg[reg] == 0)
 		prc->carry = 1;
 	else
 		prc->carry = 0;
@@ -91,7 +91,7 @@ void	ldi(t_process *prc, t_a *a)
 	prc->reg[reg] += a->mem[(prc->tmp_pc + val + 2) % MEM_SIZE] << 8;
 	prc->reg[reg] += a->mem[(prc->tmp_pc + val + 3) % MEM_SIZE];
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	prc->carry = ((prc->reg[reg] == 0 && reg != 0) ? 1 : 0);
+	prc->carry = ((prc->reg[reg] == 0) ? 1 : 0);
 	prc->reg[0] = 0;
 }
 
@@ -120,6 +120,6 @@ void	lldi(t_process *prc, t_a *a)
 	prc->reg[reg] += a->mem[(prc->tmp_pc + val + 2) % MEM_SIZE] << 8;
 	prc->reg[reg] += a->mem[(prc->tmp_pc + val + 3) % MEM_SIZE];
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	prc->carry = ((prc->reg[reg] == 0 && reg != 0) ? 1 : 0);
+	prc->carry = ((prc->reg[reg] == 0) ? 1 : 0);
 	prc->reg[0] = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:26:40 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/18 08:26:10 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 12:05:51 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_process	*add_process(t_a *a, t_process *cpy)
 	new->num_player = cpy->num_player;
 	new->player_index = cpy->player_index;
 	a->player[new->player_index].nb_process++;
+	new->cmd = -1;
 	return (new);
 }
 
@@ -46,4 +47,5 @@ void		first_process(t_a *a, int player, int offset)
 	new->cycle_wait = 0;
 	new->carry = 0;
 	new->live = 0;
+	new->cmd = -1;
 }

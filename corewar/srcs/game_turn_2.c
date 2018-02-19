@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:28:13 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/18 08:45:42 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 14:02:46 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,16 @@ void			game_turn(t_a *a, void (**f)(t_process *, t_a *))
 	{
 		if (--prc->cycle_wait <= 0)
 		{
-			if (a->mem[prc->pc] <= 0 || a->mem[prc->pc] > 16)
+			if (prc->cmd == -1)
+				prc->cmd = (a->mem[prc->pc]) & 0x000000FF;
+			if (prc->cmd <= 0 || prc->cmd > NB_COMM)
 				ft_move(prc, a);
 			else if (prc->cycle_wait == 0 && !check_type(prc, a))
 				mod_carry(prc, a);
-			else if (a->mem[prc->pc] <= NB_COMM)
-				f[a->mem[prc->pc]](prc, a);
+			else
+				f[prc->cmd](prc, a);
+			if (prc->cycle_wait <= 0)
+				prc->cmd = -1;
 		}
 		if (a->mem_info[prc->pc].process == 0)
 			ft_curseur(prc, prc->pc, prc->pc, a);
