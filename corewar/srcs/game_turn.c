@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 16:22:00 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/16 12:14:55 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/19 18:19:06 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void			kill_prc(t_a *a)
 
 int				new_cycle(t_a *a)
 {
-	int		i;
+	static int	check = 0;
+	int			i;
 
 	kill_prc(a);
 	a->live = 0;
@@ -69,11 +70,13 @@ int				new_cycle(t_a *a)
 		a->live += a->player[i].nb_live_current;
 		a->player[i].nb_live_current = 0;
 	}
-	if (a->live >= NBR_LIVE || (a->cycle - a->last_dec_cycle >= MAX_CHECKS))
+	if (a->live >= NBR_LIVE || (check >= MAX_CHECKS))
 	{
 		a->cycle_to_die -= CYCLE_DELTA;
 		a->last_dec_cycle = a->cycle;
+		check = 0;
 	}
+	check++;
 	return (a->cycle_to_die);
 }
 

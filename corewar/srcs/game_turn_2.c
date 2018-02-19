@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:28:13 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/19 14:02:46 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 15:39:29 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			game_loop(t_a *a, void (**f)(t_process *, t_a *))
 	command = 0;
 	nxt_cycle_die = a->cycle_to_die;
 	ft_print(a);
-	while ((command != 27 && a->visu && end) || !end)
+	while (command != 27 && ((a->visu && end) || !end))
 	{
 		if ((a->nc.pause || !a->visu) && a->process)
 		{

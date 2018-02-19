@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/19 14:56:35 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 18:13:54 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int		rec_memory(char type, t_process *prc, t_a *a, int size)
 	else if (type & 0x01)
 	{
 		val = a->mem[prc->pc];
-		if (val <= 0 || val > REG_NUMBER)
-			val = 0;
+		if (val < 0 || val > REG_NUMBER)
+			val = -1;
 		prc->pc = (prc->pc + 1) % MEM_SIZE;
 	}
 	return (val);
