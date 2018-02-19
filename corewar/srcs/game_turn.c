@@ -60,12 +60,6 @@ int				new_cycle(t_a *a)
 	i = -1;
 	while (++i < a->num_of_player)
 	{
-		if (a->player[i].nb_live_current != 0)
-			a->winner = a->player + i;
-	}
-	i = -1;
-	while (++i < a->num_of_player)
-	{
 		a->live += a->player[i].nb_live_current;
 		a->player[i].nb_live_current = 0;
 	}

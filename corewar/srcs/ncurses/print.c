@@ -75,6 +75,7 @@ static void	ft_print_memory(t_a *a)
 	}
 }
 
+
 static void	ft_print_info(t_a *a)
 {
 	int		total_process;
@@ -96,8 +97,8 @@ static void	ft_print_info(t_a *a)
 	mvwprintw(a->nc.win_info, ++i, 4, "Speed: %25d", 20 - (a->speed / 10000));
 	mvwprintw(a->nc.win_info, ++i, 4, "CYCLE_TO_DIE %19d", a->cycle_to_die);
 	mvwprintw(a->nc.win_info, ++i, 4, "CYCLE_DELTA %20d", CYCLE_DELTA);
-	if (!a->process || a->cycle_to_die <= 0)
-		mvwprintw(a->nc.win_info, ++i, 4, "Winner %19s", a->winner->name);
+	if ((!a->process || a->cycle_to_die <= 0) && a->winner)
+		ft_print_winner(a, &i);
 	wattroff(a->nc.win_info, a->nc.color.text);
 }
 
