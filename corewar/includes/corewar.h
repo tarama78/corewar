@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/18 08:41:06 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 12:06:04 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct			s_process
 	int					cycle_wait;
 	int					carry;
 	int					live;
+	int					cmd;
 }						t_process;
 
 typedef struct			s_player
