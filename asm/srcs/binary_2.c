@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 12:43:42 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/16 15:51:44 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/19 12:21:57 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_label_address(char *label, t_label *tlabel, t_a *data)
 	return (i);
 }
 
-int		ft_handle_args(int file, char *arg, t_a *data, int index)
+int		ft_handle_args(char *arg, t_a *data, int index)
 {
 	char	*octet;
 	int		i;
@@ -39,7 +39,8 @@ int		ft_handle_args(int file, char *arg, t_a *data, int index)
 	k = MEM_SIZE + 10;
 	if (arg[0] == 'r')
 	{
-		ft_putchar_fd((char)ft_atoi(arg + 1), file);
+//		ft_putchar_fd((char)ft_atoi(arg + 1), file);
+		ft_add_char(data, (char)ft_atoi(arg + 1));
 		return (SUCCESS);
 	}
 	i = (arg[0] == DIRECT_CHAR ? DIR_SIZE : IND_SIZE);
@@ -54,7 +55,7 @@ int		ft_handle_args(int file, char *arg, t_a *data, int index)
 		value = ((arg[0] == DIRECT_CHAR) ? ft_atoi(arg + 1) : ft_atoi(arg));
 	octet = (char*)&value;
 	while (--i >= 0)
-		ft_putchar_fd(octet[i], file);
+		ft_add_char(data, octet[i]);
 	return (SUCCESS);
 }
 
@@ -68,7 +69,7 @@ int		ft_typepara(char *arg)
 		return (IND_CODE);
 }
 
-void	ft_encoding(int file, char **words)
+void	ft_encoding(t_a *data, char **words)
 {
 	int				i;
 	unsigned char	octet;
@@ -82,10 +83,10 @@ void	ft_encoding(int file, char **words)
 		decal -= 2;
 		octet += ft_typepara(words[i]) << decal;
 	}
-	ft_dprintf(file, "%c", octet);
+	ft_add_char(data, octet);
 }
 
-void	ft_putname_magic(int file, t_a *data)
+void	ft_putname_magic(t_a *data)
 {
 	int		magic;
 	char	*octet;
@@ -95,13 +96,17 @@ void	ft_putname_magic(int file, t_a *data)
 	magic = COREWAR_EXEC_MAGIC;
 	octet = (char*)&magic;
 	while (--i >= 0)
-		ft_putchar_fd(octet[i], file);
-	write(file, data->name, PROG_NAME_LENGTH);
-	write(file, "\0\0\0\0", 4);
+		ft_add_char(data, octet[i]);
+	ft_add_str(data, data->name, PROG_NAME_LENGTH);
+	ft_add_str(data, "\0\0\0\0", 4);
+//	write(file, data->name, PROG_NAME_LENGTH);
+//	write(file, "\0\0\0\0", 4);
 	i = 4;
 	octet = (char*)&data->prog_size;
 	while (--i >= 0)
-		ft_putchar_fd(octet[i], file);
-	write(file, data->comment, COMMENT_LENGTH);
-	write(file, "\0\0\0\0", 4);
+		ft_add_char(data, octet[i]);
+	ft_add_str(data, data->comment, COMMENT_LENGTH);
+	ft_add_str(data, "\0\0\0\0", 4);
+//	write(file, data->comment, COMMENT_LENGTH);
+//	write(file, "\0\0\0\0", 4);
 }
