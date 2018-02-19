@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 12:43:42 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/19 12:21:57 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/19 12:38:49 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int		ft_handle_args(char *arg, t_a *data, int index)
 	k = MEM_SIZE + 10;
 	if (arg[0] == 'r')
 	{
-//		ft_putchar_fd((char)ft_atoi(arg + 1), file);
 		ft_add_char(data, (char)ft_atoi(arg + 1));
 		return (SUCCESS);
 	}
@@ -99,14 +98,10 @@ void	ft_putname_magic(t_a *data)
 		ft_add_char(data, octet[i]);
 	ft_add_str(data, data->name, PROG_NAME_LENGTH);
 	ft_add_str(data, "\0\0\0\0", 4);
-//	write(file, data->name, PROG_NAME_LENGTH);
-//	write(file, "\0\0\0\0", 4);
 	i = 4;
 	octet = (char*)&data->prog_size;
 	while (--i >= 0)
 		ft_add_char(data, octet[i]);
 	ft_add_str(data, data->comment, COMMENT_LENGTH);
 	ft_add_str(data, "\0\0\0\0", 4);
-//	write(file, data->comment, COMMENT_LENGTH);
-//	write(file, "\0\0\0\0", 4);
 }

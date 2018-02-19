@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/19 11:42:17 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/19 12:39:29 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ static int	ft_open_files(char *filename, int *fd1, char **name2, int *ret)
 		ft_printf("{red}Can't read source file{yellow} %s{eoc}\n", filename);
 		return (ERROR);
 	}
-//	if ((*fd2 = open(name2, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU)) == -1)
-//		exit(EXIT_FAILURE);
-//	free(name2);
 	return (SUCCESS);
 }
 
