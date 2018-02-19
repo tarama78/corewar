@@ -152,5 +152,7 @@ int			ft_dprintf(int fd, const char *format, ...);
 int			ft_vdprintf(int fd, const char *format, va_list ap);
 int			ft_asprintf(char **str, const char *format, ...);
 int			ft_vasprintf(char **ret, const char *format, va_list ap);
+int			ft_joinprintf(char **str, const char *format, ...);
+int			ft_joinnprintf(char **str, int n, const char *format, ...);
 
 #endif

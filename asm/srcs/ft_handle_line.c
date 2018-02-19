@@ -178,7 +178,7 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	i = ft_start_i(a, ln, 1);
 	if (i == 0 || ln[i] != '\0')
 	{
-		name = ft_get_name(ln + i);
+		name = ft_get_name(ln + i, a, new_ln);
 		i += ft_strlen(name);
 		if (ft_check_arg(a, name, new_ln, ln + i) == ERROR &&
 				ft_fruit(3, &name, &new_ln->line, &new_ln))

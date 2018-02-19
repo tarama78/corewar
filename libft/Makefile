@@ -110,6 +110,8 @@ FILES_FT_PRINTF = printf/ft_printf.c \
 		printf/ft_vdprintf.c \
 		printf/ft_asprintf.c \
 		printf/ft_vasprintf.c \
+		printf/ft_joinprintf.c \
+		printf/ft_joinnprintf.c \
 		color/ft_color.c \
 		color/ft_init_color.c \
 		check/ft_parse.c \
