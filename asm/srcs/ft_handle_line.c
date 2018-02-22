@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/22 11:56:02 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/22 14:45:13 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,16 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	if (!(arg = ft_strsplit(tmp, SEPARATOR_CHAR)))
 		exit(EXIT_FAILURE);
 	i = -1;
-	while (ft_strcmp(g_op_tab[++i].name, name) != 0)
+	while (++i < 17 && ft_strcmp(g_op_tab[i].name, name) != 0)
 		;
+	if (i == 17 && ft_fruit(1, &tmp) && ft_fruit_tab(1, &arg))
+		return (ft_err_msg(a, new_ln, "invalid instruction name", 0));
 	op = g_op_tab[i];
 	if ((i = ft_get_size_op(a, &op, arg, new_ln)) == ERROR && ft_fruit(1, &tmp))
 		return (ft_free_arg(arg));
 	new_ln->size = 1 + op.octet_type_arg + i;
-	i = -1;
-	while (arg[++i])
-		ft_fruit(1, arg + i);
-	ft_fruit(2, &tmp, &arg);
+	ft_fruit_tab(1, &arg);
+	ft_fruit(1, &tmp);
 	return (SUCCESS);
 }
 
