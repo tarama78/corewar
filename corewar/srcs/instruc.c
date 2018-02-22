@@ -77,6 +77,7 @@ void	live(t_process *prc, t_a *a)
 			a->player[i].last_live_cycle = (int)a->cycle;
 			a->player[i].nb_live_total++;
 			a->player[i].nb_live_current++;
+			a->winner = a->player + i;
 		}
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 }

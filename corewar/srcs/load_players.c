@@ -48,6 +48,7 @@ int		load_players(t_a *a)
 		if (load_prog(fd, &(a->player[i])) == ERROR)
 			return (ERROR);
 		a->player[i].player_number_print = a->file[i].player_number_print;
+		a->player[i].n = i;
 		++i;
 	}
 	ft_intro(a);

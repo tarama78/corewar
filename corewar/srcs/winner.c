@@ -14,5 +14,8 @@
 
 void	winner(t_a *a)
 {
-	ft_printf("winner is %s\n", a->winner->name);
+	if (a->winner)
+		ft_printf("le joueur %d(%s) a gagne\n",
+			a->winner->player_number_print,
+			a->winner->name);
 }

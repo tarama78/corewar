@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/19 12:09:43 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/19 15:58:57 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ START = @printf $(GREEN)$(BOLD)"ASM\n--------------------\n"$(NORMAL)
 END = @printf $(GREEN)$(BOLD)"--------------------\n"$(NORMAL)
 
 all:
-	@make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR) CFLAGS="$(CFLAGS)"
 	$(START)
 	@make $(NAME)
 	$(END)

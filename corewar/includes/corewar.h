@@ -71,6 +71,7 @@ typedef struct			s_player
 	int					nb_live_total;
 	int					nb_live_current;
 	size_t				nb_process;
+	int					n;
 }						t_player;
 
 typedef struct			s_champ_file
@@ -146,6 +147,7 @@ typedef struct			s_a
 }						t_a;
 
 int						ft_is_uint(char *str, int *num);
+int						ft_is_int(char *str, int *num);
 int						parse_args(t_a *a, int ac, char **av);
 int						load_players(t_a *a);
 void					load_memory(t_a *a);
@@ -182,6 +184,7 @@ void					ft_move(t_process *prc, t_a *a);
 
 void					ft_curseur(t_process *prc, int pc, int curs, t_a *a);
 void					winner(t_a *a);
+void					ft_print_winner(t_a *a, int *i);
 
 void					free_process(t_a *a);
 int						new_cycle(t_a *a);

@@ -54,3 +54,20 @@ echo
 mv doc/vm_champs/champs/ex.cor diff.cor
 ./doc/vm_champs/asm doc/vm_champs/champs/ex.s
 diff diff.cor doc/vm_champs/champs/ex.cor
+
+make -C corewarm CFLAGS=-"Wall -Wextra -Werror" 
+echo "\nTEST COREWAR"
+echo "test1: compilation"
+./asm/asm doc/vm_champs/champs/Gagnant.s
+./asm/asm doc/vm_champs/champs/Octobre_Rouge_V4.2.s
+./asm/asm doc/vm_champs/champs/mortel.s
+echo "test1: exemple vm"
+./doc/vm_champs/corewar doc/vm_champs/champs/Gagnant.cor doc/vm_champs/champs/Octobre_Rouge_V4.2.cor doc/vm_champs/champs/mortel.cor
+echo "test1: notre vm"
+./corewar/corewar doc/vm_champs/champs/Gagnant.cor doc/vm_champs/champs/Octobre_Rouge_V4.2.cor doc/vm_champs/champs/mortel.cor
+echo "\ntest2: compilation"
+./asm/asm champi/*.s
+echo "test2: exemple vm"
+./doc/vm_champs/corewar champi/*.cor
+echo "test2: notre vm"
+./corewar/corewar champi/*.cor
