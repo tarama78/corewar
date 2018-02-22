@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_handle_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/22 11:56:02 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/22 13:57:30 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	int		i;
 	t_line	*new_ln;
 
-	name = NULL;
+	if ((name = ft_check_endline(a, ln, num_ln)) != NULL)
+		return (ERROR);
 	if (!(new_ln = malloc(sizeof(t_line))))
 		exit(EXIT_FAILURE);
 	new_ln->size = 0;
