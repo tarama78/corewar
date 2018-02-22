@@ -6,7 +6,7 @@
 /*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 11:20:48 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/22 16:16:39 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/22 20:47:49 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,18 @@ static char	*ft_get_paragraph(int fd, int *num_ln, char *str)
 	if (!(str[i]))
 		return (NULL);
 	p = ft_strdup(str + i + 1);
-	if (ft_count_char(str + i, '\"') == 2)
-		return (p);
+	if ((count = ft_count_char(str + i, '\"')) == 2)
+		return (ft_check_paragraph(p));
+	else if (count > 2)
+		return (NULL);
 	while (get_next_line(fd, &line) > 0)
 	{
 		++(*num_ln);
-		count = ft_count_char(line, '\"');
-		if (!(p = ft_strjoin_ln(p, line)))
+		if ((count = ft_count_char(line, '\"')) > 1 ||
+			(!(p = ft_strjoin_ln(p, line))))
 			return (NULL);
 		if (count == 1)
-			return (p);
+			return (ft_check_paragraph(p));
 	}
 	return (NULL);
 }
