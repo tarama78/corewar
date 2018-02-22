@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_handle_line_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 12:31:22 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 12:38:22 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/22 15:14:03 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
 **   | ft_handle_line_2.c                                       |
+**   |     ft_get_name(14 lines)                                |
 **   |     ft_get_type_dir_ind(24 lines)                        |
 **   |     ft_get_type(25 lines)                                |
 **   |     ft_get_size_op(19 lines)                             |
@@ -123,6 +124,8 @@ int			ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_l)
 			+ ((type & T_IND) ? IND_SIZE : 0);
 		sz = (type & T_DIR && op->size_change == 1) ? sz - 2 : sz;
 	}
+	if (arg[i] != NULL)
+		return (ft_err_msg(a, new_l, "too many arguments", 0));
 	return (sz);
 }
 

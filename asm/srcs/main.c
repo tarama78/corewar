@@ -6,19 +6,18 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/22 11:55:25 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/22 14:25:50 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
 **   | main.c                                                   |
-**   |     init_struct(6 lines)                                 |
 **   |     file_name(9 lines)                                   |
-**   |     ft_open_files(18 lines)                              |
-**   |     ft_compile_file(29 lines)                            |
-**   |         MEUUUU too many lines                            |
-**   |     main(25 lines)                                       |
+**   |     ft_open_files(13 lines)                              |
+**   |     ft_compile_file2(10 lines)                           |
+**   |     ft_compile_file(19 lines)                            |
+**   |     main(24 lines)                                       |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -46,18 +45,17 @@ static void	file_name(char *name)
 
 static int	ft_open_files(char *filename, int *fd1, char **name2, int *ret)
 {
+	if ((*fd1 = open(filename, O_RDONLY)) == -1)
+	{
+		*ret = EXIT_FAILURE;
+		ft_printf("{red}Can't read source file{yellow} %s{eoc}\n", filename);
+		return (ERROR);
+	}
 	if (!(*name2 = malloc(sizeof(char) * (ft_strlen(filename) + 5))))
 		ft_err_msg(NULL, NULL, "malloc fail", 1);
 	ft_strncpy(*name2, filename, ft_strlen(filename) + 1);
 	file_name(*name2);
 	ft_strcat(*name2, ".cor");
-	if ((*fd1 = open(filename, O_RDONLY)) == -1)
-	{
-		*ret = EXIT_FAILURE;
-		free(name2);
-		ft_printf("{red}Can't read source file{yellow} %s{eoc}\n", filename);
-		return (ERROR);
-	}
 	return (SUCCESS);
 }
 
@@ -67,7 +65,7 @@ static int	ft_compile_file2(t_a *data, char *filename, char *argvi)
 	{
 		ft_printf("{red}{bold}compilation failed: {eoc}"
 				"{yellow}%s{eoc}\n",
-				"mauvais label");
+				"bad label");
 		return (ERROR);
 	}
 	ft_printf("{green}{bold}compilation success: {eoc}{yellow}%s"

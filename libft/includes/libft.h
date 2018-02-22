@@ -135,6 +135,8 @@ char		*ft_lltoa(long long n);
 unsigned	ft_abs(int nb);
 int			ft_free(size_t n, ...);
 int			ft_fruit(size_t n, ...);
+int			ft_free_tab(size_t n, ...);
+int			ft_fruit_tab(size_t n, ...);
 char		*ft_strndup(const char *s1, int n);
 double		ft_power(double nb, int power);
 long long	ft_2arg(int arg1, int arg2);

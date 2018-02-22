@@ -42,7 +42,10 @@ int			ft_err_msg(t_a *a, t_line *new_ln, char *txt, int quit)
 	else
 		ft_errprintf("\t{red}{bold}ERROR:{eoc}\t\t%s\n", txt);
 	if (quit)
+	{
+		ft_printf("{red}{bold}compilation failed\n{eoc}");
 		exit(EXIT_FAILURE);
+	}
 	return (ERROR);
 }
 
