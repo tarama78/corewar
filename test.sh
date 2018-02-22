@@ -55,7 +55,7 @@ mv doc/vm_champs/champs/ex.cor diff.cor
 ./doc/vm_champs/asm doc/vm_champs/champs/ex.s
 diff diff.cor doc/vm_champs/champs/ex.cor
 
-make -C corewarm CFLAGS=-"Wall -Wextra -Werror" 
+make -C corewar CFLAGS=-"Wall -Wextra -Werror" 
 echo "\nTEST COREWAR"
 echo "test1: compilation"
 ./asm/asm doc/vm_champs/champs/Gagnant.s
