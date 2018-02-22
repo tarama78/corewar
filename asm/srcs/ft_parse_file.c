@@ -6,11 +6,21 @@
 /*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/22 13:55:39 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/22 20:49:22 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+char		*ft_check_paragraph(char *p)
+{
+	int len;
+
+	len = ft_strlen(p);
+	if (p[len - 1] != '"')
+		ft_fruit(1, &p);
+	return (p);
+}
 
 static void	ft_clear_line(char *str)
 {
