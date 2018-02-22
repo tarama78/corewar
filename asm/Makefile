@@ -17,6 +17,7 @@ FILES = main.c\
 		ft_parse_cmd.c\
 		ft_handle_line.c\
 		ft_handle_line_2.c\
+		ft_handle_line_3.c\
 		ft_label.c\
 		ft_lst_add_end.c\
 		free_content.c\
