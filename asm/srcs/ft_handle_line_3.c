@@ -6,7 +6,7 @@
 /*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 11:55:21 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/22 14:23:29 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:18:37 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 #include <corewar.h>
 
-char	*ft_check_endline(t_a *a, char *ln, int num_ln)
+char		*ft_check_endline(t_a *a, char *ln, int num_ln)
 {
 	t_line	line;
 	char	c;
@@ -35,7 +35,7 @@ char	*ft_check_endline(t_a *a, char *ln, int num_ln)
 	c = ln[ft_strlen(ln) - 1];
 	if (c == DIRECT_CHAR || c == SEPARATOR_CHAR)
 	{
-		line.line = ln;	
+		line.line = ln;
 		line.num_line = num_ln;
 		ft_err_msg(a, &line, "invalid line", 0);
 		ptr = &c;
