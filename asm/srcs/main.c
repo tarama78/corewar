@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/22 11:55:25 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/22 13:29:23 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,17 @@ static void	file_name(char *name)
 
 static int	ft_open_files(char *filename, int *fd1, char **name2, int *ret)
 {
+	if ((*fd1 = open(filename, O_RDONLY)) == -1)
+	{
+		*ret = EXIT_FAILURE;
+		ft_printf("{red}Can't read source file{yellow} %s{eoc}\n", filename);
+		return (ERROR);
+	}
 	if (!(*name2 = malloc(sizeof(char) * (ft_strlen(filename) + 5))))
 		ft_err_msg(NULL, NULL, "malloc fail", 1);
 	ft_strncpy(*name2, filename, ft_strlen(filename) + 1);
 	file_name(*name2);
 	ft_strcat(*name2, ".cor");
-	if ((*fd1 = open(filename, O_RDONLY)) == -1)
-	{
-		*ret = EXIT_FAILURE;
-		free(name2);
-		ft_printf("{red}Can't read source file{yellow} %s{eoc}\n", filename);
-		return (ERROR);
-	}
 	return (SUCCESS);
 }
 
