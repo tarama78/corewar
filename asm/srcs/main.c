@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/19 15:53:39 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/22 11:55:25 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int			main(int argc, char **argv)
 	}
 	i = 0;
 	while (++i < argc)
-	{
 		if (ft_open_files(argv[i], &fd, &filename, &ret) == SUCCESS)
 		{
 			ret = (ft_compile_file(&data, fd, filename, argv[i]) == EXIT_SUCCESS
@@ -124,6 +123,5 @@ int			main(int argc, char **argv)
 				ft_printf("\n");
 			free(filename);
 		}
-	}
 	return (ret);
 }
