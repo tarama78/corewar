@@ -3,15 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   load_players.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 13:08:32 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/15 14:18:46 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/22 21:24:40 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <corewar.h>
 #include <load_players.h>
+
+int		next_num(t_a *a)
+{
+	int	num;
+	int	i;
+
+	i = 0;
+	num = -1;
+	while (i < a->num_of_player)
+	{
+		if (a->file[i].n && num == a->file[i].player_number_print)
+		{
+			--num;
+			i = -1;
+		}
+		++i;
+	}
+	return (num);
+}
+
+void	ft_give_number(t_a *a)
+{
+	int		i;
+
+	i = 0;
+	while (i < a->num_of_player)
+	{
+		if (a->file[i].n == 0)
+		{
+			a->file[i].player_number_print = next_num(a);
+			a->file[i].n = 1;
+		}
+		++i;
+	}
+}
 
 void	ft_intro(t_a *a)
 {
@@ -33,6 +68,7 @@ int		load_players(t_a *a)
 	int	i;
 
 	i = 0;
+	ft_give_number(a);
 	while (i < a->num_of_player)
 	{
 		if ((fd = open(a->file[i].filename, O_RDONLY)) < 0)

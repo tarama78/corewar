@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/22 14:51:36 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/22 21:13:15 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct			s_player
 typedef struct			s_champ_file
 {
 	int					player_number_print;
+	int					n;
 	char				*filename;
 }						t_champ_file;
 
@@ -137,6 +138,7 @@ typedef struct			s_a
 	int					num_of_player;
 	int					dump_cycle;
 	int					n;
+	int					n_val;
 	uint64_t			cycle_to_die;
 	uint64_t			last_dec_cycle;
 	uint64_t			nxt_cycle_die;
