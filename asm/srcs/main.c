@@ -6,19 +6,18 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:07:32 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/22 13:29:23 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/22 14:25:50 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
 **   | main.c                                                   |
-**   |     init_struct(6 lines)                                 |
 **   |     file_name(9 lines)                                   |
-**   |     ft_open_files(18 lines)                              |
-**   |     ft_compile_file(29 lines)                            |
-**   |         MEUUUU too many lines                            |
-**   |     main(25 lines)                                       |
+**   |     ft_open_files(13 lines)                              |
+**   |     ft_compile_file2(10 lines)                           |
+**   |     ft_compile_file(19 lines)                            |
+**   |     main(24 lines)                                       |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -66,7 +65,7 @@ static int	ft_compile_file2(t_a *data, char *filename, char *argvi)
 	{
 		ft_printf("{red}{bold}compilation failed: {eoc}"
 				"{yellow}%s{eoc}\n",
-				"mauvais label");
+				"bad label");
 		return (ERROR);
 	}
 	ft_printf("{green}{bold}compilation success: {eoc}{yellow}%s"

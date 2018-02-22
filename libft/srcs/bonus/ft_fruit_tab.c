@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_nc.c                                          :+:      :+:    :+:   */
+/*   ft_fruit_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/10 13:25:45 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/10 14:53:58 by tnicolas         ###   ########.fr       */
+/*   Created: 2018/02/22 14:40:18 by tnicolas          #+#    #+#             */
+/*   Updated: 2018/02/22 14:42:35 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
-**   | free_nc.c                                                |
-**   |     ft_free_nc(2 lines)                                  |
+**   | ft_fruit_tab.c                                           |
+**   |     ft_fruit_tab(19 lines)                               |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -23,16 +23,27 @@
 **     |||   |||
 */
 
-#include "../commun/includes/op.h"
-#include "../corewar/includes/corewar.h"
+#include <libft.h>
 
-void		ft_free_nc(t_a *a)
+int			ft_fruit_tab(size_t n, ...)
 {
+	void	***del;
+	va_list	ap;
 	int		i;
 
-	ft_fruit(2, &a->nc.win_mem, &a->nc.win_info);
-	i = -1;
-	while (++i < a->num_of_player)
-		ft_fruit(1, &a->nc.win_player[i]);
-	endwin();
+	va_start(ap, n);
+	while (n-- > 0)
+	{
+		del = va_arg(ap, void ***);
+		i = -1;
+		while ((*del)[++i])
+		{
+			free((*del)[i]);
+			(*del)[i] = NULL;
+		}
+		free(*del);
+		*del = NULL;
+	}
+	va_end(ap);
+	return (1);
 }

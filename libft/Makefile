@@ -89,6 +89,8 @@ FILES = ft_strlen.c \
 		bonus/ft_abs.c \
 		bonus/ft_free.c \
 		bonus/ft_fruit.c \
+		bonus/ft_free_tab.c \
+		bonus/ft_fruit_tab.c \
 		bonus/ft_strndup.c \
 		bonus/ft_power.c \
 		bonus/ft_2arg.c \
