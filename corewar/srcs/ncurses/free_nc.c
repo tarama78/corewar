@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:25:45 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/15 17:33:25 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/22 15:23:18 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ void		ft_free_nc(t_a *a)
 {
 	int		i;
 
-	delwin(a->nc.win_mem);
-	delwin(a->nc.win_mem);
+	if (a->nc.win_mem)
+		delwin(a->nc.win_mem);
+	if (a->nc.win_info)
+		delwin(a->nc.win_info);
 	i = -1;
 	while (++i < a->num_of_player)
-		delwin(a->nc.win_player[i]);
+		if (a->nc.win_player[i])
+			delwin(a->nc.win_player[i]);
 	endwin();
 }

@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/19 20:04:08 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/22 14:51:36 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,5 +202,6 @@ t_color					ft_init_color();
 int						ft_get_color(t_a *a, int k);
 int						ft_print(t_a *a);
 void					ft_free_nc(t_a *a);
+void					error_init_src(t_a *a) __attribute__((noreturn));
 
 #endif
