@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/18 06:11:07 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 20:10:54 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,31 @@
 void	ft_aff(t_process *prc, t_a *a)
 {
 	int		value;
+	int		reg;
 	char	*octet;
 	int		i;
 
 	i = 4;
-	if (!(check_cycle(prc, a)))
+	if (!(check_cycle(prc)))
 		return ;
-	value = prc->reg[a->mem[(prc->pc + 2 % MEM_SIZE)]];
-	octet = (char*)&value;
-	while (--i >= 0)
-		ft_putchar_fd(octet[i], STDOUT_FILENO);
-	prc->pc = (prc->pc + 3) % MEM_SIZE;
+	prc->tmp_pc = prc->pc;
+	prc->pc = (prc->pc + 2) % MEM_SIZE;
+	reg = rec_memory(1, prc, a, 0);
+	if (reg != -1)
+	{
+		value = prc->reg[reg];
+		octet = (char*)&value;
+		while (--i >= 0)
+			ft_putchar_fd(octet[i], STDOUT_FILENO);
+	}
+	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 }
 
 void	ft_zjmp(t_process *prc, t_a *a)
 {
 	int		addr;
 
-	if (!(check_cycle(prc, a)))
+	if (!(check_cycle(prc)))
 		return ;
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 1) % MEM_SIZE;
@@ -57,7 +64,7 @@ void	live(t_process *prc, t_a *a)
 	int		player_nb;
 	int		i;
 
-	if (!(check_cycle(prc, a)))
+	if (!(check_cycle(prc)))
 		return ;
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 1) % MEM_SIZE;
@@ -80,7 +87,7 @@ void	ft_fork(t_process *prc, t_a *a)
 	int			addr;
 	t_process	*new_prc;
 
-	if (!(check_cycle(prc, a)))
+	if (!(check_cycle(prc)))
 		return ;
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 1) % MEM_SIZE;
@@ -99,7 +106,7 @@ void	lfork(t_process *prc, t_a *a)
 	int			addr;
 	t_process	*new_prc;
 
-	if (!(check_cycle(prc, a)))
+	if (!(check_cycle(prc)))
 		return ;
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 1) % MEM_SIZE;

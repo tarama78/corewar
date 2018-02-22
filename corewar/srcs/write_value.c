@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 22:20:55 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/18 08:24:31 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/21 19:23:59 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,24 @@ void		st(t_process *prc, t_a *a)
 	int		addr;
 	int		reg;
 
-	if (!check_cycle(prc, a))
+	if (!check_cycle(prc))
 		return ;
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 2) % MEM_SIZE;
 	reg = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6, prc, a, 0);
 	addr = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4,
 			prc, a, IND_SIZE);
-	if (a->mem[(prc->tmp_pc + 1) % MEM_SIZE] == 0x50)
+	if (reg == -1 || (a->mem[(prc->tmp_pc + 1) % MEM_SIZE] == 0x50
+				&& addr == -1))
+		;
+	else if (a->mem[(prc->tmp_pc + 1) % MEM_SIZE] == 0x50)
 		prc->reg[addr] = prc->reg[reg];
 	else
 	{
-		addr = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
-			prc->reg[addr] : addr;
 		addr = addr % IDX_MOD;
 		write_in_mem(a, prc, reg, (prc->tmp_pc + addr) % MEM_SIZE);
 	}
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
-	prc->reg[0] = 0;
 }
 
 void		sti(t_process *prc, t_a *a)
@@ -83,19 +83,24 @@ void		sti(t_process *prc, t_a *a)
 	int		addr2;
 	int		reg;
 
-	if (!check_cycle(prc, a))
+	if (!check_cycle(prc))
 		return ;
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 2) % MEM_SIZE;
 	reg = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 6, prc, a, 0);
 	addr = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4,
-			prc, a, IND_SIZE);
-	addr = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1) ?
-		prc->reg[addr] : addr;
+		prc, a, IND_SIZE);
 	addr2 = rec_memory(a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 2,
 			prc, a, IND_SIZE);
-	addr2 = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 2 & 0x03) == 1) ?
-		prc->reg[addr2] : addr2;
+	if (reg == -1 || ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> 4 & 0x03) == 1
+				&& addr == -1) || ((a->mem[(prc->tmp_pc + 1)
+						% MEM_SIZE] >> 2 & 0x03) == 1 && addr2 == -1))
+	{
+		ft_curseur(prc, prc->tmp_pc, prc->pc, a);
+		return ;
+	}
+	addr = if_registre(addr, prc, 4, a);
+	addr2 = if_registre(addr2, prc, 2, a);
 	addr = (addr + addr2) % IDX_MOD;
 	write_in_mem(a, prc, reg, (prc->tmp_pc + addr) % MEM_SIZE);
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);

@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/18 08:41:06 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 20:04:08 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct			s_process
 	int					cycle_wait;
 	int					carry;
 	int					live;
+	int					cmd;
 }						t_process;
 
 typedef struct			s_player
@@ -151,7 +152,7 @@ int						parse_args(t_a *a, int ac, char **av);
 int						load_players(t_a *a);
 void					load_memory(t_a *a);
 void					init_command(void (**f)(t_process *, t_a *));
-int						check_cycle(t_process *prc, t_a *a);
+int						check_cycle(t_process *prc);
 int						rec_memory(char type, t_process *prc, t_a *a, int size);
 int						rec_memory_xbyte(t_process *prc, int size, t_a *a);
 int						check_type(t_process *prc, t_a *a);
@@ -160,6 +161,8 @@ void					first_process(t_a *a, int player, int offset);
 void					game_loop(t_a *a, void (**f)(t_process *, t_a *));
 void					game_turn(t_a *a, void (**f)(t_process *, t_a *));
 void					mod_carry(t_process *prc, t_a *a);
+void					load_value(t_process *prc, int val, t_a *a, int reg);
+int						if_registre(int val, t_process *prc, int byte, t_a *a);
 
 void					add(t_process *prc, t_a *a);
 void					sub(t_process *prc, t_a *a);
