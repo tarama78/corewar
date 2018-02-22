@@ -6,20 +6,20 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 16:13:45 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/18 08:41:23 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 18:47:23 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		check_cycle(t_process *prc, t_a *a)
+int		check_cycle(t_process *prc)
 {
 	int		i;
 
 	if (prc->cycle_wait <= -1)
 	{
 		i = -1;
-		while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
+		while (g_op_tab[++i].opcode != prc->cmd && g_op_tab[i].opcode)
 			;
 		prc->cycle_wait = g_op_tab[i].nb_cycle - 1;
 	}
@@ -57,5 +57,20 @@ int		rec_memory_xbyte(t_process *prc, int size, t_a *a)
 	if (size == 2)
 		if ((short)val < 0)
 			val |= 0xFFFF0000;
+	return (val);
+}
+
+void	load_value(t_process *prc, int val, t_a *a, int reg)
+{
+	prc->reg[reg] = a->mem[(prc->tmp_pc + val) % MEM_SIZE] << 24;
+	prc->reg[reg] += a->mem[(prc->tmp_pc + val + 1) % MEM_SIZE] << 16;
+	prc->reg[reg] += a->mem[(prc->tmp_pc + val + 2) % MEM_SIZE] << 8;
+	prc->reg[reg] += a->mem[(prc->tmp_pc + val + 3) % MEM_SIZE];
+}
+
+int		if_registre(int val, t_process *prc, int byte, t_a *a)
+{
+	val = ((a->mem[(prc->tmp_pc + 1) % MEM_SIZE] >> byte & 0x03) == 1) ?
+		prc->reg[val] : val;
 	return (val);
 }

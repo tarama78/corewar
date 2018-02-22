@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/19 14:22:55 by atripard         ###   ########.fr        #
+#    Updated: 2018/02/19 16:01:04 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ FILES = main.c\
 		ncurses/init.c\
 		ncurses/color.c\
 		ncurses/print.c\
+		ncurses/print_winner.c\
 		ncurses/free_nc.c\
 		ncurses/print_winner.c\
 		../../commun/srcs/op.c\
@@ -47,7 +48,7 @@ LIBFT = $(LIBFT_DIR)libft.a
 LIBFT_LIB = -L $(LIBFT_DIR) -lft
 
 CC = gcc
-CFLAGS = -Wall -Wextra -g#########Werror
+CFLAGS = -Wall -Wextra -Werror
 
 OBJS_DIR = objs/
 SRCS_DIR = srcs/
@@ -79,7 +80,7 @@ START = @printf $(GREEN)$(BOLD)"COREWAR\n--------------------\n"$(NORMAL)
 END = @printf $(GREEN)$(BOLD)"--------------------\n"$(NORMAL)
 
 all:
-	@make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR) CFLAGS="$(CFLAGS)"
 	$(START)
 	@make $(NAME)
 	$(END)

@@ -6,13 +6,15 @@
 #    By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/06 19:11:27 by tnicolas          #+#    #+#              #
-#    Updated: 2018/02/09 15:37:21 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/19 16:10:36 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+CFLAGS = -Wall -Wextra -Werror
+
 all:
-	@make -C asm
-	@make -C corewar
+	@make -C asm CFLAGS="$(CFLAGS)"
+	@make -C corewar CFLAGS="$(CFLAGS)"
 
 clean:
 	@make -C asm clean
@@ -25,8 +27,8 @@ fclean:
 re:
 	@make -C asm fclean
 	@make -C corewar fclean
-	@make -C asm
-	@make -C corewar
+	@make -C asm CFLAGS="$(CFLAGS)"
+	@make -C corewar CFLAGS="$(CFLAGS)"
 
 exec: all
 	@./test.sh

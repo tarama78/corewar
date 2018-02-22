@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/18 08:40:51 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/21 21:09:41 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,26 @@
 
 void	mod_carry(t_process *prc, t_a *a)
 {
-	int	comm;
 	int	curs;
+	int	code;
 	int	i;
 	int	j;
 
 	i = -1;
 	j = -1;
-	while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
+	while (g_op_tab[++i].opcode != prc->cmd && g_op_tab[i].opcode)
 		;
-	curs = prc->pc + 1;
-	comm = a->mem[prc->pc];
-	if (comm == 2 || comm == 4 || comm == 5 || comm == 6 || comm == 7
-			|| comm == 8 || comm == 10 || comm == 13 || comm == 14)
-		prc->carry = 0;
-	while (g_op_tab[i].type_arg[++j])
+	curs = prc->pc + 1 + g_op_tab[i].octet_type_arg;
+	code = a->mem[(prc->pc + 1) % MEM_SIZE];
+	while (++j < g_op_tab[i].nb_arg)
 	{
-		if (g_op_tab[i].type_arg[j] & 0x01)
+		if (((code >> 6) & 0x3) == 1)
 			curs++;
-		else if (g_op_tab[i].type_arg[j] & 0x02)
-			curs += 2;
-		else if (g_op_tab[i].type_arg[j] & 0x04)
+		else if (((code >> 6) & 0x3) == 2)
 			curs += 4;
+		else if (((code >> 6) & 0x3) == 3)
+			curs += 2;
+		code = code << 2;
 	}
 	ft_curseur(prc, prc->pc, curs % MEM_SIZE, a);
 	prc->pc = curs % MEM_SIZE;
@@ -81,7 +79,7 @@ int		rec_memory(char type, t_process *prc, t_a *a, int size)
 	{
 		val = a->mem[prc->pc];
 		if (val <= 0 || val > REG_NUMBER)
-			val = 0;
+			val = -1;
 		prc->pc = (prc->pc + 1) % MEM_SIZE;
 	}
 	return (val);
@@ -113,13 +111,13 @@ int		check_type(t_process *prc, t_a *a)
 
 	i = -1;
 	j = -1;
-	arg_code = a->mem[prc->pc + 1];
-	while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
+	arg_code = a->mem[(prc->pc + 1) % MEM_SIZE];
+	while (g_op_tab[++i].opcode != prc->cmd && g_op_tab[i].opcode)
 		;
-	if (g_op_tab[i].opcode != a->mem[prc->pc])
+	if (g_op_tab[i].opcode != prc->cmd)
 		return (0);
-	if (a->mem[prc->pc] == 1 || a->mem[prc->pc] == 9
-			|| a->mem[prc->pc] == 12 || a->mem[prc->pc] == 15)
+	if (prc->cmd == 1 || prc->cmd == 9
+			|| prc->cmd == 12 || prc->cmd == 15)
 		return (1);
 	while (++j < 4)
 	{
