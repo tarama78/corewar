@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_handle_line_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 11:55:21 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/22 11:56:07 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/22 14:23:29 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,24 @@
 */
 
 #include <corewar.h>
+
+char	*ft_check_endline(t_a *a, char *ln, int num_ln)
+{
+	t_line	line;
+	char	c;
+	char	*ptr;
+
+	c = ln[ft_strlen(ln) - 1];
+	if (c == DIRECT_CHAR || c == SEPARATOR_CHAR)
+	{
+		line.line = ln;	
+		line.num_line = num_ln;
+		ft_err_msg(a, &line, "invalid line", 0);
+		ptr = &c;
+		return (ptr);
+	}
+	return (NULL);
+}
 
 int			ft_start_i(t_a *a, char *ln, int label)
 {

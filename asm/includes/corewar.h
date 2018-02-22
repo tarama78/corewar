@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/19 12:21:27 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/22 13:57:07 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int					ft_parse_file(t_a *a, int fd);
 void				ft_parse_cmd(int fd, t_a *a, int *num_ln, int *cmd);
 int					ft_label_address(char *label, t_label *tab_label,
 																	t_a *data);
+char				*ft_check_endline(t_a *a, char *ln, int num_ln);
+
 int					ft_handle_args(char *arg, t_a *data, int index);
 int					ft_typepara(char *arg);
 void				ft_encoding(t_a *data, char **words);
