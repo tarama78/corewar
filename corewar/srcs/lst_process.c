@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:26:40 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/13 11:29:30 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/21 20:48:25 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,23 @@ t_process	*add_process(t_a *a, t_process *cpy)
 	t_process *new;
 
 	if (!(new = (t_process *)malloc(sizeof(t_process))))
-		return (0);
-	//ERROR MALLOC
+		error_malloc(a);
 	ft_memcpy(new, cpy, sizeof(t_process));
 	new->next = a->process;
 	a->process = new;
 	new->num_player = cpy->num_player;
 	new->player_index = cpy->player_index;
-	a->player[new->player_index].nb_process++;
+	a->player[cpy->player_index].nb_process++;
+	new->cmd = -1;
 	return (new);
 }
 
-t_process	*first_process(t_a *a, int player, int offset)
+void		first_process(t_a *a, int player, int offset)
 {
 	t_process *new;
 
 	if (!(new = (t_process *)malloc(sizeof(t_process))))
-		return (0);
-	//ERROR MALLOC
+		error_malloc(a);
 	new->next = a->process;
 	a->process = new;
 	new->num_player = a->player[player].player_number_print;
@@ -43,10 +42,10 @@ t_process	*first_process(t_a *a, int player, int offset)
 	new->reg[1] = new->num_player;
 	new->player_index = player;
 	new->pc = offset * player;
-	a->mem_info[offset *player].player_process = player + 1;
-	a->mem_info[offset *player].process = 1;
-	new->cycle_wait = -1;
+	a->mem_info[offset * player].player_process = player + 1;
+	a->mem_info[offset * player].process = 1;
+	new->cycle_wait = 0;
 	new->carry = 0;
 	new->live = 0;
-	return (new);
+	new->cmd = -1;
 }

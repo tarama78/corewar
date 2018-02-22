@@ -1,5 +1,5 @@
 .name		"champ"
-.comment	"worst ?"
+.comment	""
 
 			ld		%255, r8
 			ld		%250, r10

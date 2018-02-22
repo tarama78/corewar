@@ -6,18 +6,18 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/09 16:05:28 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/22 11:56:02 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
 **   | ft_handle_line.c                                         |
-**   |     ft_start_i(14 lines)                                 |
-**   |     ft_clean_char_custom(24 lines)                       |
 **   |     ft_free_arg(7 lines)                                 |
 **   |     ft_check_arg(23 lines)                               |
-**   |     ft_handle_line(23 lines)                             |
+**   |     ft_islabel(25 lines)                                 |
+**   |     ft_check_double_label(12 lines)                      |
+**   |     ft_handle_line(24 lines)                             |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -28,52 +28,6 @@
 */
 
 #include <corewar.h>
-
-int			ft_start_i(t_a *a, char *ln, int label)
-{
-	int		i;
-
-	i = -1;
-	while (ft_strchr(LABEL_CHARS, ln[++i]) && ln[i])
-		;
-	if (ln[i] == LABEL_CHAR)
-	{
-		while (ln[++i] == ' ' || ln[i] == '\t')
-			;
-		if (label)
-			a->nb_label++;
-		return (i + ft_start_i(a, ln + i, label));
-	}
-	return (0);
-}
-
-char		*ft_clean_char_custom(char *s)
-{
-	int		i;
-	int		j;
-	char	*ret;
-
-	if (!(ret = ft_strtrim(s)))
-		return (NULL);
-	i = -1;
-	while (ret[++i])
-		if (ret[i] == SEPARATOR_CHAR)
-		{
-			j = 0;
-			while (ret[i - j - 1] == ' ')
-				++j;
-			if (j > 0)
-				ft_memmove(ret + i - j, ret + i, ft_strlen(ret + i) + 1);
-			i -= j;
-			j = 0;
-			while (ret[i + j + 1] == ' ')
-				++j;
-			if (j > 0)
-				ft_memmove(ret + i + 1, ret + i + j + 1,
-						ft_strlen(ret + i + j + 1) + 1);
-		}
-	return (ret);
-}
 
 static int	ft_free_arg(char **arg)
 {
@@ -113,6 +67,51 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	return (SUCCESS);
 }
 
+static int	ft_islabel(t_line *ln, int ret)
+{
+	int		nb_label;
+	int		i;
+
+	if (ln == NULL)
+		return (0);
+	nb_label = 0;
+	i = 0;
+	while (ln->line[i])
+	{
+		while (ft_strchr(LABEL_CHARS, ln->line[++i]) && ln->line[i])
+			;
+		if (ln->line[i] == LABEL_CHAR)
+			nb_label++;
+		else
+			break ;
+		while (ln->line[++i] == ' ')
+			;
+		if (ln->line[i] == '\0')
+			break ;
+	}
+	if (ln->line[i] == '\0' && nb_label == 1)
+		return (1);
+	if (ln->line[i] != '\0' && nb_label == 1 && ret == 1)
+		return (0);
+	return (nb_label);
+}
+
+static void	ft_check_double_label(t_a *a, t_line *new_ln)
+{
+	int		nb_lab;
+
+	if ((nb_lab = ft_islabel(new_ln, 0)) == 0)
+		return ;
+	if (nb_lab >= 2)
+	{
+		ft_warning_msg(a, new_ln, "more than 1 label on a single line");
+		return ;
+	}
+	if (ft_islabel((t_line*)ft_lst_get_last((t_lst*)a->line), 1) != 1)
+		return ;
+	ft_warning_msg(a, new_ln, "2 label in a row");
+}
+
 int			ft_handle_line(t_a *a, char *ln, int num_ln)
 {
 	char	*name;
@@ -129,12 +128,13 @@ int			ft_handle_line(t_a *a, char *ln, int num_ln)
 	i = ft_start_i(a, ln, 1);
 	if (i == 0 || ln[i] != '\0')
 	{
-		name = ft_get_name(ln + i);
+		name = ft_get_name(ln + i, a, new_ln);
 		i += ft_strlen(name);
 		if (ft_check_arg(a, name, new_ln, ln + i) == ERROR &&
 				ft_fruit(3, &name, &new_ln->line, &new_ln))
 			return (ERROR);
 	}
+	ft_check_double_label(a, new_ln);
 	ft_lst_add_end((t_lst**)&a->line, (t_lst*)new_ln);
 	ft_fruit(1, &name);
 	return (SUCCESS);

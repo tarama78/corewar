@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/09 15:35:20 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/19 15:58:57 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,14 @@ FILES = main.c\
 		ft_parse_cmd.c\
 		ft_handle_line.c\
 		ft_handle_line_2.c\
+		ft_handle_line_3.c\
 		ft_label.c\
 		ft_lst_add_end.c\
 		free_content.c\
 		binary.c\
 		binary_2.c\
 		ft_error.c\
+		ft_add_str.c\
 		../../commun/srcs/op.c
 
 HFILES = includes/corewar.h \
@@ -66,7 +68,7 @@ START = @printf $(GREEN)$(BOLD)"ASM\n--------------------\n"$(NORMAL)
 END = @printf $(GREEN)$(BOLD)"--------------------\n"$(NORMAL)
 
 all:
-	@make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR) CFLAGS="$(CFLAGS)"
 	$(START)
 	@make $(NAME)
 	$(END)

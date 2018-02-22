@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 19:35:36 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/12 13:36:12 by ynacache         ###   ########.fr       */
+/*   Updated: 2018/02/19 12:21:50 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,31 @@ static int		ft_binary_2(int *j, int *i, char ***word, t_line *tmp)
 	return (SUCCESS);
 }
 
-static int		ft_binary_3(long ik, t_a *data, int file, char **args)
+static int		ft_binary_3(long ik, t_a *data, char **args)
 {
 	int i;
 	int k;
 
 	i = ft_get2arg(ik, 0);
 	k = ft_get2arg(ik, 1);
-	ft_dprintf(file, "%c", (char)g_op_tab[i].opcode);
+	ft_add_char(data, (char)g_op_tab[i].opcode);
 	if (g_op_tab[i].octet_type_arg == 1)
-		ft_encoding(file, args);
+		ft_encoding(data, args);
 	while (args[++k])
-		if (ft_handle_args(file, args[k], data, i) == ERROR)
+		if (ft_handle_args(args[k], data, i) == ERROR)
 			return (ERROR);
 	return (SUCCESS);
 }
 
-static int		ft_binary_1(int file, t_a *data, t_line *tmp, int i)
+static int		ft_binary_1(t_a *data, t_line *tmp, int i)
 {
 	int		j;
 	int		k;
 	char	**word;
 	char	**args;
 
-	while (tmp != NULL)
+	while (tmp != NULL && ((k = -1) ? 1 : 1))
 	{
-		k = -1;
 		if (ft_binary_2(&j, &i, &word, tmp) == ERROR)
 			return (ERROR);
 		if (word[1] == NULL && ((tmp = tmp->next) ? 1 : 1) &&
@@ -81,7 +80,7 @@ static int		ft_binary_1(int file, t_a *data, t_line *tmp, int i)
 		while (++i < 17 && g_op_tab[i].name != 0
 				&& ft_strcmp(word[j - 1], g_op_tab[i].name) != 0)
 			;
-		if (ft_binary_3(ft_2arg(i, k), data, file, args) == ERROR)
+		if (ft_binary_3(ft_2arg(i, k), data, args) == ERROR)
 			return (ERROR);
 		data->cmpt += tmp->size;
 		tmp = tmp->next;
@@ -90,16 +89,24 @@ static int		ft_binary_1(int file, t_a *data, t_line *tmp, int i)
 	return (SUCCESS);
 }
 
-int				ft_binary(int file, t_a *data)
+int				ft_binary(char *filename, t_a *data)
 {
 	t_line	*tmp;
 	int		i;
+	int		fd;
 
+	data->str = NULL;
+	data->len_str = 0;
 	tmp = data->line;
 	data->cmpt = 0;
 	i = -1;
-	ft_putname_magic(file, data);
-	if (ft_binary_1(file, data, tmp, i) == ERROR)
+	ft_putname_magic(data);
+	if (ft_binary_1(data, tmp, i) == ERROR)
 		return (ERROR);
+	if ((fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU)) == -1)
+		exit(EXIT_FAILURE);
+	write(fd, data->str, data->len_str);
+	free(data->str);
+	close(fd);
 	return (SUCCESS);
 }

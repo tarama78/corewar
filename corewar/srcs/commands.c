@@ -6,115 +6,101 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:02:28 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 15:30:40 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/21 21:09:41 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		check_cycle(t_process *prc, t_a *a)
+void	mod_carry(t_process *prc, t_a *a)
 {
-//	char	nb_player;
-	int		i;
+	int	curs;
+	int	code;
+	int	i;
+	int	j;
 
-	if (prc->cycle_wait == -1)
+	i = -1;
+	j = -1;
+	while (g_op_tab[++i].opcode != prc->cmd && g_op_tab[i].opcode)
+		;
+	curs = prc->pc + 1 + g_op_tab[i].octet_type_arg;
+	code = a->mem[(prc->pc + 1) % MEM_SIZE];
+	while (++j < g_op_tab[i].nb_arg)
 	{
-		i = -1;
-		while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
-			;
-		prc->cycle_wait = g_op_tab[i].nb_cycle;
-//		a->mem_info[prc->pc].process = 1;
-//		nb_player = 0;
-//		while (++nb_player <= a->num_of_player)
-//			if (a->player[nb_player - 1].player_number_print == prc->num_player)
-//				break ;
-//		a->mem_info[prc->pc].player_process = nb_player;
+		if (((code >> 6) & 0x3) == 1)
+			curs++;
+		else if (((code >> 6) & 0x3) == 2)
+			curs += 4;
+		else if (((code >> 6) & 0x3) == 3)
+			curs += 2;
+		code = code << 2;
 	}
-	if (prc->cycle_wait >= 0)
-		prc->cycle_wait--;
-	if (prc->cycle_wait == -1)
-	{
-//		a->mem_info[prc->pc].process = 0;
-		return (1);
-	}
-	return (0);
+	ft_curseur(prc, prc->pc, curs % MEM_SIZE, a);
+	prc->pc = curs % MEM_SIZE;
 }
 
-void ft_curseur(t_process *prc, int pc, int curs, t_a *a)
+void	rec_memory_2(int *val, t_a *a, t_process *prc)
 {
-	char	nb_player;
+	int	addr;
+	int	i;
 
-	a->mem_info[pc].process = 0;
-	a->mem_info[curs].process = 1;
-	nb_player = 0;
-	while (++nb_player <= a->num_of_player)
-		if (a->player[nb_player - 1].player_number_print == prc->num_player)
-			break ;
-	a->mem_info[curs].player_process = nb_player;
+	i = -1;
+	addr = a->mem[prc->pc] << 8;
+	prc->pc = (prc->pc + 1) % MEM_SIZE;
+	addr += a->mem[prc->pc];
+	prc->pc = (prc->pc + 1) % MEM_SIZE;
+	addr = addr % IDX_MOD;
+	while (++i < IND_SIZE)
+	{
+		*val = *val << 8;
+		*val += (((char)a->mem[(addr + i + prc->tmp_pc)
+					% MEM_SIZE])) & 0x000000FF;
+	}
+	if (IND_SIZE == 2)
+		if ((short)(*val) < 0)
+			*val = *val | 0xFFFF0000;
 }
 
-int		rec_memory(char type, int *curs, t_a *a, int addr)
+int		rec_memory(char type, t_process *prc, t_a *a, int size)
 {
 	int		val;
+	int		i;
 
 	val = 0;
-	if ((type & 0x03) == 0x02 && !addr)
-	{
-		val = a->mem[*curs] << 24;
-		*curs = (*curs + 1) % MEM_SIZE;
-		val += a->mem[*curs] << 16;
-		*curs = (*curs + 1) % MEM_SIZE;
-		val += a->mem[*curs] << 8;
-		*curs = (*curs + 1) % MEM_SIZE;
-		val += a->mem[*curs];
-		*curs = (*curs + 1) % MEM_SIZE;
-	}
+	i = -1;
+	if (size == 0)
+		size = ((type & 0x03) == 0x03) ? IND_SIZE : REG_SIZE;
+	if ((type & 0x03) == 0x03 && (prc->pc - prc->tmp_pc) > 1 && size != REG_SIZE
+			&& a->mem[prc->tmp_pc] != 3 && a->mem[prc->tmp_pc] != 11)
+		rec_memory_2(&val, a, prc);
 	else if ((type & 0x03) > 1)
-	{
-		val = ((char)a->mem[*curs] << 8) & 0x0000FF00;
-		*curs = (*curs + 1) % MEM_SIZE;
-		//val +=  (char)a->mem[*curs];
-		val += (((char)a->mem[*curs])) & 0x000000FF;
-		val = val & 0x0000FFFF;
-		if ((short)val < 0)
-			val = val | 0xFFFF0000;
-		*curs = (*curs + 1) % MEM_SIZE;
-	}
+		val = rec_memory_xbyte(prc, size, a);
 	else if (type & 0x01)
 	{
-		val = a->mem[*curs];
-		val = val % (REG_NUMBER);
-		if (val <= 0)
-			val = REG_NUMBER - val;
-//		val--;
-		*curs = (*curs + 1) % MEM_SIZE;
+		val = a->mem[prc->pc];
+		if (val <= 0 || val > REG_NUMBER)
+			val = -1;
+		prc->pc = (prc->pc + 1) % MEM_SIZE;
 	}
 	return (val);
 }
 
-/*static int		ft_check_carry(t_process *prc, int i)
+int		check_type_2(int *tmp, int i, int j)
 {
-	(void)i;
-	if (ft_strequ(g_op_tab[i].name,"lfork") ||
-			ft_strequ(g_op_tab[i].name, "add") ||
-			ft_strequ(g_op_tab[i].name, "sub") ||
-			ft_strequ(g_op_tab[i].name, "or") ||
-			ft_strequ(g_op_tab[i].name, "xor") ||
-			ft_strequ(g_op_tab[i].name, "and"))
-	{
-		prc->carry = 0;
+	if ((*tmp & 0x0003) == 1 &&
+			((g_op_tab[i].type_arg[j] & 0x01) != 0x1))
 		return (0);
-	}
-	if (ft_strequ(g_op_tab[i].name, "ld") ||
-			ft_strequ(g_op_tab[i].name, "lld") ||
-			ft_strequ(g_op_tab[i].name, "ldi") ||
-			ft_strequ(g_op_tab[i].name, "lldi"))
-	{
-		prc->carry = 0;
+	else if ((*tmp & 0x0003) == 2 &&
+			((g_op_tab[i].type_arg[j] & 0x02) != 0x02))
 		return (0);
-	}
+	else if ((*tmp & 0x0003) == 3 &&
+			((g_op_tab[i].type_arg[j] & 0x04) != 0x04))
+		return (0);
+	if ((*tmp & 0x0003) == 0 &&
+			((g_op_tab[i].type_arg[j] & 0x07) != 0x00))
+		return (0);
 	return (1);
-}*/
+}
 
 int		check_type(t_process *prc, t_a *a)
 {
@@ -125,28 +111,20 @@ int		check_type(t_process *prc, t_a *a)
 
 	i = -1;
 	j = -1;
-	arg_code = a->mem[prc->pc + 1];
-	while (g_op_tab[++i].opcode != a->mem[prc->pc] && g_op_tab[i].opcode)
+	arg_code = a->mem[(prc->pc + 1) % MEM_SIZE];
+	while (g_op_tab[++i].opcode != prc->cmd && g_op_tab[i].opcode)
 		;
-	if (g_op_tab[i].opcode != a->mem[prc->pc])
+	if (g_op_tab[i].opcode != prc->cmd)
 		return (0);
-	if (a->mem[prc->pc] == 1 || a->mem[prc->pc] == 9
-			|| a->mem[prc->pc] == 12 || a->mem[prc->pc] == 15)
+	if (prc->cmd == 1 || prc->cmd == 9
+			|| prc->cmd == 12 || prc->cmd == 15)
 		return (1);
-	while (++j < 4/*g_op_tab[i].nb_arg*/)
+	while (++j < 4)
 	{
 		tmp = arg_code >> 6;
-		if ((tmp & 0x0003) == 1 && ((g_op_tab[i].type_arg[j] & 0x01) != 0x1))
-			return (0);
-		else if ((tmp & 0x0003) == 2 && ((g_op_tab[i].type_arg[j] & 0x02) != 0x02))
-			return (0);
-		else if ((tmp & 0x0003) == 3 && ((g_op_tab[i].type_arg[j] & 0x04) != 0x04))
-			return (0);
-		if ((tmp & 0x0003) == 0 && ((g_op_tab[i].type_arg[j] & 0x07) != 0x00))
+		if (check_type_2(&tmp, i, j) == 0)
 			return (0);
 		arg_code = arg_code << 2;
 	}
-//	if (arg_code >> 6 != 0)
-//		return (0);
 	return (1);
 }

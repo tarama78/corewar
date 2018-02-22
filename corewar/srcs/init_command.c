@@ -6,7 +6,7 @@
 /*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 14:26:17 by bcozic            #+#    #+#             */
-/*   Updated: 2018/02/14 14:47:23 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/19 15:27:29 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ void	ft_move(t_process *prc, t_a *a)
 
 	i = 0;
 	a->mem_info[prc->pc].process = 0;
-	check_cycle(prc, a);
-	check_cycle(prc, a);
+	check_cycle(prc);
+	check_cycle(prc);
 	while (++i <= a->num_of_player)
 		if (a->player[i - 1].player_number_print == prc->num_player)
 			break ;
+	ft_curseur(prc, prc->pc, (prc->pc + 1) % MEM_SIZE, a);
 	prc->pc = (prc->pc + 1) % MEM_SIZE;
 	a->mem_info[prc->pc].process = 1;
 	a->mem_info[prc->pc].player_process = i;
