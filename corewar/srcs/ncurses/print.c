@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 13:18:53 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/18 08:01:46 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/22 11:52:16 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static void	ft_print_memory(t_a *a)
 		}
 	}
 }
-
 
 static void	ft_print_info(t_a *a)
 {

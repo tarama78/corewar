@@ -6,7 +6,7 @@
 /*   By: atripard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 14:12:11 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/19 14:12:30 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/22 11:51:29 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		ft_print_winner(t_a *a, int *i)
 {
-	char 	*name;
+	char	*name;
 	int		num;
 
 	++(*i);
