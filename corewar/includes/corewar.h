@@ -132,6 +132,7 @@ typedef struct			s_a
 
 	t_champ_file		file[MAX_PLAYERS];
 	int					live;
+	int					live_option;
 	int					visu;
 	int					num_of_player;
 	int					dump_cycle;

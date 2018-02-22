@@ -14,8 +14,9 @@
 
 void		ft_usage(int quit, char *name)
 {
-	ft_printf("Usage: %s [-v -dump N] <[-n N] champion1.cor> <...>\n"
+	ft_printf("Usage: %s [-v -live -dump N] <[-n N] champion1.cor> <...>\n"
 			"\t-v %8t: visual mode\n"
+			"\t-live %5t: Display all lives\n"
 			"\t-dump N %3t: Dumps memory after N cycles then exits\n"
 			"\t-n N %6t: players number\n", name);
 	if (quit)

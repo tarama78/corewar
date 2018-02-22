@@ -35,6 +35,7 @@ FILES = main.c\
 		ncurses/print.c\
 		ncurses/print_winner.c\
 		ncurses/free_nc.c\
+		ncurses/print_winner.c\
 		../../commun/srcs/op.c\
 
 HFILES = includes/corewar.h \

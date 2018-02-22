@@ -39,44 +39,36 @@ static int	ft_add_file(t_champ_file *file, char *file_name, int *n, int player)
 static int	check_dump(char *value, t_a *a, int ac, int *i)
 {
 	if (*i + 1 >= ac)
-		return (0);
+		return (ERROR);
 	if (!ft_is_uint(value, &(a->dump_cycle)))
-		return (0);
+		return (ERROR);
 	++(*i);
-	return (1);
+	return (SUCCESS);
 }
 
 static int	check_n(char **av, t_a *a, int ac, int *i)
 {
 	if (*i + 2 >= ac || av[*i + 2][0] == '-')
-		return (0);
+		return (ERROR);
 	if (!ft_is_int(av[*i + 1], &(a->n)))
-		return (0);
+		return (ERROR);
 	++(*i);
-	return (1);
+	return (SUCCESS);
 }
 
 static int	check_option(int ac, char **av, t_a *a, int *i)
 {
 	if (ft_strequ("-dump", av[*i]))
-	{
-		if (!check_dump(av[*i + 1], a, ac, i))
-			return (ERROR);
-		return (SUCCESS);
-	}
+		return (check_dump(av[*i + 1], a, ac, i));
 	else if (ft_strequ("-n", av[*i]))
-	{
-		if (!check_n(av, a, ac, i))
-			return (ERROR);
-		return (SUCCESS);
-	}
+		return (check_n(av, a, ac, i));
 	else if (ft_strequ("-v", av[*i]))
-	{
 		a->visu = 1;
-		return (SUCCESS);
-	}
+	else if (ft_strequ("-live", av[*i]))
+		a->live_option = 1;
 	else
 		return (ERROR);
+	return (SUCCESS);
 }
 
 int			parse_args(t_a *a, int ac, char **av)
