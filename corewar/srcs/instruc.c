@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 17:30:49 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/19 20:10:54 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/22 20:35:06 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ void	ft_aff(t_process *prc, t_a *a)
 	prc->tmp_pc = prc->pc;
 	prc->pc = (prc->pc + 2) % MEM_SIZE;
 	reg = rec_memory(1, prc, a, 0);
-	if (reg != -1)
+	if (reg != -1 && !a->visu)
 	{
 		value = prc->reg[reg];
 		octet = (char*)&value;
+		ft_printf("Aff : ");
 		while (--i >= 0)
 			ft_putchar_fd(octet[i], STDOUT_FILENO);
+		ft_printf("\n");
 	}
 	ft_curseur(prc, prc->tmp_pc, prc->pc, a);
 }
