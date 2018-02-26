@@ -6,7 +6,7 @@
 /*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:28:54 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/22 20:46:06 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/26 16:41:31 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int					ft_warning_msg(t_a *a, t_line *new_ln, char *txt);
 t_lst				*ft_lst_get_last(t_lst *lst);
 void				ft_lst_add_end(t_lst **begin, t_lst *new);
 char				*ft_get_name(char *ln, t_a *a, t_line *new_ln);
+char				*ft_get_paragraph(int fd, int *num_ln, char *str);
 int					ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_l);
 char				*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln);
 int					ft_start_i(t_a *a, char *ln, int label);
@@ -87,7 +88,6 @@ void				ft_parse_cmd(int fd, t_a *a, int *num_ln, int *cmd);
 int					ft_label_address(char *label, t_label *tab_label,
 																	t_a *data);
 char				*ft_check_endline(t_a *a, char *ln, int num_ln);
-char				*ft_check_paragraph(char *p);
 
 int					ft_handle_args(char *arg, t_a *data, int index);
 int					ft_typepara(char *arg);

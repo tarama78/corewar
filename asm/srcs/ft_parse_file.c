@@ -6,21 +6,11 @@
 /*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 18:49:13 by atripard          #+#    #+#             */
-/*   Updated: 2018/02/22 20:49:22 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/26 17:33:50 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-char		*ft_check_paragraph(char *p)
-{
-	int len;
-
-	len = ft_strlen(p);
-	if (p[len - 1] != '"')
-		ft_fruit(1, &p);
-	return (p);
-}
 
 static void	ft_clear_line(char *str)
 {
@@ -63,26 +53,37 @@ static int	ft_parse_line(int fd, t_a *a, int *num_ln, int *lines)
 	return (SUCCESS);
 }
 
+int			ft_err_msg_header(t_a *a, int err)
+{
+	if (err & (1 << 2))
+		return (ft_err_msg(a, NULL, "name too long", 0));
+	if (err & (1 << 4))
+		return (ft_err_msg(a, NULL, "mutiple name", 0));
+	if (err & (1 << 0))
+		return (ft_err_msg(a, NULL, "no name", 0));
+	if (err & (1 << 6))
+		return (ft_err_msg(a, NULL, "don't shit between name and comment", 0));
+	if (err & (1 << 3))
+		return (ft_err_msg(a, NULL, "comment too long", 0));
+	if (err & (1 << 5))
+		return (ft_err_msg(a, NULL, "multiple comment", 0));
+	if (err & (1 << 1))
+		return (ft_err_msg(a, NULL, "no comment", 0));
+	return (ERROR);
+}
+
 int			ft_parse_file(t_a *a, int fd)
 {
 	int		num_ln;
 	int		lines;
-	int		cmd;
+	int		error;
 
-	cmd = 0;
+	error = 0;
 	lines = 0;
 	num_ln = 0;
-	ft_parse_cmd(fd, a, &num_ln, &cmd);
-	if (cmd != 3)
-	{
-		if (cmd == 0)
-			ft_err_msg(a, NULL, "no name/comment", 0);
-		else if (cmd == 1)
-			ft_err_msg(a, NULL, "no comment", 0);
-		else if (cmd == 2)
-			ft_err_msg(a, NULL, "no name", 0);
-		return (ERROR);
-	}
+	ft_parse_cmd(fd, a, &num_ln, &error);
+	if (error)
+		return (ft_err_msg_header(a, error));
 	if (ft_parse_line(fd, a, &num_ln, &lines) == ERROR)
 		return (ERROR);
 	if (lines == 0)

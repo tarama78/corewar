@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 14:35:14 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/08 17:19:24 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/26 15:15:09 by atripard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ int			ft_warning_msg(t_a *a, t_line *new_ln, char *txt)
 		ft_errprintf("\t{magenta}{bold}WARNING:{eoc} {yellow}%s.s\n{eoc}"
 				"\t\t{yellow}{bold}line: %d{eoc} ->{bold} %s{eoc}\n"
 				"\t\t%s\n", a->file_name, new_ln->num_line, txt, new_ln->line);
-	else
+	else if (a)
 		ft_errprintf("\t{magenta}{bold}WARNING:{eoc} {yellow}%s.s\n{eoc}"
 				"\t\t%s\n", a->file_name, txt);
+	else
+		ft_errprintf("\t{magenta}{bold}WARNING:{eoc}\t{bold} %s{eoc}\n", txt);
 	return (SUCCESS);
 }

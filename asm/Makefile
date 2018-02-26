@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: atripard <atripard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/19 15:58:57 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/26 16:19:23 by atripard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = asm
 FILES = main.c\
 		ft_parse_file.c\
 		ft_parse_cmd.c\
+		ft_get_paragraph.c\
 		ft_handle_line.c\
 		ft_handle_line_2.c\
 		ft_handle_line_3.c\
