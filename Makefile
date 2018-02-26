@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 
 NORMAL = "\x1B[0m"
 RED = "\x1B[31m"
