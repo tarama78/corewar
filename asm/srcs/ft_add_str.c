@@ -28,7 +28,7 @@
 
 void	ft_add_char(t_a *a, char c)
 {
-	ft_joinnprintf(&a->str, a->len_str, "%c", c);
+	ft_joinnprintf(&a->str, a->len_str, "%c", '{'/*c*/);
 	a->len_str++;
 }
 

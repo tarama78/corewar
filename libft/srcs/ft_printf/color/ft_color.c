@@ -88,7 +88,7 @@ int			ft_color(char **str, t_arg *arg)
 	int		ret;
 
 	ft_init_color((i[0] = -1) ? color : color);
-	while (++(i[0]) < arg->cmpt)
+	while (++(i[0]) < arg->cmpt && i[0] + 1 < ft_strlen(*str))
 		if ((*str)[i[0]] == '{' && !(i[1] = 0) && ++(i[0]))
 		{
 			if ((ret = ft_isignore(str, i[0] - 1)) == 1 || ret == -1)
