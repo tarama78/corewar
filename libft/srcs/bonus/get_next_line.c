@@ -3,144 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bcozic <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/22 13:54:25 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/01/11 13:24:58 by tnicolas         ###   ########.fr       */
+/*   Created: 2017/11/16 06:08:28 by bcozic            #+#    #+#             */
+/*   Updated: 2018/01/23 02:26:29 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-**   ____________________________________________________________
-**   | get_next_line.c                                          |
-**   |     ft_fruit__(16 lines)                                 |
-**   |     ft_create_struct(19 lines)                           |
-**   |     ft_get_line(17 lines)                                |
-**   |     ft_read(25 lines)                                    |
-**   |     get_next_line(15 lines)                              |
-**   ------------------------------------------------------------
-**           __n__n__  /
-**    .------`-\00/-'/
-**   /  ##  ## (oo)
-**  / \## __   ./
-**     |//YY \|/
-**     |||   |||
-*/
-
-#include <libft.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/uio.h>
 #include <unistd.h>
+#include "libft.h"
 
-static int		ft_fruit__(t_file **f, size_t n)
-{
-	t_file		*to_del;
-
-	to_del = ((t_file*)ft_lstget((t_list*)*f, n));
-	if (n > 0)
-	{
-		((t_file*)ft_lstget((t_list*)*f, n - 1))->next =
-			((t_file*)ft_lstget((t_list*)*f, n + 1));
-	}
-	else
-	{
-		to_del = *f;
-		*f = (*f)->next;
-	}
-	free(to_del->s);
-	free(to_del);
-	return (GNL_SUCCESS);
-}
-
-static int		ft_create_struct(t_file **f, int fd, size_t *n)
-{
-	t_file		*new;
-
-	*n = 0;
-	while (((t_file*)ft_lstget((t_list*)*f, *n)))
-	{
-		if (((t_file*)ft_lstget((t_list*)*f, *n))->fd == fd)
-			return (GNL_SUCCESS);
-		(*n)++;
-	}
-	*n = 0;
-	if (!(new = malloc(sizeof(t_file))))
-		return (GNL_ERROR);
-	new->fd = fd;
-	if (!(new->s = malloc(sizeof(char))))
-		return (GNL_ERROR);
-	new->s[0] = '\0';
-	new->next = *f;
-	*f = new;
-	return (GNL_SUCCESS);
-}
-
-static int		ft_get_line(t_file *tmp, char **line)
-{
-	size_t	size_line;
-	size_t	len_file;
-
-	len_file = ft_strlen(tmp->s);
-	size_line = 0;
-	while (tmp->s[size_line] != '\n' && tmp->s[size_line] != '\r' &&
-			tmp->s[size_line] != '\0')
-		size_line++;
-	if (!(*line = malloc(sizeof(**line) * (size_line + 1))))
-		return (GNL_ERROR);
-	ft_strncpy(*line, tmp->s, size_line);
-	(*line)[size_line] = '\0';
-	ft_memmove(tmp->s, tmp->s + size_line + 1, len_file - size_line);
-	if (!(tmp->s = ft_realloc(tmp->s, len_file + 1, len_file - size_line + 1)))
-		return (GNL_ERROR);
-	tmp->s[len_file - size_line] = '\0';
-	return (GNL_LINE_READ);
-}
-
-static int		ft_read(t_file *f, char **line, size_t n)
+static int	test_end(char *save, char *buff)
 {
 	int		i;
-	t_file	*tmp;
-	char	buf[BUFF_SIZE + 1];
-	int		ret_read;
+	size_t	size;
 
 	i = 0;
-	tmp = ((t_file*)ft_lstget((t_list*)f, n));
-	while (tmp->s[i] != '\n' && tmp->s[i] != '\r' && tmp->s[i])
-		i++;
-	if (tmp->s[i] == '\n' || tmp->s[i] == '\r')
-		return (ft_get_line(tmp, line));
-	if ((ret_read = read(tmp->fd, buf, BUFF_SIZE)) > 0)
+	while (buff[i])
 	{
-		buf[ret_read] = '\0';
-		if (!(tmp->s = ft_realloc(tmp->s, ft_strlen(tmp->s) + 1,
-						ft_strlen(tmp->s) + ret_read + 1)))
-			return (GNL_ERROR);
-		ft_strncat(tmp->s, buf, ret_read);
-		return (ft_read(f, line, n));
+		if (buff[i++] == '\n')
+		{
+			size = ft_strlen(buff + i);
+			ft_memmove(buff, buff + i, size);
+			buff[size] = '\0';
+			break ;
+		}
 	}
-	else if (ret_read == 0 && ft_strlen(tmp->s) == 0)
-		return (GNL_END);
-	else if (ret_read == 0)
-		return (ft_get_line(tmp, line));
-	return (GNL_ERROR);
+	i = -1;
+	while (save[++i])
+	{
+		if (save[i] == '\n')
+		{
+			save[i] = '\0';
+			return (1);
+		}
+	}
+	return (2);
 }
 
-int				get_next_line(const int fd, char **line)
+static int	read_line(const int fd, char *buff)
 {
-	static t_file	*f = NULL;
-	size_t			n;
-	int				ret;
+	int		c;
 
-	if (fd < 0 || line == NULL)
-		return (GNL_ERROR);
-	*line = NULL;
-	ret = 0;
-	if (ft_create_struct(&f, fd, &n) == GNL_ERROR)
-		return (GNL_ERROR);
-	ret = ft_read(f, line, n);
-	if (ret == GNL_END)
-		if (ft_fruit__(&f, n) == GNL_ERROR)
-			return (GNL_ERROR);
-	return (ret);
+	if (BUFF_SIZE <= 0)
+		return (-1);
+	c = (int)read(fd, buff, BUFF_SIZE);
+	buff[c] = '\0';
+	return (c);
+}
+
+int			get_next_line(const int fd, char **line)
+{
+	static char	buff[BUFF_SIZE + 1] = "";
+	char		*str;
+	int			end;
+	int			c;
+
+	str = NULL;
+	if (!line)
+		return (-1);
+	end = 2;
+	if (!(*line = ft_strjoinflush(&str, buff)))
+		return (-1);
+	end = test_end(*line, buff);
+	while (end == 2)
+	{
+		if ((c = read_line(fd, buff)) <= 0)
+		{
+			if (*line[0])
+				return (1);
+			return (c);
+		}
+		if (!(ft_strjoinflush(line, buff)))
+			return (-1);
+		end = test_end(*line, buff);
+	}
+	return (1);
 }

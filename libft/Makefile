@@ -6,7 +6,7 @@
 #    By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 09:45:36 by tnicolas          #+#    #+#              #
-#    Updated: 2018/02/19 16:01:29 by tnicolas         ###   ########.fr        #
+#    Updated: 2018/02/26 15:39:12 by bcozic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,7 @@ FILES = ft_strlen.c \
 		bonus/ft_clean_char.c \
 		bonus/ft_test_malloc.c \
 		bonus/get_next_line.c \
+		bonus/ft_strjoinflush.c\
 		$(addprefix ft_printf/, $(FILES_FT_PRINTF))
 
 FILES_FT_PRINTF = printf/ft_printf.c \

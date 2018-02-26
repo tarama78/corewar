@@ -6,7 +6,7 @@
 /*   By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 14:15:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/16 15:32:49 by bcozic           ###   ########.fr       */
+/*   Updated: 2018/02/26 15:40:57 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void		ft_swap_int(int *a, int *b);
 char		*ft_clean_char(char *s, char c);
 void		ft_test_malloc(size_t size);
 int			get_next_line(const int fd, char **line);
+char		*ft_strjoinflush(char **s1, char const *s2);
 
 int			ft_printf(const char *format, ...);
 int			ft_vprintf(const char *format, va_list ap);
