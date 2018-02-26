@@ -6,7 +6,7 @@
 /*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 16:27:27 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/22 14:45:13 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/26 13:37:41 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_check_arg(t_a *a, char *name, t_line *new_ln, char *ln)
 	char	**arg;
 	t_op	op;
 
-	if (!(tmp = ft_clean_char_custom(ln)))
+	if (!(tmp = ft_clean_char_custom(ln, a, new_ln)))
 		exit(EXIT_FAILURE);
 	if ((tmp[0] == '\0' || name[0] == '\0') && ft_fruit(1, &tmp))
 		return (ft_err_msg(a, new_ln, "invalid line", 0));
