@@ -1,3 +1,4 @@
+#!/bin/sh
 make -C asm CFLAGS=-"Wall -Wextra -Werror" 
 echo "TEST ASM"
 ./asm/asm doc/vm_champs/champs/42.s
