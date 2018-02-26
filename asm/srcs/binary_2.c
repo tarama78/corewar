@@ -6,7 +6,7 @@
 /*   By: ynacache <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 12:43:42 by ynacache          #+#    #+#             */
-/*   Updated: 2018/02/19 12:38:49 by tnicolas         ###   ########.fr       */
+/*   Updated: 2018/02/26 12:18:40 by ynacache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int		ft_label_address(char *label, t_label *tlabel, t_a *data)
 	dir = ((label[0] == '%' && label[1] == ':') ? 1 : 0);
 	if (tlabel == NULL || data->nb_label == 0)
 		return (ERROR);
-	while (i < data->nb_label &&
-			ft_strequ(label + ((dir == 1) ? 2 : 1), tlabel[++i].name) != 1)
+	while (++i < data->nb_label &&
+			ft_strequ(label + ((dir == 1) ? 2 : 1), tlabel[i].name) != 1)
 		;
 	if (i == data->nb_label)
 		return (ERROR);
