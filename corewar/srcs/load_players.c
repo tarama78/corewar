@@ -13,23 +13,23 @@
 #include <corewar.h>
 #include <load_players.h>
 
-int		next_num(t_a *a)
+int		ft_number(t_a *a, int n)
 {
-	int	num;
-	int	i;
+	int		i;
+	int		ret;
 
-	i = 0;
-	num = -1;
-	while (i < a->num_of_player)
+	ret = (n == 0) ? -1 : a->file[n - 1].player_number_print - 1;
+	i = -1;
+	while (++i < a->num_of_player)
 	{
-		if (a->file[i].n && num == a->file[i].player_number_print)
+		if (i != n && a->file[i].n == 1 &&
+				a->file[i].player_number_print == ret)
 		{
-			--num;
+			ret--;
 			i = -1;
 		}
-		++i;
 	}
-	return (num);
+	return (ret);
 }
 
 void	ft_give_number(t_a *a)
@@ -41,7 +41,7 @@ void	ft_give_number(t_a *a)
 	{
 		if (a->file[i].n == 0)
 		{
-			a->file[i].player_number_print = next_num(a);
+			a->file[i].player_number_print = ft_number(a, i);
 			a->file[i].n = 1;
 		}
 		++i;

@@ -6,7 +6,7 @@
 /*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 12:31:22 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/22 15:14:03 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/26 14:05:34 by bcozic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ char		*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln)
 
 	if (!(ret = ft_strnew(sizeof(char) * ft_strlen(ln))))
 		exit(EXIT_FAILURE);
+	new_ln->line = ln;
 	i = ft_start_i(a, ln, 0);
 	if (ln[i] != '\0')
 	{
@@ -145,12 +146,11 @@ char		*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln)
 		i++;
 		if (ln[i - 1] == '\0')
 		{
-			new_ln->line = ln;
 			ft_err_msg(a, new_ln, "invalid line", 0);
 			ft_fruit(1, &ret);
 			return (NULL);
 		}
-		if (!(tmp = ft_clean_char_custom(ln + i)))
+		if (!(tmp = ft_clean_char_custom(ln + i, a, new_ln)))
 			exit(EXIT_FAILURE);
 		ft_memcpy(ret + i, tmp, ft_strlen(tmp));
 		ft_fruit(1, &tmp);
