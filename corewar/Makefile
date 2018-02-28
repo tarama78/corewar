@@ -6,7 +6,7 @@
 #    By: ynacache <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by ynacache          #+#    #+#              #
-#    Updated: 2018/02/22 11:56:42 by bcozic           ###   ########.fr        #
+#    Updated: 2018/02/22 22:30:41 by ynacache         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ LIGHT = "\e[2m"
 ITALIC = "\e[3m"
 ULINE = "\e[4m"
 
-ARG = "ex.s -n"
+ARG = ""
 
 START = @printf $(GREEN)$(BOLD)"COREWAR\n--------------------\n"$(NORMAL)
 END = @printf $(GREEN)$(BOLD)"--------------------\n"$(NORMAL)

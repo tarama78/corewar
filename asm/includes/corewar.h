@@ -79,7 +79,7 @@ char				*ft_get_paragraph(int fd, int *num_ln, char *str);
 int					ft_get_size_op(t_a *a, t_op *op, char **arg, t_line *new_l);
 char				*ft_get_clean_ln(t_a *a, char *ln, t_line *new_ln);
 int					ft_start_i(t_a *a, char *ln, int label);
-char				*ft_clean_char_custom(char *s);
+char				*ft_clean_char_custom(char *s, t_a *a, t_line *line);
 int					ft_handle_line(t_a *a, char *ln, int num_ln);
 void				ft_label(t_a *data);
 int					free_content(t_a *data, char *error);

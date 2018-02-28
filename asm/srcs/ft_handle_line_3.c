@@ -6,15 +6,16 @@
 /*   By: atripard <atripard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 11:55:21 by tnicolas          #+#    #+#             */
-/*   Updated: 2018/02/22 16:18:37 by atripard         ###   ########.fr       */
+/*   Updated: 2018/02/26 15:26:23 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 **   ____________________________________________________________
 **   | ft_handle_line_3.c                                       |
+**   |     ft_check_endline(14 lines)                           |
 **   |     ft_start_i(14 lines)                                 |
-**   |     ft_clean_char_custom(24 lines)                       |
+**   |     ft_clean_char_custom(25 lines)                       |
 **   ------------------------------------------------------------
 **           __n__n__  /
 **    .------`-\00/-'/
@@ -62,7 +63,7 @@ int			ft_start_i(t_a *a, char *ln, int label)
 	return (0);
 }
 
-char		*ft_clean_char_custom(char *s)
+char		*ft_clean_char_custom(char *s, t_a *a, t_line *line)
 {
 	int		i;
 	int		j;
@@ -74,7 +75,8 @@ char		*ft_clean_char_custom(char *s)
 	while (ret[++i])
 		if (ret[i] == SEPARATOR_CHAR)
 		{
-			j = 0;
+			if (!(j = 0) && i == 0)
+				return (ft_err_msg(a, line, "invalid line", 0) ? NULL : NULL);
 			while (ret[i - j - 1] == ' ')
 				++j;
 			if (j > 0)
